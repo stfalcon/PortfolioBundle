@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\PortfolioBundle;
+namespace Stfalcon\Bundle\PortfolioBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

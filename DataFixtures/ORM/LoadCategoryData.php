@@ -1,10 +1,10 @@
 <?php
 
-namespace Application\PortfolioBundle\DataFixtures\ORM;
+namespace Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Application\PortfolioBundle\Entity\Category;
+use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 
 class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface
 {

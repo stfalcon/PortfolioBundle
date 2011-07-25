@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\PortfolioBundle\Tests\Controller;
+namespace Stfalcon\Bundle\PortfolioBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
@@ -26,8 +26,8 @@ class ProjectControllerTest extends WebTestCase
     public function testProjectsList()
     {
         $this->loadFixtures(array(
-                    'Application\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
-                    'Application\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
                 ));
         $crawler = $this->fetchCrawler($this->getUrl('portfolioProjectIndex', array()), 'GET', true, true);
 
@@ -77,8 +77,8 @@ class ProjectControllerTest extends WebTestCase
     public function testDeleteProject()
     {
         $this->loadFixtures(array(
-                    'Application\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
-                    'Application\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
                 ));
 
         $client = $this->makeClient(true);
@@ -113,8 +113,8 @@ class ProjectControllerTest extends WebTestCase
     public function testViewProject()
     {
         $this->loadFixtures(array(
-                    'Application\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
-                    'Application\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
                 ));
         
         $crawler = $this->fetchCrawler(

@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\PortfolioBundle\Repository;
+namespace Stfalcon\Bundle\PortfolioBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

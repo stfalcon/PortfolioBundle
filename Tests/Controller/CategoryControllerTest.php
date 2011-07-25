@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\PortfolioBundle\Tests\Controller;
+namespace Stfalcon\Bundle\PortfolioBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
@@ -20,7 +20,7 @@ class CategoryControllerTest extends WebTestCase
 
     public function testCategoriesList()
     {
-        $this->loadFixtures(array('Application\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
+        $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $crawler = $this->fetchCrawler($this->getUrl('portfolioCategoryIndex', array()), 'GET', true, true);
         
         // check display categories list
@@ -77,7 +77,7 @@ class CategoryControllerTest extends WebTestCase
 
     public function testEditCategory()
     {
-        $this->loadFixtures(array('Application\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
+        $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $client = $this->makeClient(true);
         
         $crawler = $client->request('GET', $this->getUrl('portfolioCategoryEdit', array('slug' => 'web-development')));
@@ -104,7 +104,7 @@ class CategoryControllerTest extends WebTestCase
 
     public function testViewCategory()
     {
-        $this->loadFixtures(array('Application\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
+        $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $crawler = $this->fetchCrawler(
                 $this->getUrl('portfolioCategoryView', array('slug' => 'web-development')), 'GET', true, true);
 
@@ -125,7 +125,7 @@ class CategoryControllerTest extends WebTestCase
 
     public function testEditInvalidCategory()
     {
-        $this->loadFixtures(array('Application\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
+        $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $client = $this->makeClient(true);
 
         $crawler = $client->request('GET', $this->getUrl('portfolioCategoryEdit', array('slug' => 'web-development')));
@@ -157,7 +157,7 @@ class CategoryControllerTest extends WebTestCase
 
     public function testDeleteCategory()
     {
-        $this->loadFixtures(array('Application\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
+        $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
 
         $client = $this->makeClient(true);
         // delete project

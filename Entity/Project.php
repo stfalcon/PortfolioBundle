@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\PortfolioBundle\Entity;
+namespace Stfalcon\Bundle\PortfolioBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,10 +9,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Imagine;
 
 /**
- * Application\PortfolioBundle\Entity\Project
+ * Stfalcon\Bundle\PortfolioBundle\Entity\Project
  *
  * @ORM\Table(name="portfolio_projects")
- * @ORM\Entity(repositoryClass="Application\PortfolioBundle\Repository\ProjectRepository")
+ * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\ProjectRepository")
  */
 class Project
 {
@@ -94,7 +94,7 @@ class Project
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Application\PortfolioBundle\Entity\Category")
+     * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\PortfolioBundle\Entity\Category")
      * @ORM\JoinTable(name="portfolio_projects_categories",
      *   joinColumns={
      *     @ORM\JoinColumn(name="project_id", referencedColumnName="id")
@@ -229,7 +229,7 @@ class Project
         return $this->categories;
     }
 
-    public function addCategory(\Application\PortfolioBundle\Entity\Category $category)
+    public function addCategory(\Stfalcon\Bundle\PortfolioBundle\Entity\Category $category)
     {
         $this->categories[] = $category;
     }

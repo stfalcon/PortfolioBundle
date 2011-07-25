@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\PortfolioBundle\Form;
+namespace Stfalcon\Bundle\PortfolioBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
@@ -21,7 +21,7 @@ class CategoryForm extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'Application\PortfolioBundle\Entity\Category',
+            'data_class' => 'Stfalcon\Bundle\PortfolioBundle\Entity\Category',
         );
     }
     

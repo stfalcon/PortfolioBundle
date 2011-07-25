@@ -1,9 +1,9 @@
 <?php
 
-namespace Application\PortfolioBundle\Tests\Entity;
+namespace Stfalcon\Bundle\PortfolioBundle\Tests\Entity;
 
-use Application\PortfolioBundle\Entity\Category;
-use Application\PortfolioBundle\Entity\Project;
+use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
+use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
 
 class CategoryEntityTest extends \PHPUnit_Framework_TestCase
 {

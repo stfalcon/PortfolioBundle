@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\PortfolioBundle\Form;
+namespace Stfalcon\Bundle\PortfolioBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
@@ -19,7 +19,7 @@ class ProjectForm extends AbstractType
         $builder->add('image', 'file', array('required' => false));
         $builder->add('description', 'textarea');
         $builder->add('categories', 'entity', array(
-                    'class' => 'Application\PortfolioBundle\Entity\Category',
+                    'class' => 'Stfalcon\Bundle\PortfolioBundle\Entity\Category',
                     'multiple' => true, 'expanded' => true,
                 ));
     }
@@ -27,7 +27,7 @@ class ProjectForm extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'Application\PortfolioBundle\Entity\Project',
+            'data_class' => 'Stfalcon\Bundle\PortfolioBundle\Entity\Project',
         );
     }
     

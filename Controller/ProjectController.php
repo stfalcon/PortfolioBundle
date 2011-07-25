@@ -1,13 +1,13 @@
 <?php
 
-namespace Application\PortfolioBundle\Controller;
+namespace Stfalcon\Bundle\PortfolioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Application\PortfolioBundle\Form\ProjectForm;
-use Application\PortfolioBundle\Entity\Project;
+use Stfalcon\Bundle\PortfolioBundle\Form\ProjectForm;
+use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

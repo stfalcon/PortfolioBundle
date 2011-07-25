@@ -1,16 +1,16 @@
 <?php
 
-namespace Application\PortfolioBundle\Entity;
+namespace Stfalcon\Bundle\PortfolioBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Application\PortfolioBundle\Entity\Category
+ * Stfalcon\Bundle\PortfolioBundle\Entity\Category
  *
  * @ORM\Table(name="portfolio_categories")
- * @ORM\Entity(repositoryClass="Application\PortfolioBundle\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\CategoryRepository")
  */
 class Category
 {
@@ -53,7 +53,7 @@ class Category
     /**
      * @var Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Application\PortfolioBundle\Entity\Project", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\PortfolioBundle\Entity\Project", mappedBy="categories")
      * @ORM\OrderBy({"date" = "DESC"})
      */
     private $projects;
@@ -103,7 +103,7 @@ class Category
         return $this->projects;
     }
 
-    public function addProject(\Application\PortfolioBundle\Entity\Project $project)
+    public function addProject(\Stfalcon\Bundle\PortfolioBundle\Entity\Project $project)
     {
         $this->projects[] = $project;
     }

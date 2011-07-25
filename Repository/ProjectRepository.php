@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\PortfolioBundle\Repository;
+namespace Stfalcon\Bundle\PortfolioBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -15,10 +15,10 @@ class ProjectRepository extends EntityRepository
     /**
      * Get all projects from this category
      * 
-     * @param \Application\PortfolioBundle\Entity\Category $category
+     * @param \Stfalcon\Bundle\PortfolioBundle\Entity\Category $category
      * @return array
      */
-    public function getProjectsByCategory(\Application\PortfolioBundle\Entity\Category $category)
+    public function getProjectsByCategory(\Stfalcon\Bundle\PortfolioBundle\Entity\Category $category)
     {
         $query = $this->getEntityManager()
                 ->createQuery('SELECT p FROM PortfolioBundle:Project p
