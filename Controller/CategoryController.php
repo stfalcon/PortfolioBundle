@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function indexAction()
     {
         $categories = $this->get('doctrine')->getEntityManager()
-                ->getRepository("PortfolioBundle:Category")->getAllCategories();
+                ->getRepository("StfalconPortfolioBundle:Category")->getAllCategories();
 
         return array('categories' => $categories);
     }
@@ -112,10 +112,14 @@ class CategoryController extends Controller
         $breadcrumbs->addChild('Услуги', $this->get('router')->generate('homepage'));
         $breadcrumbs->addChild($category->getName())->setIsCurrent(true);
 
-        return $this->render('PortfolioBundle:Category:view.html.twig', array(
+        return array(
             'category' => $category,
             'paginator' => $paginator,
-        ));
+        );
+//        return $this->render('StfalconPortfolioBundle:Category:view.html.twig', array(
+//            'category' => $category,
+//            'paginator' => $paginator,
+//        ));
     }
 
     /**
@@ -148,7 +152,7 @@ class CategoryController extends Controller
     public function servicesAction(Category $category, $project = null)
     {
         $categories = $this->get('doctrine.orm.entity_manager')
-                ->getRepository("PortfolioBundle:Category")->getAllCategories();
+                ->getRepository("StfalconPortfolioBundle:Category")->getAllCategories();
 
         return array('categories' => $categories, 'currentProject' => $project, 'currentCategory' => $category);
     }
@@ -163,7 +167,7 @@ class CategoryController extends Controller
     {
         $em = $this->get('doctrine.orm.entity_manager');
 
-        $category = $em->getRepository("PortfolioBundle:Category")
+        $category = $em->getRepository("StfalconPortfolioBundle:Category")
                 ->findOneBy(array('slug' => $slug));
         if (!$category) {
             throw new NotFoundHttpException('The category does not exist.');

@@ -21,7 +21,7 @@ class ProjectRepository extends EntityRepository
     public function getProjectsByCategory(\Stfalcon\Bundle\PortfolioBundle\Entity\Category $category)
     {
         $query = $this->getEntityManager()
-                ->createQuery('SELECT p FROM PortfolioBundle:Project p
+                ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
                     JOIN p.categories c WHERE c.id = ?1 ORDER BY p.date DESC');
         $query->setParameter(1, $category->getId());
 
@@ -36,7 +36,7 @@ class ProjectRepository extends EntityRepository
     public function getAllProjects()
     {
         $query = $this->getEntityManager()
-                ->createQuery('SELECT p FROM PortfolioBundle:Project p
+                ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
                     ORDER BY p.date DESC');
         
         return $query->getResult();

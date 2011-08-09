@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    // @PortfolioBundle:Category:services.html.twig
+    // @StfalconPortfolioBundle:Category:services.html.twig
     'Услуги'  => 'Services',
     
     'Портфолио'  => 'Portfolio',

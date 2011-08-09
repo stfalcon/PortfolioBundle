@@ -28,7 +28,7 @@ class ProjectController extends Controller
     public function indexAction()
     {
         $projects = $this->get('doctrine')->getEntityManager()
-                ->getRepository("PortfolioBundle:Project")->getAllProjects();
+                ->getRepository("StfalconPortfolioBundle:Project")->getAllProjects();
 
         return array('projects' => $projects);
     }
@@ -117,7 +117,7 @@ class ProjectController extends Controller
 
         // try find category by slug
         $em = $this->get('doctrine')->getEntityManager();
-        $category = $em->getRepository("PortfolioBundle:Category")
+        $category = $em->getRepository("StfalconPortfolioBundle:Category")
                 ->findOneBy(array('slug' => $categorySlug));
 
         if (!$category) {
@@ -147,7 +147,7 @@ class ProjectController extends Controller
         $em = $this->get('doctrine')->getEntityManager();
 
         // get all projects from this category
-        $projects = $em->getRepository("PortfolioBundle:Project")
+        $projects = $em->getRepository("StfalconPortfolioBundle:Project")
                 ->getProjectsByCategory($category);
 
         // get next and previous projects from this category
@@ -195,7 +195,7 @@ class ProjectController extends Controller
         $em = $this->get('doctrine')->getEntityManager();
 
         // try find project by slug
-        $project = $em->getRepository("PortfolioBundle:Project")
+        $project = $em->getRepository("StfalconPortfolioBundle:Project")
                 ->findOneBy(array('slug' => $slug));
         if (!$project) {
             throw new NotFoundHttpException('The project does not exist.');

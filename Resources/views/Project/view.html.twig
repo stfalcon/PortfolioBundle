@@ -1,11 +1,11 @@
-{% extends 'PortfolioBundle::internal.html.twig' %}
+{% extends 'StfalconPortfolioBundle::internal.html.twig' %}
 
 {% block title %}Веб-студия stfalcon.com - {{ project.name }}{% endblock %}
 
 {% block content %}
     <!--details of project-->
     <div class="detailsOfProject">
-        {% render "PortfolioBundle:Project:nearbyProjects" with { 'category': category, 'project': project } %}
+        {% render "StfalconPortfolioBundle:Project:nearbyProjects" with { 'category': category, 'project': project } %}
 
         <h1>
             {{ project.name }}
