@@ -52,6 +52,7 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
     public function testPathToUploadsIsDirAndIsWritable()
     {
         $project = new Project();
+        $project->setPathToUploads(realpath(__DIR__ . '/../uploads'));
 
         $this->assertTrue(\is_dir($project->getPathToUploads()));
         $this->assertTrue(\is_writable($project->getPathToUploads()));
@@ -60,7 +61,8 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetProjectImage()
     {
         $project = new Project();
-
+        $project->setPathToUploads(realpath(__DIR__ . '/../uploads'));
+        
         $this->assertTrue(\file_exists($this->_getTestImagePath()));
 
         $project->setImage($this->_getTestImagePath());
@@ -73,6 +75,7 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
     public function testRemoveImageMethod()
     {
         $project = new Project();
+        $project->setPathToUploads(realpath(__DIR__ . '/../uploads'));
 
         // try remove not exist image
         $this->assertFalse($project->removeImage());
@@ -90,6 +93,7 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
     public function testRemoveOldImageWhenUpdating()
     {
         $project = new Project();
+        $project->setPathToUploads(realpath(__DIR__ . '/../uploads'));
 
         $this->assertTrue(\file_exists($this->_getTestImagePath()));
 
