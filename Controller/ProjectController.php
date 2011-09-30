@@ -43,6 +43,12 @@ class ProjectController extends Controller
     public function createAction()
     {
         $project = new Project();
+
+        // @todo: refact
+        $uploadDir = '/uploads/portfolio/projects';
+        $pathToUploads = realpath($this->get('kernel')->getRootDir() . '/../web' . $uploadDir);
+        $project->setPathToUploads($pathToUploads);
+
         $form = $this->get('form.factory')->create(new ProjectForm(), $project);
 
         $request = $this->get('request');
@@ -78,6 +84,12 @@ class ProjectController extends Controller
     public function editAction($slug)
     {
         $project = $this->_findProjectBySlug($slug);
+
+        // @todo: refact
+        $uploadDir = '/uploads/portfolio/projects';
+        $pathToUploads = realpath($this->get('kernel')->getRootDir() . '/../web' . $uploadDir);
+        $project->setPathToUploads($pathToUploads);
+
         $form = $this->get('form.factory')->create(new ProjectForm(), $project);
 
         $request = $this->get('request');

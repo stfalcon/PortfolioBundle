@@ -106,6 +106,8 @@ class Project
      */
     private $categories;
 
+    private $path_to_uploads;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -221,7 +223,12 @@ class Project
      */
     public function getPathToUploads()
     {
-        return realpath(__DIR__ . '/../Resources/public/uploads/projects');
+        return $this->path_to_uploads;
+    }
+
+    public function setPathToUploads($path)
+    {
+        $this->path_to_uploads = $path;
     }
 
     public function getCategories()
