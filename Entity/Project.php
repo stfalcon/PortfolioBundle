@@ -186,6 +186,10 @@ class Project
      */
     public function setImage($imagePath)
     {
+        if (null === $imagePath) {
+            return;
+        }
+        
         // create thumbnail and save it to new file
         $filename = uniqid() . '.png';
         $imagine = new Imagine\Gd\Imagine();
