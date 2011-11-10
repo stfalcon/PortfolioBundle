@@ -108,6 +108,12 @@ class Project
 
     private $path_to_uploads;
 
+    /**
+     * @var text $users
+     *
+     */
+    private $users;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -260,4 +266,23 @@ class Project
         return $this->updated;
     }
 
+    /**
+     * Get users
+     *
+     * @return text 
+     */
+    public function getUsers()
+    {
+        return $this->users;
+}
+
+    /**
+     * Set users
+     *
+     * @param text $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+    }
 }
