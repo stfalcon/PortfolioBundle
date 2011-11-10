@@ -110,7 +110,10 @@ class Project
 
     /**
      * @var text $users
-     *
+     * 
+     * @Assert\NotBlank()
+     * @Assert\MinLength(10)
+     * @ORM\Column(name="users", type="text")
      */
     private $users;
 
@@ -267,6 +270,26 @@ class Project
     }
 
     /**
+     * Set created
+     *
+     * @param datetime $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param datetime $updated
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    }
+    
+    /**
      * Get users
      *
      * @return text 
@@ -274,7 +297,7 @@ class Project
     public function getUsers()
     {
         return $this->users;
-}
+    }
 
     /**
      * Set users

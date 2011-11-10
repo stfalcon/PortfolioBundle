@@ -50,6 +50,7 @@ class ProjectControllerTest extends WebTestCase
             'project[url]'  => 'http://wallpaper.in.ua',
             'project[image]'  => $this->_getTestImagePath(),
             'project[description]'  => 'Free desktop wallpapers gallery.',
+            'project[users]'  => 'Some brave users from the Stfalcon',
         ));
 
         // check redirect to list of categories
@@ -124,10 +125,12 @@ class ProjectControllerTest extends WebTestCase
                 ), 'GET', true, true);
 
         $description = "Press-releases and reviews of the latest electronic novelties. The possibility to leave a pre-order.";
+        $users       = "Some very brave users from the Stfalcon studio";
 
         // check display project info
         $this->assertEquals(1, $crawler->filter('html:contains("preorder.it")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("' . $description . '")')->count());
+        $this->assertEquals(1, $crawler->filter('html:contains("' . $users . '")')->count());
         $this->assertEquals(1, $crawler->filter('a[href="http://preorder.it"]')->count());
 
         $epriceUrl = $this->getUrl('portfolioCategoryProjectView',
