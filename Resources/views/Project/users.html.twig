@@ -1,5 +1,7 @@
-<h2>{% trans %}Над проектом работали{% endtrans %}</h2>
-{{ project.users | raw }}
+{% if project.users %}
+    <h2>{% trans %}Над проектом работали{% endtrans %}</h2>
+    {{ project.users | raw }}
+{% endif %}
 
 {#
 <ul class="comandList">

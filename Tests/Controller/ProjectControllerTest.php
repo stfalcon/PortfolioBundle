@@ -118,6 +118,7 @@ class ProjectControllerTest extends WebTestCase
                     'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
                 ));
         
+        // Check project preorder.it
         $crawler = $this->fetchCrawler(
                 $this->getUrl(
                         'portfolioCategoryProjectView',
@@ -125,11 +126,13 @@ class ProjectControllerTest extends WebTestCase
                 ), 'GET', true, true);
 
         $description = "Press-releases and reviews of the latest electronic novelties. The possibility to leave a pre-order.";
-        $users       = "Some very brave users from the Stfalcon studio";
+        $usersHeader = "Над проектом работали";
+        $users       = "Some brave users from the Stfalcon";
 
         // check display project info
         $this->assertEquals(1, $crawler->filter('html:contains("preorder.it")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("' . $description . '")')->count());
+        $this->assertEquals(1, $crawler->filter('html:contains("' . $usersHeader . '")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("' . $users . '")')->count());
         $this->assertEquals(1, $crawler->filter('a[href="http://preorder.it"]')->count());
 
@@ -140,5 +143,31 @@ class ProjectControllerTest extends WebTestCase
 
         // check display projects in services widget
         $this->assertEquals(1, $crawler->filter('#sidebar a[href="' . $epriceUrl . '"]')->count());
+        
+        // Check project eprice-kz
+        $crawler = $this->fetchCrawler(
+                $this->getUrl(
+                        'portfolioCategoryProjectView',
+                        array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz')
+                ), 'GET', true, true);
+
+        $description = "Comparison of the prices of mobile phones, computers, monitors, audio and video in Kazakhstan";
+        $usersHeader = "Над проектом работали";
+        $users       = "Some brave users from the Stfalcon";
+        
+        // check display project info
+        $this->assertEquals(1, $crawler->filter('html:contains("eprice.kz")')->count());
+        $this->assertEquals(1, $crawler->filter('html:contains("' . $description . '")')->count());
+        $this->assertEquals(0, $crawler->filter('html:contains("' . $usersHeader . '")')->count());
+        $this->assertEquals(0, $crawler->filter('html:contains("' . $users . '")')->count());
+        $this->assertEquals(1, $crawler->filter('a[href="http://eprice.kz"]')->count());
+
+        $preorderUrl = $this->getUrl('portfolioCategoryProjectView',
+                array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it'));
+        // check display prev/next project url
+        $this->assertEquals(1, $crawler->filter('#content a[href="' . $preorderUrl . '"]')->count());
+
+        // check display projects in services widget
+        $this->assertEquals(1, $crawler->filter('#sidebar a[href="' . $preorderUrl . '"]')->count());
     }
 }
