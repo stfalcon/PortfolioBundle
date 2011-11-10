@@ -173,4 +173,5 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
         $project->setUsers($users);
 
         $this->assertEquals($project->getUsers(), $users);
+    }
 }
