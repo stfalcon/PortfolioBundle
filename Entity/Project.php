@@ -56,8 +56,8 @@ class Project
     /**
      * @var text $url
      *
-     * @Assert\Url()
-     * @ORM\Column(name="url", type="string", length=255)
+     * @Assert\Url
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
 
