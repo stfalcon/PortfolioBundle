@@ -11,7 +11,7 @@ class ProjectControllerTest extends WebTestCase
     {
         return \realpath(__DIR__ . '/../Entity/Resources/files/projects/preorder-it/data/index.png');
     }
-    
+
     public function testEmptyProjectsList()
     {
         $this->loadFixtures(array(), false);
@@ -26,9 +26,9 @@ class ProjectControllerTest extends WebTestCase
     public function testProjectsList()
     {
         $this->loadFixtures(array(
-                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
-                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
-                ));
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+        ));
         $crawler = $this->fetchCrawler($this->getUrl('portfolioProjectIndex', array()), 'GET', true, true);
 
         // check display projects
@@ -47,9 +47,9 @@ class ProjectControllerTest extends WebTestCase
         $crawler = $client->submit($form, array(
             'project[name]' => 'wallpaper.in.ua',
             'project[slug]' => 'wallpaper-in-ua',
-            'project[url]'  => 'http://wallpaper.in.ua',
-            'project[image]'  => $this->_getTestImagePath(),
-            'project[description]'  => 'Free desktop wallpapers gallery.',
+            'project[url]' => 'http://wallpaper.in.ua',
+            'project[image]' => $this->_getTestImagePath(),
+            'project[description]' => 'Free desktop wallpapers gallery.',
         ));
 
         // check redirect to list of categories
@@ -77,9 +77,9 @@ class ProjectControllerTest extends WebTestCase
     public function testDeleteProject()
     {
         $this->loadFixtures(array(
-                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
-                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
-                ));
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+        ));
 
         $client = $this->makeClient(true);
         // delete project
@@ -113,14 +113,13 @@ class ProjectControllerTest extends WebTestCase
     public function testViewProject()
     {
         $this->loadFixtures(array(
-                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
-                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
-                ));
-        
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+        ));
+
         $crawler = $this->fetchCrawler(
                 $this->getUrl(
-                        'portfolioCategoryProjectView',
-                        array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
+                        'portfolioCategoryProjectView', array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
                 ), 'GET', true, true);
 
         $description = "Press-releases and reviews of the latest electronic novelties. The possibility to leave a pre-order.";
@@ -130,12 +129,52 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('html:contains("' . $description . '")')->count());
         $this->assertEquals(1, $crawler->filter('a[href="http://preorder.it"]')->count());
 
-        $epriceUrl = $this->getUrl('portfolioCategoryProjectView',
-                array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz'));
+        $epriceUrl = $this->getUrl('portfolioCategoryProjectView', array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz'));
         // check display prev/next project url
         $this->assertEquals(1, $crawler->filter('#content a[href="' . $epriceUrl . '"]')->count());
 
         // check display projects in services widget
         $this->assertEquals(1, $crawler->filter('#sidebar a[href="' . $epriceUrl . '"]')->count());
     }
+
+    public function testFilledProjectUsersList()
+    {
+        $this->loadFixtures(array(
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+        ));
+
+        // Check project preorder.it
+        $crawler = $this->fetchCrawler(
+                $this->getUrl(
+                        'portfolioCategoryProjectView', array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
+                ), 'GET', true, true);
+
+
+        // check display project info
+        $this->assertEquals(1, $crawler->filter('html:contains("Над проектом работали")')->count());
+        $this->assertEquals(1, $crawler->filter('html ul.comandList>li>h5:contains("арт-директор и дизайнер")')->count());
+
+    }
+    
+    public function testEmptyProjectUsersList()
+    {
+        $this->loadFixtures(array(
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+        ));
+
+        // Check project eprice.kz
+        $crawler = $this->fetchCrawler(
+                $this->getUrl(
+                        'portfolioCategoryProjectView', array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz')
+                ), 'GET', true, true);
+
+
+        // check display project info
+        $this->assertEquals(0, $crawler->filter('html:contains("Над проектом работали")')->count());
+        $this->assertEquals(0, $crawler->filter('html ul.comandList>li>h5:contains("арт-директор и дизайнер")')->count());
+
+     }
+
 }
