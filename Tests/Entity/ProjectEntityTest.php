@@ -165,12 +165,13 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($project->getCategories(), $categories);
     }
 
-     public function testSetAndGetProjectUsers()
+    public function testSetAndGetProjectUsers()
     {
-        $users = "Some users";
+        $users = '<ul class="comandList"><li><h5>арт-директор и дизайнер<span>Олег Пащенко</span></h5></li></ul>';
 
         $project = new Project();
         $project->setUsers($users);
 
         $this->assertEquals($project->getUsers(), $users);
+    }
 }

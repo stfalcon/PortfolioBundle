@@ -56,8 +56,8 @@ class Project
     /**
      * @var text $url
      *
-     * @Assert\Url()
-     * @ORM\Column(name="url", type="string", length=255)
+     * @Assert\Url
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
 
@@ -110,7 +110,8 @@ class Project
 
     /**
      * @var text $users
-     *
+     * 
+     * @ORM\Column(name="users", type="text", nullable=true)
      */
     private $users;
 
@@ -265,7 +266,7 @@ class Project
     {
         return $this->updated;
     }
-
+   
     /**
      * Get users
      *
@@ -274,7 +275,7 @@ class Project
     public function getUsers()
     {
         return $this->users;
-}
+    }
 
     /**
      * Set users

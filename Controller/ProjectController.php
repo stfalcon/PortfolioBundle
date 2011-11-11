@@ -215,5 +215,17 @@ class ProjectController extends Controller
 
         return $project;
     }
+    
+    /**
+     * Users widget
+     *
+     * @param Project $project
+     * @return array
+     * @Template()
+     */
+    public function usersAction(Project $project)
+    {
+        return array('project' => $project);
+    }
 
 }
