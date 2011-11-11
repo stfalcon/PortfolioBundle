@@ -138,4 +138,45 @@ class ProjectControllerTest extends WebTestCase
         // check display projects in services widget
         $this->assertEquals(1, $crawler->filter('#sidebar a[href="' . $epriceUrl . '"]')->count());
     }
+
+    public function testFilledProjectUsersList()
+    {
+        $this->loadFixtures(array(
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+        ));
+
+        // Check project preorder.it
+        $crawler = $this->fetchCrawler(
+                $this->getUrl(
+                        'portfolioCategoryProjectView', array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
+                ), 'GET', true, true);
+
+
+        // check display project info
+        $this->assertEquals(1, $crawler->filter('html:contains("Над проектом работали")')->count());
+        $this->assertEquals(1, $crawler->filter('html ul.comandList>li>h5:contains("арт-директор и дизайнер")')->count());
+
+    }
+    
+    public function testEmptyProjectUsersList()
+    {
+        $this->loadFixtures(array(
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+        ));
+
+        // Check project eprice.kz
+        $crawler = $this->fetchCrawler(
+                $this->getUrl(
+                        'portfolioCategoryProjectView', array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz')
+                ), 'GET', true, true);
+
+
+        // check display project info
+        $this->assertEquals(0, $crawler->filter('html:contains("Над проектом работали")')->count());
+        $this->assertEquals(0, $crawler->filter('html ul.comandList>li>h5:contains("арт-директор и дизайнер")')->count());
+
+     }
+
 }

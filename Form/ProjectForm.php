@@ -18,6 +18,7 @@ class ProjectForm extends AbstractType
         $builder->add('date', 'date');
         $builder->add('image', 'file', array('required' => false));
         $builder->add('description', 'textarea');
+        $builder->add('users', 'textarea', array('required' => false));
         $builder->add('categories', 'entity', array(
                     'class' => 'Stfalcon\Bundle\PortfolioBundle\Entity\Category',
                     'multiple' => true, 'expanded' => true,
