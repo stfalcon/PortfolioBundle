@@ -50,8 +50,7 @@ class ProjectControllerTest extends WebTestCase
             'project[url]' => 'http://wallpaper.in.ua',
             'project[image]' => $this->_getTestImagePath(),
             'project[description]' => 'Free desktop wallpapers gallery.',
-            'project[users]' => '<ul class="comandList"><li><h5>арт-директор и дизайнер<span>Олег Пащенко</span></h5></li></ul>',
-                ));
+        ));
 
         // check redirect to list of categories
 //        $this->assertTrue($client->getResponse()->isRedirect());
