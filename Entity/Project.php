@@ -111,9 +111,7 @@ class Project
     /**
      * @var text $users
      * 
-     * @Assert\NotBlank()
-     * @Assert\MinLength(10)
-     * @ORM\Column(name="users", type="text")
+     * @ORM\Column(name="users", type="text", nullable=true)
      */
     private $users;
 
@@ -268,27 +266,7 @@ class Project
     {
         return $this->updated;
     }
-
-    /**
-     * Set created
-     *
-     * @param datetime $created
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param datetime $updated
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-    }
-    
+   
     /**
      * Get users
      *

@@ -6,6 +6,8 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class ProjectControllerTest extends WebTestCase
 {
+    const TEST_PROJECT_USERS_HEADER = 'html:contains("Над проектом работали")';
+    const TEST_PROJECT_USERS_CONTENT = 'html ul.comandList>li>h5:contains("арт-директор и дизайнер")';
 
     private function _getTestImagePath()
     {
@@ -50,7 +52,7 @@ class ProjectControllerTest extends WebTestCase
             'project[url]'  => 'http://wallpaper.in.ua',
             'project[image]'  => $this->_getTestImagePath(),
             'project[description]'  => 'Free desktop wallpapers gallery.',
-            'project[users]'  => 'Some brave users from the Stfalcon',
+            'project[users]'  => '<ul class="comandList"><li><h5>арт-директор и дизайнер<span>Олег Пащенко</span></h5></li></ul>',
         ));
 
         // check redirect to list of categories
@@ -126,14 +128,12 @@ class ProjectControllerTest extends WebTestCase
                 ), 'GET', true, true);
 
         $description = "Press-releases and reviews of the latest electronic novelties. The possibility to leave a pre-order.";
-        $usersHeader = "Над проектом работали";
-        $users       = "Some brave users from the Stfalcon";
-
+        
         // check display project info
         $this->assertEquals(1, $crawler->filter('html:contains("preorder.it")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("' . $description . '")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("' . $usersHeader . '")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("' . $users . '")')->count());
+        $this->assertEquals(1, $crawler->filter(self::TEST_PROJECT_USERS_HEADER)->count());
+        $this->assertEquals(1, $crawler->filter(self::TEST_PROJECT_USERS_CONTENT)->count());
         $this->assertEquals(1, $crawler->filter('a[href="http://preorder.it"]')->count());
 
         $epriceUrl = $this->getUrl('portfolioCategoryProjectView',
@@ -152,14 +152,12 @@ class ProjectControllerTest extends WebTestCase
                 ), 'GET', true, true);
 
         $description = "Comparison of the prices of mobile phones, computers, monitors, audio and video in Kazakhstan";
-        $usersHeader = "Над проектом работали";
-        $users       = "Some brave users from the Stfalcon";
         
         // check display project info
         $this->assertEquals(1, $crawler->filter('html:contains("eprice.kz")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("' . $description . '")')->count());
-        $this->assertEquals(0, $crawler->filter('html:contains("' . $usersHeader . '")')->count());
-        $this->assertEquals(0, $crawler->filter('html:contains("' . $users . '")')->count());
+        $this->assertEquals(0, $crawler->filter(self::TEST_PROJECT_USERS_HEADER)->count());
+        $this->assertEquals(0, $crawler->filter(self::TEST_PROJECT_USERS_CONTENT)->count());
         $this->assertEquals(1, $crawler->filter('a[href="http://eprice.kz"]')->count());
 
         $preorderUrl = $this->getUrl('portfolioCategoryProjectView',
@@ -169,5 +167,44 @@ class ProjectControllerTest extends WebTestCase
 
         // check display projects in services widget
         $this->assertEquals(1, $crawler->filter('#sidebar a[href="' . $preorderUrl . '"]')->count());
+    }
+    
+    public function testViewProjectUsers()
+    {
+        $this->loadFixtures(array(
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+                ));
+        
+        // Check project preorder.it
+        $crawler = $this->fetchCrawler(
+        $this->getUrl(
+                'portfolioCategoryProjectView',
+                array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
+            ), 'GET', true, true);
+
+
+        // check display project info
+        $this->assertEquals(1, $crawler->filter(self::TEST_PROJECT_USERS_HEADER)->count());
+        $this->assertEquals(1, $crawler->filter(self::TEST_PROJECT_USERS_CONTENT)->count());
+        
+        // Delete project's users
+        $this->loadFixtures(array(
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
+                    'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\EditProjectData',
+                ));
+        
+        $crawler = $this->fetchCrawler(
+        $this->getUrl(
+                'portfolioCategoryProjectView',
+                array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
+            ), 'GET', true, true);
+
+
+        // check display project info
+        $this->assertEquals(0, $crawler->filter(self::TEST_PROJECT_USERS_HEADER)->count());
+        $this->assertEquals(0, $crawler->filter(self::TEST_PROJECT_USERS_CONTENT)->count());
+       
     }
 }
