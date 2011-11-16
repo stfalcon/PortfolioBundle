@@ -155,7 +155,7 @@ class ProjectControllerTest extends WebTestCase
 
         // check display project info
         $this->assertEquals(1, $crawler->filter('html:contains("Над проектом работали")')->count());
-        $this->assertEquals(1, $crawler->filter('html ul.comandList>li>h5:contains("арт-директор и дизайнер")')->count());
+        $this->assertEquals(1, $crawler->filter('html #sidebar dl>dt:contains("арт-директор и дизайнер")')->count());
 
     }
     
@@ -175,7 +175,7 @@ class ProjectControllerTest extends WebTestCase
 
         // check display project info
         $this->assertEquals(0, $crawler->filter('html:contains("Над проектом работали")')->count());
-        $this->assertEquals(0, $crawler->filter('html ul.comandList>li>h5:contains("арт-директор и дизайнер")')->count());
+        $this->assertEquals(0, $crawler->filter('html #sidebar dl>dt:contains("арт-директор и дизайнер")')->count());
 
      }
 
