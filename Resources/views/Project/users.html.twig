@@ -1,4 +1,6 @@
 {% if project.users %}
+<div class="users-list">
     <h2>{% trans %}Над проектом работали{% endtrans %}</h2>
     {{ project.users | raw }}
+</div>
 {% endif %}
