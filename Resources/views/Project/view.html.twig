@@ -1,6 +1,6 @@
 {% extends 'StfalconPortfolioBundle::internal.html.twig' %}
 
-{% block title %}Веб-студия stfalcon.com - {{ project.name }}{% endblock %}
+{% block title %}{{ parent() }} / {{ project.name }}{% endblock %}
 
 {% block content %}
     <!--details of project-->
