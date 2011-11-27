@@ -62,8 +62,8 @@ class ProjectController extends Controller
                 $em->flush();
 
                 $this->get('request')->getSession()->setFlash('notice',
-                        'Congratulations, your project "' . $project->getName()
-                        . '" is successfully created!');
+                    'Congratulations, your project "' . $project->getName()
+                    . '" is successfully created!');
 
                 // redirect to list of projects
                 return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
@@ -76,7 +76,8 @@ class ProjectController extends Controller
     /**
      * Edit project
      *
-     * @param string $slug
+     * @param string $slug Project slug
+     *
      * @return array|RedirectResponse
      * @Route("/admin/portfolio/project/edit/{slug}", name="portfolioProjectEdit")
      * @Template()
@@ -103,7 +104,7 @@ class ProjectController extends Controller
                 $em->flush();
 
                 $this->get('request')->getSession()->setFlash('notice',
-                        'Congratulations, your project is successfully updated!');
+                    'Congratulations, your project is successfully updated!');
                 return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
             }
         }
@@ -114,14 +115,13 @@ class ProjectController extends Controller
     /**
      * View project
      *
-     * @param string $categorySlug
-     * @param string $projectSlug
+     * @param string $categorySlug Slug of category
+     * @param string $projectSlug Slug of project
+     *
      * @return array
      * @Route("/portfolio/{categorySlug}/{projectSlug}", name="portfolioCategoryProjectView")
      * @Template()
      */
-//     * @Route("/{_locale}/portfolio/{categorySlug}/{projectSlug}", name="portfolioCategoryProjectView",
-//     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
     public function viewAction($categorySlug, $projectSlug)
     {
         // try find project by slug
@@ -138,8 +138,9 @@ class ProjectController extends Controller
 
         $breadcrumbs = $this->get('menu.breadcrumbs');
         $breadcrumbs->addChild(
-                $category->getName(),
-                $this->get('router')->generate('portfolioCategoryView', array('slug' => $category->getSlug())));
+            $category->getName(),
+            $this->get('router')->generate('portfolioCategoryView', array('slug' => $category->getSlug()))
+        );
         $breadcrumbs->addChild($project->getName())->setIsCurrent(true);
 
         return array('project' => $project, 'category' => $category);
@@ -148,8 +149,9 @@ class ProjectController extends Controller
     /**
      * Display links to prev/next projects
      *
-     * @param Category $category
-     * @param Project $project
+     * @param Category $category Object of category
+     * @param Project $project Object of project
+     *
      * @return array
      * @Template()
      */
@@ -178,7 +180,8 @@ class ProjectController extends Controller
     /**
      * Delete project
      *
-     * @param string $slug
+     * @param string $slug Slug of project
+     *
      * @return RedirectResponse
      * @Route("/admin/portfolio/project/delete/{slug}", name="portfolioProjectDelete")
      */
@@ -191,14 +194,15 @@ class ProjectController extends Controller
         $em->flush();
 
         $this->get('request')->getSession()->setFlash('notice',
-                'Your project "' . $project->getName() . '" is successfully delete.');
+            'Your project "' . $project->getName() . '" is successfully delete.');
         return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
     }
 
     /**
      * Try find project by slug
      *
-     * @param string $slug
+     * @param string $slug Slug of project
+     *
      * @return Project
      */
     private function _findProjectBySlug($slug)
@@ -218,7 +222,8 @@ class ProjectController extends Controller
     /**
      * Users widget
      *
-     * @param Project $project
+     * @param Project $project Object of project
+     *
      * @return array
      * @Template()
      */
