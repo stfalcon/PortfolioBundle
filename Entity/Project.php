@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Imagine;
 
 /**
- * Stfalcon\Bundle\PortfolioBundle\Entity\Project
+ * Project entity
  *
  * @ORM\Table(name="portfolio_projects")
  * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\ProjectRepository")
@@ -106,97 +106,212 @@ class Project
      */
     private $categories;
 
-    private $path_to_uploads;
+    private $pathToUploads;
 
     /**
      * @var text $users
-     * 
+     *
      * @ORM\Column(name="users", type="text", nullable=true)
      */
     private $users;
 
+    /**
+     * Initialization properties for new project entity
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->categories = new ArrayCollection();
     }
 
+    /**
+     * Get post id
+     *
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
-    public function getName()
+    /**
+     * Get project categories
+     *
+     * @return ArrayCollection
+     */
+    public function getCategories()
     {
-        return $this->name;
+        return $this->categories;
     }
 
+    /**
+     * Add category to project
+     *
+     * @param \Stfalcon\Bundle\PortfolioBundle\Entity\Category $category Category entity
+     *
+     * @return void
+     */
+    public function addCategory(\Stfalcon\Bundle\PortfolioBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+    }
+
+    /**
+     * Set categories collection to project
+     *
+     * @param \Doctrine\Common\Collections\Collection $categories Categories collection
+     *
+     * @return void
+     */
+    public function setCategories(\Doctrine\Common\Collections\Collection $categories)
+    {
+        $this->categories = $categories;
+    }
+
+    /**
+     * Set project name
+     *
+     * @param type $name A text of project name
+     *
+     * @return void
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * Get project name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set project slug
+     *
+     * @param string $slug Unique text identifier
+     *
+     * @return void
+     */
     public function setSlug($slug)
     {
-        // @todo: add filter
         $this->slug = $slug;
     }
 
+    /**
+     * Get project slug
+     *
+     * @return string
+     */
     public function getSlug()
     {
         return $this->slug;
     }
-    
-    public function getDescription()
-    {
-        return $this->description;
-    }
 
+    /**
+     * Set project description
+     *
+     * @param string $description A text of description
+     *
+     * @return void
+     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
-    public function getUrl()
+    /**
+     * Get project description
+     *
+     * @return string
+     */
+    public function getDescription()
     {
-        return $this->url;
+        return $this->description;
     }
 
+    /**
+     * Set project url
+     *
+     * @param string $url A url for project
+     *
+     * @return void
+     */
     public function setUrl($url)
     {
         $this->url = $url;
     }
 
-    public function getDate()
+    /**
+     * Get project url
+     *
+     * @return string
+     */
+    public function getUrl()
     {
-        return $this->date;
+        return $this->url;
     }
 
+    /**
+     * Set date when project has been realized
+     *
+     * @param \DateTime $date Date when project has been realized
+     *
+     * @return void
+     */
     public function setDate(\DateTime $date)
     {
         $this->date = $date;
     }
 
-    public function getImage()
+    /**
+     * Get date when project has been realized
+     *
+     * @return \DateTime
+     */
+    public function getDate()
     {
-        return ($this->image) ? $this->getPathToUploads() . '/' . $this->image : null;
+        return $this->date;
     }
 
-    public function getImageFilename()
+    /**
+     * Get image filename
+     *
+     * @return string
+     */
+    public function getImage()
     {
         return $this->image;
     }
 
     /**
-     * Create thumbnail image to project
-     * 
-     * @param string $imagePath
+     * Get image path
+     *
+     * @return string|null
+     */
+    public function getImagePath()
+    {
+        return ($this->image) ? $this->getPathToUploads() . '/' . $this->image : null;
+    }
+
+    /**
+     * Set image and create thumbnail
+     *
+     * @param string $imagePath Full path to image file
+     *
+     * @return void
      */
     public function setImage($imagePath)
     {
         if (null === $imagePath) {
             return;
         }
-        
+
         // create thumbnail and save it to new file
         $filename = uniqid() . '.png';
         $imagine = new Imagine\Gd\Imagine();
@@ -206,7 +321,6 @@ class Project
                 ->save($this->getPathToUploads() . '/' . $filename);
 
         // remove old image file
-        // @todo: refact
         $this->removeImage();
 
         $this->image = $filename;
@@ -219,58 +333,39 @@ class Project
      */
     public function removeImage()
     {
-        if ($this->getImage() && \file_exists($this->getImage())) {
-            unlink($this->getImage());
+        if ($this->getImagePath() && \file_exists($this->getImagePath())) {
+            unlink($this->getImagePath());
             return true;
         }
-        
+
         return false;
     }
 
     /**
      * Get path to the uploaded files of the project
-     * 
+     *
      * @return string
      */
     public function getPathToUploads()
     {
-        return $this->path_to_uploads;
+        return $this->pathToUploads;
     }
 
+    /**
+     * Set path to uploads
+     *
+     * @param type $path A full path to uploads directory
+     */
     public function setPathToUploads($path)
     {
-        $this->path_to_uploads = $path;
+        $this->pathToUploads = $path;
     }
 
-    public function getCategories()
-    {
-        return $this->categories;
-    }
 
-    public function addCategory(\Stfalcon\Bundle\PortfolioBundle\Entity\Category $category)
-    {
-        $this->categories[] = $category;
-    }
-
-    public function setCategories(\Doctrine\Common\Collections\Collection $categories)
-    {
-        $this->categories = $categories;
-    }
-
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-   
     /**
-     * Get users
+     * Get list of users who worked on the project (as html)
      *
-     * @return text 
+     * @return string
      */
     public function getUsers()
     {
@@ -278,12 +373,59 @@ class Project
     }
 
     /**
-     * Set users
+     * Set list of users who worked on the project (as html)
      *
-     * @param text $users
+     * @param string $users A list in html format
+     *
+     * @return void
      */
     public function setUsers($users)
     {
         $this->users = $users;
     }
+
+    /**
+     * Set time when project created
+     *
+     * @param \DateTime $created A time when project created
+     *
+     * @return void
+     */
+    public function setCreated(\DateTime $created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * Get time when project created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set time when project updated
+     *
+     * @param \DateTime $updated A time when project updated
+     *
+     * @return void
+     */
+    public function setUpdated(\DateTime $updated)
+    {
+        $this->updated = $updated;
+    }
+
+    /**
+     * Get time when project updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
 }

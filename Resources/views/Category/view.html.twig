@@ -13,8 +13,8 @@
                 <li>
                         <a href="{{ path('portfolioCategoryProjectView', { 'categorySlug': category.slug, 'projectSlug': project.slug }) }}">
                             <span>
-                                <img class="project-thumb" src="/uploads/portfolio/projects/{{ project.imageFilename }}" width="240" height="198"
-                                     alt="{{ project.name }}" title="{{ project.name }}" />
+                                <img src="/uploads/portfolio/projects/{{ project.image }}" width="240" height="198"
+                                     alt="{{ project.name }}" title="{{ project.name }}" class="project-thumb" />
                             </span>
                         </a>
                 </li>

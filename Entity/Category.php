@@ -60,7 +60,7 @@ class Category
     private $projects;
 
     /**
-     * Constructor for entity category
+     * Initialization properties for new category entity
      *
      * @return void
      */
