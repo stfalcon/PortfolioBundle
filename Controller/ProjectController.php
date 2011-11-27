@@ -137,7 +137,6 @@ class ProjectController extends Controller
         }
 
         $breadcrumbs = $this->get('menu.breadcrumbs');
-        $breadcrumbs->addChild('Услуги', $this->get('router')->generate('homepage'));
         $breadcrumbs->addChild(
                 $category->getName(),
                 $this->get('router')->generate('portfolioCategoryView', array('slug' => $category->getSlug())));
@@ -215,7 +214,7 @@ class ProjectController extends Controller
 
         return $project;
     }
-    
+
     /**
      * Users widget
      *
