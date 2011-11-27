@@ -127,6 +127,8 @@ class Category
      * Set category description
      *
      * @param string $description Text for category description
+     *
+     * @return void
      */
     public function setDescription($description)
     {

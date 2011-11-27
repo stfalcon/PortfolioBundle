@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * ProjectController
+ * CRUD projects. Show users and nearby projects widget.
  */
 class ProjectController extends Controller
 {

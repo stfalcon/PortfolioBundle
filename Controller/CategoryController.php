@@ -13,6 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+/**
+ * CRUD categories. Services widget.
+ */
 class CategoryController extends Controller
 {
 
@@ -52,7 +55,8 @@ class CategoryController extends Controller
                 $em->flush();
 
                 $this->get('request')->getSession()->setFlash('notice',
-                        'Congratulations, your category is successfully created!');
+                    'Congratulations, your category is successfully created!'
+                );
                 return new RedirectResponse($this->generateUrl('portfolioCategoryIndex'));
             }
         }
@@ -63,7 +67,8 @@ class CategoryController extends Controller
     /**
      * Edit category
      *
-     * @param string $slug
+     * @param string $slug Category slug
+     *
      * @return array|RedirectResponse
      * @Route("/admin/portfolio/category/edit/{slug}", name="portfolioCategoryEdit")
      * @Template()
@@ -94,12 +99,12 @@ class CategoryController extends Controller
     /**
      * View category
      *
-     * @param string $slug
+     * @param string $slug Category slug
+     *
+     * @return array
      * @Route("/portfolio/{slug}", name="portfolioCategoryView")
      * @Template()
      */
-//     * @Route("/{_locale}/portfolio/{slug}", name="portfolioCategoryView",
-//     *      defaults={"_locale"="ru"}, requirements={"_locale"="ru|en"})
     public function viewAction($slug)
     {
         $category = $this->_findCategoryBySlug($slug);
@@ -116,16 +121,13 @@ class CategoryController extends Controller
             'category' => $category,
             'paginator' => $paginator,
         );
-//        return $this->render('StfalconPortfolioBundle:Category:view.html.twig', array(
-//            'category' => $category,
-//            'paginator' => $paginator,
-//        ));
     }
 
     /**
      * Delete category
      *
-     * @param string $slug
+     * @param string $slug Category slug
+     *
      * @return RedirectResponse
      * @Route("/admin/portfolio/category/delete/{slug}", name="portfolioCategoryDelete")
      */
@@ -144,8 +146,9 @@ class CategoryController extends Controller
     /**
      * Services widget
      *
-     * @param Category $category
-     * @param Project $project
+     * @param Category $category Category object
+     * @param Project  $project  Project object
+     *
      * @return array
      * @Template()
      */
@@ -159,8 +162,9 @@ class CategoryController extends Controller
 
     /**
      * Try find category by slug
-     * 
-     * @param string $slug
+     *
+     * @param string $slug Category slug
+     *
      * @return Category
      */
     private function _findCategoryBySlug($slug)

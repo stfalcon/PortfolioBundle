@@ -21,8 +21,8 @@ class CategoryRepository extends EntityRepository
     public function getAllCategories()
     {
         $query = $this->getEntityManager()->createQuery('SELECT c FROM StfalconPortfolioBundle:Category c');
-//        $query->useResultCache(true);
-        
+
         return $query->getResult();
     }
+
 }
