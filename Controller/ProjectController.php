@@ -28,7 +28,7 @@ class ProjectController extends Controller
     public function indexAction()
     {
         $projects = $this->get('doctrine')->getEntityManager()
-                ->getRepository("StfalconPortfolioBundle:Project")->getAllProjects();
+            ->getRepository("StfalconPortfolioBundle:Project")->getAllProjects();
 
         return array('projects' => $projects);
     }
@@ -43,11 +43,7 @@ class ProjectController extends Controller
     public function createAction()
     {
         $project = new Project();
-
-        // @todo: refact
-        $uploadDir = '/uploads/portfolio/projects';
-        $pathToUploads = realpath($this->get('kernel')->getRootDir() . '/../web' . $uploadDir);
-        $project->setPathToUploads($pathToUploads);
+        $project->setPathToUploads($this->_getUploadPath());
 
         $form = $this->get('form.factory')->create(new ProjectForm(), $project);
 
@@ -63,7 +59,8 @@ class ProjectController extends Controller
 
                 $this->get('request')->getSession()->setFlash('notice',
                     'Congratulations, your project "' . $project->getName()
-                    . '" is successfully created!');
+                    . '" is successfully created!'
+                );
 
                 // redirect to list of projects
                 return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
@@ -85,11 +82,7 @@ class ProjectController extends Controller
     public function editAction($slug)
     {
         $project = $this->_findProjectBySlug($slug);
-
-        // @todo: refact
-        $uploadDir = '/uploads/portfolio/projects';
-        $pathToUploads = realpath($this->get('kernel')->getRootDir() . '/../web' . $uploadDir);
-        $project->setPathToUploads($pathToUploads);
+        $project->setPathToUploads($this->_getUploadPath());
 
         $form = $this->get('form.factory')->create(new ProjectForm(), $project);
 
@@ -104,7 +97,8 @@ class ProjectController extends Controller
                 $em->flush();
 
                 $this->get('request')->getSession()->setFlash('notice',
-                    'Congratulations, your project is successfully updated!');
+                    'Congratulations, your project is successfully updated!'
+                );
                 return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
             }
         }
@@ -116,7 +110,7 @@ class ProjectController extends Controller
      * View project
      *
      * @param string $categorySlug Slug of category
-     * @param string $projectSlug Slug of project
+     * @param string $projectSlug  Slug of project
      *
      * @return array
      * @Route("/portfolio/{categorySlug}/{projectSlug}", name="portfolioCategoryProjectView")
@@ -150,7 +144,7 @@ class ProjectController extends Controller
      * Display links to prev/next projects
      *
      * @param Category $category Object of category
-     * @param Project $project Object of project
+     * @param Project  $project  Object of project
      *
      * @return array
      * @Template()
@@ -194,7 +188,8 @@ class ProjectController extends Controller
         $em->flush();
 
         $this->get('request')->getSession()->setFlash('notice',
-            'Your project "' . $project->getName() . '" is successfully delete.');
+            'Your project "' . $project->getName() . '" is successfully delete.'
+        );
         return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
     }
 
@@ -230,6 +225,17 @@ class ProjectController extends Controller
     public function usersAction(Project $project)
     {
         return array('project' => $project);
+    }
+
+    /**
+     * Get path to upload dir for project images
+     *
+     * @return string
+     */
+    private function _getUploadPath()
+    {
+        $uploadDir = '/uploads/portfolio/projects';
+        return realpath($this->get('kernel')->getRootDir() . '/../web' . $uploadDir);
     }
 
 }

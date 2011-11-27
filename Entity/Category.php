@@ -7,13 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Stfalcon\Bundle\PortfolioBundle\Entity\Category
+ * Category entity. It groups projects in portfolio
  *
  * @ORM\Table(name="portfolio_categories")
  * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\CategoryRepository")
  */
 class Category
 {
+
     /**
      * @var integer $id
      *
@@ -58,56 +59,117 @@ class Category
      */
     private $projects;
 
+    /**
+     * Constructor for entity category
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->projects = new ArrayCollection();
     }
 
+    /**
+     * Get category id
+     *
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
     }
 
-    public function getName()
-    {
-        return $this->name;
-    }
-
+    /**
+     * Set category name
+     *
+     * @param string $name Text for category name
+     *
+     * @return void
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * Get category name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set category slug
+     *
+     * @param string $slug Unique text identifier
+     *
+     * @return void
+     */
     public function setSlug($slug)
     {
         $this->slug = $slug;
     }
 
+    /**
+     * Get category slug
+     *
+     * @return string
+     */
     public function getSlug()
     {
         return $this->slug;
     }
 
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
+    /**
+     * Set category description
+     *
+     * @param string $description Text for category description
+     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
+    /**
+     * Get category description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Get category projects
+     *
+     * @return ArrayCollection
+     */
     public function getProjects()
     {
         return $this->projects;
     }
 
+    /**
+     * Add project to category
+     *
+     * @param \Stfalcon\Bundle\PortfolioBundle\Entity\Project $project Project object
+     *
+     * @return void
+     */
     public function addProject(\Stfalcon\Bundle\PortfolioBundle\Entity\Project $project)
     {
         $this->projects[] = $project;
     }
 
+    /**
+     * This method allows a class to decide how it will react when it is treated like a string
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();
