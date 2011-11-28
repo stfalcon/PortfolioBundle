@@ -8,6 +8,11 @@ use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 class ProjectEntityTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * Get path to test project image
+     *
+     * @return string
+     */
     private function _getTestImagePath()
     {
         return \realpath(__DIR__ . '/Resources/files/projects/preorder-it/data/index.png');
@@ -22,7 +27,7 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
     public function testSetAndGetProjectName()
     {
         $name = "preorder.it";
-        
+
         $project = new Project();
         $project->setName($name);
 
@@ -62,7 +67,7 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
     {
         $project = new Project();
         $project->setPathToUploads(realpath(__DIR__ . '/../uploads'));
-        
+
         $this->assertTrue(\file_exists($this->_getTestImagePath()));
 
         $project->setImage($this->_getTestImagePath());
@@ -156,12 +161,12 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
 
         $project->addCategory($category);
         $categories = $project->getCategories();
-        
+
         $this->assertEquals($categories->count(), 1);
         $this->assertTrue(\is_a($categories, 'Doctrine\Common\Collections\ArrayCollection'), 2);
 
         $project->setCategories($categories);
-        
+
         $this->assertEquals($project->getCategories(), $categories);
     }
 
@@ -174,4 +179,5 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($project->getUsers(), $users);
     }
+
 }

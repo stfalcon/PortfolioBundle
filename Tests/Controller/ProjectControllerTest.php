@@ -4,14 +4,24 @@ namespace Stfalcon\Bundle\PortfolioBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
+/**
+ * Test cases for CategoryController
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
+ */
 class ProjectControllerTest extends WebTestCase
 {
 
+    /**
+     * Get path to test project image
+     *
+     * @return string
+     */
     private function _getTestImagePath()
     {
         return \realpath(__DIR__ . '/../Entity/Resources/files/projects/preorder-it/data/index.png');
     }
-    
+
     public function testEmptyProjectsList()
     {
         $this->loadFixtures(array(), false);
@@ -85,8 +95,7 @@ class ProjectControllerTest extends WebTestCase
         // delete project
         $crawler = $client->request('GET', $this->getUrl('portfolioProjectDelete', array('slug' => 'preorder-it')));
 
-        // check redirect to list of categories
-//        $this->assertTrue($client->getResponse()->isRedirect());
+        // check redirect to list of projects
         $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('portfolioProjectIndex', array())));
 
         $crawler = $client->followRedirect();
@@ -116,7 +125,7 @@ class ProjectControllerTest extends WebTestCase
                     'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
                     'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
                 ));
-        
+
         $crawler = $this->fetchCrawler(
                 $this->getUrl(
                         'portfolioCategoryProjectView',
@@ -158,7 +167,7 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('html #sidebar dl>dt:contains("арт-директор и дизайнер")')->count());
 
     }
-    
+
     public function testEmptyProjectUsersList()
     {
         $this->loadFixtures(array(
@@ -176,7 +185,6 @@ class ProjectControllerTest extends WebTestCase
         // check display project info
         $this->assertEquals(0, $crawler->filter('html:contains("Над проектом работали")')->count());
         $this->assertEquals(0, $crawler->filter('html #sidebar dl>dt:contains("арт-директор и дизайнер")')->count());
-
      }
 
 }

@@ -4,6 +4,11 @@ namespace Stfalcon\Bundle\PortfolioBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
+/**
+ * Test cases for CategoryController
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
+ */
 class CategoryControllerTest extends WebTestCase
 {
 
@@ -22,7 +27,7 @@ class CategoryControllerTest extends WebTestCase
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $crawler = $this->fetchCrawler($this->getUrl('portfolioCategoryIndex', array()), 'GET', true, true);
-        
+
         // check display categories list
         $this->assertEquals(1, $crawler->filter('ul li:contains("Web Development")')->count());
     }
@@ -41,7 +46,6 @@ class CategoryControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         // check redirect to list of categories
-//        $this->assertTrue($client->getResponse()->isRedirect());
         $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('portfolioCategoryIndex', array())));
 
         $crawler = $client->followRedirect();
@@ -69,17 +73,13 @@ class CategoryControllerTest extends WebTestCase
 
         // check redirect to list of categories
         $this->assertFalse($client->getResponse()->isRedirect());
-
-        // check display error message
-        // @todo: для русского текста выводится "Значение не должно быть пустым"
-//        $this->assertEquals(3, $crawler->filter('ul li:contains("This value should not be blank")')->count());
     }
 
     public function testEditCategory()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $client = $this->makeClient(true);
-        
+
         $crawler = $client->request('GET', $this->getUrl('portfolioCategoryEdit', array('slug' => 'web-development')));
 
         $form = $crawler->selectButton('Save')->form();
@@ -90,11 +90,10 @@ class CategoryControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         // check redirect to list of categories
-//        $this->assertTrue($client->getResponse()->isRedirect());
         $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('portfolioCategoryIndex', array())));
 
         $crawler = $client->followRedirect();
-        
+
         // check responce
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertFalse($client->getResponse()->isRedirect());
@@ -106,7 +105,8 @@ class CategoryControllerTest extends WebTestCase
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $crawler = $this->fetchCrawler(
-                $this->getUrl('portfolioCategoryView', array('slug' => 'web-development')), 'GET', true, true);
+            $this->getUrl('portfolioCategoryView', array('slug' => 'web-development')), 'GET', true, true
+        );
 
         $this->assertEquals(1, $crawler->filter('html:contains("Web Development")')->count());
         $description = "In work we use Symfony2.";
@@ -139,9 +139,6 @@ class CategoryControllerTest extends WebTestCase
 
         // check redirect to list of categories
         $this->assertFalse($client->getResponse()->isRedirect());
-        // check display error message
-        // @todo: для русского текста выводится "Значение не должно быть пустым"
-//        $this->assertEquals(1, $crawler->filter('ul li:contains("This value should not be blank")')->count());
     }
 
     public function testEditNonExistCategory()
@@ -164,7 +161,6 @@ class CategoryControllerTest extends WebTestCase
         $crawler = $client->request('GET', $this->getUrl('portfolioCategoryDelete', array('slug' => 'web-development')));
 
         // check redirect to list of categories
-//        $this->assertTrue($client->getResponse()->isRedirect());
         $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('portfolioCategoryIndex', array())));
 
         $crawler = $client->followRedirect();
