@@ -355,6 +355,8 @@ class Project
      * Set path to uploads
      *
      * @param type $path A full path to uploads directory
+     *
+     * @return void
      */
     public function setPathToUploads($path)
     {

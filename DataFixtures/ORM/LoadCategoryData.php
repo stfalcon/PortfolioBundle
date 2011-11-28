@@ -34,7 +34,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
     }
 
     /**
-     * Get the number for sorting fixture
+     * Get order number
      *
      * @return integer
      */

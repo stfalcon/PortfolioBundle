@@ -6,8 +6,19 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
 
+/**
+ * Projects fixtures
+ */
 class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 {
+
+    /**
+     * Create and load projects fixtures to database
+     *
+     * @param Doctrine\ORM\EntityManager $em Entity manager object
+     *
+     * @return void
+     */
     public function load($em)
     {
         // projects
@@ -36,6 +47,11 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('project-eprice', $eprice);
     }
 
+    /**
+     * Get order number
+     *
+     * @return integer
+     */
     public function getOrder()
     {
         return 2; // the order in which fixtures will be loaded
