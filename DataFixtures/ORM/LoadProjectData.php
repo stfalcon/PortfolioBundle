@@ -8,6 +8,8 @@ use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
 
 /**
  * Projects fixtures
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 {

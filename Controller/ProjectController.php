@@ -14,6 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * CRUD projects. Show users and nearby projects widget.
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class ProjectController extends Controller
 {

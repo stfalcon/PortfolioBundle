@@ -11,6 +11,7 @@ use Imagine;
 /**
  * Project entity
  *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  * @ORM\Table(name="portfolio_projects")
  * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\ProjectRepository")
  */

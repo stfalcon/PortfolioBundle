@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilder;
 
 /**
  * CategoryForm
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class CategoryForm extends AbstractType
 {

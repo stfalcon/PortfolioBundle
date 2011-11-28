@@ -8,6 +8,8 @@ use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 
 /**
  * Categories fixtures
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface
 {

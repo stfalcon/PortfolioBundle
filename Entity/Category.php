@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Category entity. It groups projects in portfolio
  *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  * @ORM\Table(name="portfolio_categories")
  * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\CategoryRepository")
  */

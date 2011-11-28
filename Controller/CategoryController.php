@@ -6,15 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
-use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
-use Stfalcon\Bundle\PortfolioBundle\Form\CategoryForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
+use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
+use Stfalcon\Bundle\PortfolioBundle\Form\CategoryForm;
+
 /**
  * CRUD categories. Services widget.
+ *
+ * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class CategoryController extends Controller
 {
