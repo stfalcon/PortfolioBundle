@@ -4,6 +4,7 @@ namespace Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
 
 /**
@@ -17,11 +18,11 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
     /**
      * Create and load projects fixtures to database
      *
-     * @param Doctrine\ORM\EntityManager $em Entity manager object
+     * @param Doctrine\ORM\EntityManager $manager Entity manager object
      *
      * @return void
      */
-    public function load($em)
+    public function load(ObjectManager $manager)
     {
         // projects
         $preorder = new Project();
@@ -30,9 +31,9 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $preorder->setUrl('http://preorder.it');
         $preorder->setDate(new \DateTime('now'));
         $preorder->setDescription('Press-releases and reviews of the latest electronic novelties. The possibility to leave a pre-order.');
-        $preorder->setUsers('<dl><dt>арт-директор и дизайнер</dt><dd>Олег Пащенко</dd></dl>');
-        $preorder->addCategory($em->merge($this->getReference('category-development')));
-        $em->persist($preorder);
+        $preorder->setUsers('<dl><dt>art-director and designer</dt><dd>Oleg Ulasyuk</dd></dl>');
+        $preorder->addCategory($manager->merge($this->getReference('category-development')));
+        $manager->persist($preorder);
 
         $eprice = new Project();
         $eprice->setName('eprice.kz');
@@ -40,10 +41,10 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $eprice->setUrl('http://eprice.kz');
         $eprice->setDate(new \DateTime('now'));
         $eprice->setDescription('Comparison of the prices of mobile phones, computers, monitors, audio and video in Kazakhstan');
-        $eprice->addCategory($em->merge($this->getReference('category-development')));
-        $em->persist($eprice);
+        $eprice->addCategory($manager->merge($this->getReference('category-development')));
+        $manager->persist($eprice);
 
-        $em->flush();
+        $manager->flush();
 
         $this->addReference('project-preorder', $preorder);
         $this->addReference('project-eprice', $eprice);

@@ -4,6 +4,7 @@ namespace Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 
 /**
@@ -17,11 +18,11 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
     /**
      * Create and load categories fixtures to database
      *
-     * @param Doctrine\ORM\EntityManager $em Entity manager object
+     * @param Doctrine\ORM\EntityManager $manager Entity manager object
      *
      * @return void
      */
-    public function load($em)
+    public function load(ObjectManager $manager)
     {
         // categories
         $development = new Category();
@@ -29,8 +30,8 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
         $development->setSlug('web-development');
         $development->setDescription('In work we use Symfony2.');
 
-        $em->persist($development);
-        $em->flush();
+        $manager->persist($development);
+        $manager->flush();
 
         $this->addReference('category-development', $development);
     }

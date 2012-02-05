@@ -120,17 +120,11 @@ class ProjectController extends Controller
      */
     public function viewAction($categorySlug, $projectSlug)
     {
+        // try find category by slug
+        $category = $this->_findCategoryBySlug($categorySlug);
+        
         // try find project by slug
         $project = $this->_findProjectBySlug($projectSlug);
-
-        // try find category by slug
-        $em = $this->get('doctrine')->getEntityManager();
-        $category = $em->getRepository("StfalconPortfolioBundle:Category")
-                ->findOneBy(array('slug' => $categorySlug));
-
-        if (!$category) {
-            throw new NotFoundHttpException('The category does not exist.');
-        }
 
         $breadcrumbs = $this->get('menu.breadcrumbs');
         $breadcrumbs->addChild(
@@ -145,24 +139,30 @@ class ProjectController extends Controller
     /**
      * Display links to prev/next projects
      *
-     * @param Category $category Object of category
-     * @param Project  $project  Object of project
+     * @param Category $categorySlug Object of category
+     * @param Project  $projectSlug  Object of project
      *
      * @return array
      * @Template()
      */
-    public function nearbyProjectsAction($category, $project)
+    public function nearbyProjectsAction($categorySlug, $projectSlug)
     {
+        // try find category by slug
+        $categorySlug = $this->_findCategoryBySlug($categorySlug);
+        
+        // try find project by slug
+        $projectSlug = $this->_findProjectBySlug($projectSlug);
+
         $em = $this->get('doctrine')->getEntityManager();
 
         // get all projects from this category
         $projects = $em->getRepository("StfalconPortfolioBundle:Project")
-                ->getProjectsByCategory($category);
+                ->getProjectsByCategory($categorySlug);
 
         // get next and previous projects from this category
         $i = 0; $previousProject = null; $nextProject = null;
         foreach ($projects as $p) {
-            if ($project->getId() == $p->getId()) {
+            if ($projectSlug->getId() == $p->getId()) {
                 $previousProject = isset($projects[$i-1]) ? $projects[$i-1] : null;
                 $nextProject     = isset($projects[$i+1]) ? $projects[$i+1] : null;
                 break;
@@ -170,7 +170,7 @@ class ProjectController extends Controller
             $i++;
         }
 
-        return array('category' => $category, 'previousProject' => $previousProject, 'nextProject' => $nextProject);
+        return array('category' => $categorySlug, 'previousProject' => $previousProject, 'nextProject' => $nextProject);
     }
 
     /**
@@ -196,6 +196,26 @@ class ProjectController extends Controller
     }
 
     /**
+     * Try find category by slug
+     *
+     * @param string $slug Slug of category
+     *
+     * @return Category
+     */
+    private function _findCategoryBySlug($slug)
+    {
+        $em = $this->get('doctrine')->getEntityManager();
+        $category = $em->getRepository("StfalconPortfolioBundle:Category")
+                ->findOneBy(array('slug' => $slug));
+
+        if (!$category) {
+            throw new NotFoundHttpException('The category does not exist.');
+        }
+
+        return $category;
+    }    
+
+    /**
      * Try find project by slug
      *
      * @param string $slug Slug of project
@@ -215,20 +235,7 @@ class ProjectController extends Controller
 
         return $project;
     }
-
-    /**
-     * Users widget
-     *
-     * @param Project $project Object of project
-     *
-     * @return array
-     * @Template()
-     */
-    public function usersAction(Project $project)
-    {
-        return array('project' => $project);
-    }
-
+    
     /**
      * Get path to upload dir for project images
      *

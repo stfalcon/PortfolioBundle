@@ -172,7 +172,7 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAndGetProjectUsers()
     {
-        $users = '<dl><dt>арт-директор и дизайнер</dt><dd>Олег Пащенко</dd></dl>';
+        $users = '<dl><dt>art-director and designer</dt><dd>Oleg Ulasyuk</dd></dl>';
 
         $project = new Project();
         $project->setUsers($users);
