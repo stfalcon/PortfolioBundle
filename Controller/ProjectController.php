@@ -122,7 +122,7 @@ class ProjectController extends Controller
     {
         // try find category by slug
         $category = $this->_findCategoryBySlug($categorySlug);
-        
+
         // try find project by slug
         $project = $this->_findProjectBySlug($projectSlug);
 
@@ -149,7 +149,7 @@ class ProjectController extends Controller
     {
         // try find category by slug
         $categorySlug = $this->_findCategoryBySlug($categorySlug);
-        
+
         // try find project by slug
         $projectSlug = $this->_findProjectBySlug($projectSlug);
 
@@ -213,7 +213,7 @@ class ProjectController extends Controller
         }
 
         return $category;
-    }    
+    }
 
     /**
      * Try find project by slug
@@ -235,7 +235,7 @@ class ProjectController extends Controller
 
         return $project;
     }
-    
+
     /**
      * Get path to upload dir for project images
      *
