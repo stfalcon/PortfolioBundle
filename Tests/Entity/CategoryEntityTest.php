@@ -21,7 +21,7 @@ class CategoryEntityTest extends \PHPUnit_Framework_TestCase
         $category = new Category();
         $category->setName($name);
 
-        $this->assertEquals($category->getName(), $name);
+        $this->assertEquals($name, $category->getName());
     }
 
     public function testSetAndGetCategoryDescription()
@@ -31,7 +31,7 @@ class CategoryEntityTest extends \PHPUnit_Framework_TestCase
         $category = new Category();
         $category->setDescription($description);
 
-        $this->assertEquals($category->getDescription(), $description);
+        $this->assertEquals($description, $category->getDescription());
     }
 
     public function testSetAndGetCategorySlug()
@@ -41,7 +41,7 @@ class CategoryEntityTest extends \PHPUnit_Framework_TestCase
         $slug = 'web-development';
         $category->setSlug($slug);
 
-        $this->assertEquals($category->getSlug(), $slug);
+        $this->assertEquals($slug, $category->getSlug());
     }
 
     public function testGetAndAddCategoryProjects()
@@ -54,7 +54,19 @@ class CategoryEntityTest extends \PHPUnit_Framework_TestCase
         $projects = $category->getProjects();
 
         $this->assertEquals($projects->count(), 1);
-        $this->assertTrue(\is_a($projects, 'Doctrine\Common\Collections\ArrayCollection'), 2);
+        $this->assertTrue(\is_a($projects, 'Doctrine\Common\Collections\ArrayCollection'));
+    }
+
+    public function testGetAndSetOrdernum()
+    {
+        $category = new Category();
+
+        // check default value
+        $this->assertEquals(0, $category->getOrdernum());
+
+        // check set/get
+        $category->setOrdernum(2);
+        $this->assertEquals(2, $category->getOrdernum());
     }
 
 }

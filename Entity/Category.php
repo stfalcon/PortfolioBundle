@@ -61,6 +61,14 @@ class Category
     private $projects;
 
     /**
+     *
+     * @var integer
+     *
+     * @ORM\Column(name="ordernum", type="integer")
+     */
+    private $ordernum = 0;
+
+    /**
      * Initialization properties for new category entity
      *
      * @return void
@@ -176,6 +184,26 @@ class Category
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Get order num
+     *
+     * @return integer
+     */
+    public function getOrdernum()
+    {
+        return $this->ordernum;
+    }
+
+    /**
+     * Set order num
+     *
+     * @param integer $ordernum
+     */
+    public function setOrdernum($ordernum)
+    {
+        $this->ordernum = $ordernum;
     }
 
 }

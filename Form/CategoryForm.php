@@ -25,6 +25,7 @@ class CategoryForm extends AbstractType
     {
         $builder->add('name');
         $builder->add('slug');
+        $builder->add('ordernum');
         $builder->add('description', 'textarea');
     }
 
