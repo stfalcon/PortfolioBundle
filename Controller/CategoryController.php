@@ -57,7 +57,7 @@ class CategoryController extends Controller
                 $em->persist($category);
                 $em->flush();
 
-                $this->get('request')->getSession()->setFlash('notice',
+                $this->get('session')->setFlash('notice',
                     'Congratulations, your category is successfully created!'
                 );
                 return new RedirectResponse($this->generateUrl('portfolioCategoryIndex'));
@@ -91,7 +91,7 @@ class CategoryController extends Controller
                 $em->persist($category);
                 $em->flush();
 
-                $this->get('request')->getSession()->setFlash('notice', 'Congratulations, your category is successfully updated!');
+                $this->get('session')->setFlash('notice', 'Congratulations, your category is successfully updated!');
                 return new RedirectResponse($this->generateUrl('portfolioCategoryIndex'));
             }
         }
@@ -142,7 +142,8 @@ class CategoryController extends Controller
         $em->remove($category);
         $em->flush();
 
-        $this->get('request')->getSession()->setFlash('notice', 'Your category is successfully delete.');
+        $this->get('session')->setFlash('notice', 'Your category is successfully delete.');
+
         return new RedirectResponse($this->generateUrl('portfolioCategoryIndex'));
     }
 

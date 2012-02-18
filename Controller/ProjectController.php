@@ -59,7 +59,7 @@ class ProjectController extends Controller
                 $em->persist($project);
                 $em->flush();
 
-                $this->get('request')->getSession()->setFlash('notice',
+                $this->get('session')->setFlash('notice',
                     'Congratulations, your project "' . $project->getName()
                     . '" is successfully created!'
                 );
@@ -98,7 +98,7 @@ class ProjectController extends Controller
                 $em->persist($project);
                 $em->flush();
 
-                $this->get('request')->getSession()->setFlash('notice',
+                $this->get('session')->setFlash('notice',
                     'Congratulations, your project is successfully updated!'
                 );
                 return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
@@ -139,8 +139,8 @@ class ProjectController extends Controller
     /**
      * Display links to prev/next projects
      *
-     * @param Category $categorySlug Object of category
-     * @param Project  $projectSlug  Object of project
+     * @param string $categorySlug Object of category
+     * @param string $projectSlug  Object of project
      *
      * @return array
      * @Template()
@@ -189,7 +189,7 @@ class ProjectController extends Controller
         $em->remove($project);
         $em->flush();
 
-        $this->get('request')->getSession()->setFlash('notice',
+        $this->get('session')->setFlash('notice',
             'Your project "' . $project->getName() . '" is successfully delete.'
         );
         return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
