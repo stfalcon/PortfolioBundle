@@ -116,9 +116,11 @@ class CategoryController extends Controller
         $paginator->setCurrentPageNumber($this->get('request')->query->get('page', 1));
         $paginator->setItemCountPerPage(6);
 
-        $breadcrumbs = $this->get('menu.breadcrumbs');
-        $breadcrumbs->addChild('Услуги', $this->get('router')->generate('homepage'));
-        $breadcrumbs->addChild($category->getName())->setIsCurrent(true);
+        if ($this->has('application_default.menu.breadcrumbs')) {
+            $breadcrumbs = $this->get('application_default.menu.breadcrumbs');
+            $breadcrumbs->addChild('Услуги', array('route' => 'homepage'));
+            $breadcrumbs->addChild($category->getName())->setCurrent(true);
+        }
 
         return array(
             'category' => $category,
