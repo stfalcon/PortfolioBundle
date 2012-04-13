@@ -118,16 +118,11 @@ class CategoryController extends Controller
     {
         $category = $this->_findCategoryBySlug($slug);
 
-        $query = $this->getDoctrine()->getEntityManager()->createQueryBuilder()
-                ->select('p')
-                ->from('StfalconPortfolioBundle:Project', 'p')
-                ->join('p.categories', 'c')
-                ->where('c.id = ?1')
-                ->setParameter(1, $category->getId())
-                ->getQuery();
         $knpPaginator = $this->get('knp_paginator');
         $paginator = $knpPaginator->paginate(
-            $query,
+            $this->get('doctrine.orm.entity_manager')
+                ->getRepository("StfalconPortfolioBundle:Project")
+                ->getProjectsQueryForPagination($category->getId()),
             $this->getRequest()->get('page', 1) /*page number*/,
             6 /*limit per page*/
         );
