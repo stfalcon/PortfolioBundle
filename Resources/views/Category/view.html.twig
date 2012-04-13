@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>{{ category.name }}</h1>
-    
+
     <p>
         {{ category.description }}
     </p>
@@ -21,7 +21,7 @@
             {% endfor %}
         </ul>
 
-        {{paginator|paginate}}
+        {{ paginator.render()|raw }}
     {% else %}
         <div class="info">
             This category is empty

@@ -43,4 +43,19 @@ class ProjectRepository extends EntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Project Query For Pagination
+     * @param int $categoryId
+     * @return Doctrine\ORM\Query
+     */
+    public function getProjectsQueryForPagination($categoryId = 0)
+    {
+        return $this->createQueryBuilder('p')
+                ->select('p')
+                ->join('p.categories', 'c')
+                ->where('c.id = ?1')
+                ->setParameter(1, $categoryId)
+                ->getQuery();
+    }
+
 }
