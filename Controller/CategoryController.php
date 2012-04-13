@@ -103,18 +103,35 @@ class CategoryController extends Controller
      * View category
      *
      * @param string $slug Category slug
+     * @param int $page Page number
      *
      * @return array
-     * @Route("/portfolio/{slug}", name="portfolioCategoryView")
+     * @Route(
+     *      "/portfolio/{slug}/{page}",
+     *      name="portfolioCategoryView",
+     *      requirements={"page" = "\d+"},
+     *      defaults={"page" = "1"}
+     * )
      * @Template()
      */
     public function viewAction($slug)
     {
         $category = $this->_findCategoryBySlug($slug);
 
-        $paginator = \Zend\Paginator\Paginator::factory($category->getProjects()->toArray());
-        $paginator->setCurrentPageNumber($this->get('request')->query->get('page', 1));
-        $paginator->setItemCountPerPage(6);
+        $query = $this->getDoctrine()->getEntityManager()->createQueryBuilder()
+                ->select('p')
+                ->from('StfalconPortfolioBundle:Project', 'p')
+                ->join('p.categories', 'c')
+                ->where('c.id = ?1')
+                ->setParameter(1, $category->getId())
+                ->getQuery();
+        $knpPaginator = $this->get('knp_paginator');
+        $paginator = $knpPaginator->paginate(
+            $query,
+            $this->getRequest()->get('page', 1) /*page number*/,
+            6 /*limit per page*/
+        );
+        $paginator->setUsedRoute('portfolioCategoryView');
 
         if ($this->has('application_default.menu.breadcrumbs')) {
             $breadcrumbs = $this->get('application_default.menu.breadcrumbs');
