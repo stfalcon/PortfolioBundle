@@ -39,11 +39,9 @@ class ProjectForm extends AbstractType
     /**
      * Returns the default options for this type
      *
-     * @param array $options The options
-     *
      * @return array The default options
      */
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'data_class' => 'Stfalcon\Bundle\PortfolioBundle\Entity\Project',
