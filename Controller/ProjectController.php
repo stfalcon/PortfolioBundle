@@ -8,8 +8,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Stfalcon\Bundle\PortfolioBundle\Form\ProjectForm;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
+use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
@@ -198,6 +200,48 @@ class ProjectController extends Controller
             'Your project "' . $project->getName() . '" is successfully delete.'
         );
         return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
+    }
+
+    /**
+     * Show projects by category
+     *
+     * @param Category $category
+     *
+     * @return array
+     * @Route("/admin/portfolio/projects/byCategory/{slug}", name="portfolioProjectsByCategory")
+     * @Template()
+     */
+    public function showByCategoryAction(Category $category)
+    {
+        $projects = $this->get('doctrine')->getEntityManager()
+                ->getRepository("StfalconPortfolioBundle:Project")
+                ->getProjectsByCategory($category);
+
+        return array(
+            'projects' => $projects,
+            'category' => $category,
+        );
+    }
+
+    /**
+     * Ajax order projects
+     *
+     * @return string
+     * @Route("/admin/portfolio/projects/applyOrder", name="portfolioProjectsApplyOrder")
+     * @Method({"POST"})
+     */
+    public function orderProjects()
+    {
+        $request = $this->getRequest();
+        $em = $this->get('doctrine')->getEntityManager();
+        foreach ($request->get('projects') as $projectInfo) {
+            $project = $em->getRepository("StfalconPortfolioBundle:Project")->find($projectInfo['id']);
+            $project->setOrdernum($projectInfo['index']);
+            $em->persist($project);
+        }
+        $em->flush();
+
+        return new Response('good');
     }
 
     /**

@@ -93,6 +93,20 @@ class Project
     private $image;
 
     /**
+     * @var int $ordernum
+     *
+     * @ORM\Column(name="ordernum", type="integer")
+     */
+    private $ordernum;
+
+    /**
+     * @var int $indexPage
+     *
+     * @ORM\Column(name="indexPage", type="integer")
+     */
+    private $indexPage;
+
+    /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\PortfolioBundle\Entity\Category")
@@ -124,6 +138,8 @@ class Project
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->ordernum = 0;
+        $this->indexPage = 1;
     }
 
     /**
@@ -431,4 +447,47 @@ class Project
         return $this->updated;
     }
 
+    /**
+     * Set project ordernum
+     *
+     * @param int $ordernum
+     *
+     * @return void
+     */
+    public function setOrdernum($ordernum)
+    {
+        $this->ordernum = $ordernum;
+    }
+
+    /**
+     * Get project ordernum
+     *
+     * @return int
+     */
+    public function getOrdernum()
+    {
+        return $this->ordernum;
+    }
+
+    /**
+     * Set project indexPage
+     *
+     * @param int $indexPage
+     *
+     * @return void
+     */
+    public function setIndexPage($indexPage)
+    {
+        $this->indexPage = $indexPage;
+    }
+
+    /**
+     * Get project indexPage
+     *
+     * @return int
+     */
+    public function getIndexPage()
+    {
+        return $this->indexPage;
+    }
 }

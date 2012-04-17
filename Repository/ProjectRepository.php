@@ -23,7 +23,7 @@ class ProjectRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
                 ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
-                    JOIN p.categories c WHERE c.id = ?1 ORDER BY p.date DESC');
+                    JOIN p.categories c WHERE c.id = ?1 ORDER BY p.ordernum ASC');
         $query->setParameter(1, $category->getId());
 
         return $query->getResult();
@@ -38,7 +38,7 @@ class ProjectRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
                 ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
-                    ORDER BY p.date DESC');
+                    ORDER BY p.ordernum ASC');
 
         return $query->getResult();
     }
@@ -54,8 +54,19 @@ class ProjectRepository extends EntityRepository
                 ->select('p')
                 ->join('p.categories', 'c')
                 ->where('c.id = ?1')
+                ->orderBy('p.indexPage', 'ASC')
                 ->setParameter(1, $categoryId)
                 ->getQuery();
     }
 
+    public function getIndexPageProjectsForCategory(Category $category)
+    {
+        $query = $this->getEntityManager()
+                ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
+                    JOIN p.categories c WHERE c.id = ?1 AND p.indexPage = 1
+                    ORDER BY p.ordernum ASC');
+        $query->setParameter(1, $category->getId());
+
+        return $query->getResult();
+    }
 }

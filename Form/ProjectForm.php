@@ -30,6 +30,15 @@ class ProjectForm extends AbstractType
         $builder->add('image', 'file', array('required' => false));
         $builder->add('description', 'textarea');
         $builder->add('users', 'textarea', array('required' => false));
+        $builder->add('indexPage', 'choice', array(
+                    'required' => false,
+                    'choices'   => array(
+                        1   => 'Post this project on index',
+                        0   => 'Do not post this project on index',
+                    ),
+                    'expanded' => true,
+                    'multiple' => false,
+                ));
         $builder->add('categories', 'entity', array(
                     'class' => 'Stfalcon\Bundle\PortfolioBundle\Entity\Category',
                     'multiple' => true, 'expanded' => true,

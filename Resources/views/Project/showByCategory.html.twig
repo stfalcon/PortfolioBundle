@@ -1,8 +1,7 @@
 {% extends 'StfalconPortfolioBundle::layout.html.twig' %}
 
 {% block content %}
-    <h4>Projects list</h4>
-
+    <h4>Projects in category: {{ category.getName }}</h4>
     {% if projects %}
         <ul class="sortable">
             {% for project in projects %}
@@ -15,7 +14,7 @@
         </ul>
     {% else %}
         <div class="info">
-            List of projects is empty
+            There are no projects in this category
         </div>
     {% endif %}
-{% endblock %}
+{% endblock %}{# empty Twig template #}
