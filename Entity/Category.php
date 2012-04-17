@@ -56,7 +56,7 @@ class Category
      * @var Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\PortfolioBundle\Entity\Project", mappedBy="categories")
-     * @ORM\OrderBy({"date" = "DESC", "ordernum" = "ASC"})
+     * @ORM\OrderBy({"ordernum" = "ASC", "date" = "DESC"})
      */
     private $projects;
 
