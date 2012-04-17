@@ -210,9 +210,9 @@ class CategoryController extends Controller
      */
     public function orderProjects()
     {
-        $request = $this->getRequest();
+        $projects = $this->getRequest()->get('projects');
         $em = $this->get('doctrine')->getEntityManager();
-        foreach ($request->get('projects') as $projectInfo) {
+        foreach ($projects as $projectInfo) {
             $project = $em->getRepository("StfalconPortfolioBundle:Project")->find($projectInfo['id']);
             $project->setOrdernum($projectInfo['index']);
             $em->persist($project);
