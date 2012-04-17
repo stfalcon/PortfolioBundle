@@ -193,9 +193,8 @@ class CategoryControllerTest extends WebTestCase
             'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData'
         ));
         $crawler = $this->fetchCrawler(
-            $this->getUrl(
-                'portfolioProjectsByCategory', array('slug' => 'web-development')
-            ), 'GET', true, true);
+            $this->getUrl('portfolioProjectsByCategory', array('slug' => 'web-development')), 'GET', true, true
+        );
         $this->assertEquals(1, $crawler->filter('h4:contains("Projects in category: Web Development")')->count());
 
         $this->assertEquals(2, $crawler->filter('.grid_12')->eq(3)->filter('li')->count());

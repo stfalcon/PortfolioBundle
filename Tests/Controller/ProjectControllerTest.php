@@ -60,7 +60,7 @@ class ProjectControllerTest extends WebTestCase
             'project[url]'  => 'http://wallpaper.in.ua',
             'project[image]'  => $this->_getTestImagePath(),
             'project[description]'  => 'Free desktop wallpapers gallery.',
-            'project[allowPostOnIndexPage]'  => 1,
+            'project[onFrontPage]'  => 1,
         ));
 
         // check redirect to list of categories

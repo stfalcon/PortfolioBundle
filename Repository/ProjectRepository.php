@@ -70,7 +70,7 @@ class ProjectRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
                 ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
-                    JOIN p.categories c WHERE c.id = ?1 AND p.allowPostOnIndexPage = 1
+                    JOIN p.categories c WHERE c.id = ?1 AND p.onFrontPage = 1
                     ORDER BY p.ordernum ASC');
         $query->setParameter(1, $category->getId());
 

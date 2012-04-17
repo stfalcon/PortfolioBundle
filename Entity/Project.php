@@ -100,11 +100,11 @@ class Project
     private $ordernum = 0;
 
     /**
-     * @var bool $allowPostOnIndexPage
-     *
-     * @ORM\Column(name="allowPostOnIndexPage", type="boolean")
+     * @var bool $onFrontPage
+     * Check if this project can be published on main page of the site
+     * @ORM\Column(name="onFrontPage", type="boolean")
      */
-    private $allowPostOnIndexPage = true;
+    private $onFrontPage = true;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
@@ -469,24 +469,24 @@ class Project
     }
 
     /**
-     * Set allowPostOnIndexPage
+     * Set onFrontPage
      *
-     * @param bool $allowPostOnIndexPage
+     * @param bool $onFrontPage
      *
      * @return void
      */
-    public function setAllowPostOnIndexPage($allowPostOnIndexPage)
+    public function setOnFrontPage($onFrontPage)
     {
-        $this->allowPostOnIndexPage = $allowPostOnIndexPage;
+        $this->onFrontPage = $onFrontPage;
     }
 
     /**
-     * Get allowPostOnIndexPage
+     * Get onFrontPage
      *
      * @return bool
      */
-    public function getAllowPostOnIndexPage()
+    public function getOnFrontPage()
     {
-        return $this->allowPostOnIndexPage;
+        return $this->onFrontPage;
     }
 }

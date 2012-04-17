@@ -32,7 +32,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $preorder->setDate(new \DateTime('now'));
         $preorder->setDescription('Press-releases and reviews of the latest electronic novelties. The possibility to leave a pre-order.');
         $preorder->setUsers('<dl><dt>art-director and designer</dt><dd>Oleg Ulasyuk</dd></dl>');
-        $preorder->setAllowPostOnIndexPage(0);
+        $preorder->setOnFrontPage(0);
         $preorder->setOrdernum(0);
         $preorder->addCategory($manager->merge($this->getReference('category-development')));
         $manager->persist($preorder);
@@ -43,7 +43,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $eprice->setUrl('http://eprice.kz');
         $eprice->setDate(new \DateTime('now'));
         $eprice->setDescription('Comparison of the prices of mobile phones, computers, monitors, audio and video in Kazakhstan');
-        $eprice->setAllowPostOnIndexPage(1);
+        $eprice->setOnFrontPage(1);
         $eprice->setOrdernum(1);
         $eprice->addCategory($manager->merge($this->getReference('category-development')));
         $manager->persist($eprice);

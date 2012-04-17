@@ -30,7 +30,7 @@ class ProjectForm extends AbstractType
         $builder->add('image', 'file', array('required' => false));
         $builder->add('description', 'textarea');
         $builder->add('users', 'textarea', array('required' => false));
-        $builder->add('allowPostOnIndexPage', 'checkbox', array(
+        $builder->add('onFrontPage', 'checkbox', array(
                     'required' => false,
                     'label'     => 'Post this project on index?'
                 ));
