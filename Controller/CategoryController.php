@@ -193,9 +193,7 @@ class CategoryController extends Controller
      */
     public function showByCategoryAction(Category $category)
     {
-        $projects = $this->get('doctrine')->getEntityManager()
-                ->getRepository("StfalconPortfolioBundle:Project")
-                ->getProjectsByCategory($category);
+        $projects = $category->getProjects();
 
         return array(
             'projects' => $projects,
