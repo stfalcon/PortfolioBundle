@@ -352,6 +352,7 @@ class Project
     {
         if ($this->getImagePath() && \file_exists($this->getImagePath())) {
             unlink($this->getImagePath());
+
             return true;
         }
 

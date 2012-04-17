@@ -12,6 +12,9 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 class CategoryControllerTest extends WebTestCase
 {
 
+    /**
+     * test Empty Categories List
+     */
     public function testEmptyCategoriesList()
     {
         $this->loadFixtures(array());
@@ -23,6 +26,9 @@ class CategoryControllerTest extends WebTestCase
         $this->assertEquals(0, $crawler->filter('ul li:contains("Web Development")')->count());
     }
 
+    /**
+     *  test Categories List
+     */
     public function testCategoriesList()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
@@ -32,6 +38,9 @@ class CategoryControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('ul li:contains("Web Development")')->count());
     }
 
+    /**
+     *  Create Valid Category
+     */
     public function testCreateValidCategory()
     {
         $this->loadFixtures(array());
@@ -58,6 +67,9 @@ class CategoryControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('ul li:contains("Web Design")')->count());
     }
 
+    /**
+     *  Create Invalid Category
+     */
     public function testCreateInvalidCategory()
     {
         $this->loadFixtures(array());
@@ -75,6 +87,9 @@ class CategoryControllerTest extends WebTestCase
         $this->assertFalse($client->getResponse()->isRedirect());
     }
 
+    /**
+     * Edit category
+     */
     public function testEditCategory()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
@@ -101,6 +116,9 @@ class CategoryControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('ul li:contains("Web Design")')->count());
     }
 
+    /**
+     * view category
+     */
     public function testViewCategory()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
@@ -113,6 +131,9 @@ class CategoryControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('html:contains("' . $description . '")')->count());
     }
 
+    /**
+     *  Viewing Non-Existing Category
+     */
     public function testViewNonExistCategory()
     {
         $this->loadFixtures(array());
@@ -123,6 +144,9 @@ class CategoryControllerTest extends WebTestCase
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
+    /**
+     *  Edit Invalid Category
+     */
     public function testEditInvalidCategory()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
@@ -141,6 +165,9 @@ class CategoryControllerTest extends WebTestCase
         $this->assertFalse($client->getResponse()->isRedirect());
     }
 
+    /**
+     *  Edit Non-Exist Category
+     */
     public function testEditNonExistCategory()
     {
         $this->loadFixtures(array());
@@ -152,6 +179,9 @@ class CategoryControllerTest extends WebTestCase
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
+    /**
+     * delete category
+     */
     public function testDeleteCategory()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
@@ -176,6 +206,9 @@ class CategoryControllerTest extends WebTestCase
         $this->assertEquals(0, $crawler->filter('ul li:contains("Web Development")')->count());
     }
 
+    /**
+     *  Delete Not-Exist Category
+     */
     public function testDeleteNotExistCategory()
     {
         $this->loadFixtures(array());

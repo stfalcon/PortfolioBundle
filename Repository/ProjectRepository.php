@@ -46,6 +46,7 @@ class ProjectRepository extends EntityRepository
     /**
      * Project Query For Pagination
      * @param int $categoryId
+     *
      * @return Doctrine\ORM\Query
      */
     public function getProjectsQueryForPagination($categoryId = 0)
@@ -59,6 +60,12 @@ class ProjectRepository extends EntityRepository
                 ->getQuery();
     }
 
+    /**
+     * get projects for index page
+     * @param Category $category
+     * 
+     * @return array
+     */
     public function getIndexPageProjectsForCategory(Category $category)
     {
         $query = $this->getEntityManager()

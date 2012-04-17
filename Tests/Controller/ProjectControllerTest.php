@@ -22,6 +22,9 @@ class ProjectControllerTest extends WebTestCase
         return \realpath(__DIR__ . '/../Entity/Resources/files/projects/preorder-it/data/index.png');
     }
 
+    /**
+     * empty project list
+     */
     public function testEmptyProjectsList()
     {
         $this->loadFixtures(array());
@@ -33,6 +36,9 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(0, $crawler->filter('ul li:contains("preorder.it")')->count());
     }
 
+    /**
+     * project list
+     */
     public function testProjectsList()
     {
         $this->loadFixtures(array(
@@ -46,6 +52,9 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('ul li:contains("eprice.kz")')->count());
     }
 
+    /**
+     * Create Valid Project
+     */
     public function testCreateValidProject()
     {
         $this->loadFixtures(array());
@@ -85,6 +94,9 @@ class ProjectControllerTest extends WebTestCase
 //    {
 //    }
 //
+    /**
+     * delete Project
+     */
     public function testDeleteProject()
     {
         $this->loadFixtures(array(
@@ -112,6 +124,9 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(0, $crawler->filter('ul li:contains("preorder.it")')->count());
     }
 
+    /**
+     * delete NotExisting Project
+     */
     public function testDeleteNotExistProject()
     {
         $this->loadFixtures(array());
@@ -122,6 +137,9 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
+    /**
+     * view Project
+     */
     public function testViewProject()
     {
         $this->loadFixtures(array(
@@ -151,6 +169,9 @@ class ProjectControllerTest extends WebTestCase
 //        $this->assertEquals(1, $crawler->filter('#sidebar a[href="' . $epriceUrl . '"]')->count());
     }
 
+    /**
+     * Project creators
+     */
     public function testFilledProjectUsersList()
     {
         $this->loadFixtures(array(
@@ -171,6 +192,9 @@ class ProjectControllerTest extends WebTestCase
 
     }
 
+    /**
+     * empty Project creators
+     */
     public function testEmptyProjectUsersList()
     {
         $this->loadFixtures(array(
@@ -190,6 +214,9 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(0, $crawler->filter('html #sidebar dl>dt:contains("art-director and designer")')->count());
      }
 
+     /**
+      * projects by category in admin
+      */
      public function testListProjectsByCategory()
      {
         $crawler = $this->fetchCrawler(

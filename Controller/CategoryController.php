@@ -60,6 +60,7 @@ class CategoryController extends Controller
                 $this->get('session')->setFlash('notice',
                     'Congratulations, your category is successfully created!'
                 );
+
                 return new RedirectResponse($this->generateUrl('portfolioCategoryIndex'));
             }
         }
@@ -92,6 +93,7 @@ class CategoryController extends Controller
                 $em->flush();
 
                 $this->get('session')->setFlash('notice', 'Congratulations, your category is successfully updated!');
+
                 return new RedirectResponse($this->generateUrl('portfolioCategoryIndex'));
             }
         }
