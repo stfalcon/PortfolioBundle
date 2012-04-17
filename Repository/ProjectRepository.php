@@ -23,7 +23,7 @@ class ProjectRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
                 ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
-                    JOIN p.categories c WHERE c.id = ?1 ORDER BY p.date DESC');
+                    JOIN p.categories c WHERE c.id = ?1 ORDER BY p.ordernum ASC');
         $query->setParameter(1, $category->getId());
 
         return $query->getResult();
@@ -38,7 +38,7 @@ class ProjectRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
                 ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
-                    ORDER BY p.date DESC');
+                    ORDER BY p.ordernum ASC');
 
         return $query->getResult();
     }
@@ -46,6 +46,7 @@ class ProjectRepository extends EntityRepository
     /**
      * Project Query For Pagination
      * @param int $categoryId
+     *
      * @return Doctrine\ORM\Query
      */
     public function getProjectsQueryForPagination($categoryId = 0)
@@ -54,8 +55,25 @@ class ProjectRepository extends EntityRepository
                 ->select('p')
                 ->join('p.categories', 'c')
                 ->where('c.id = ?1')
+                ->orderBy('p.ordernum', 'ASC')
                 ->setParameter(1, $categoryId)
                 ->getQuery();
     }
 
+    /**
+     * get projects for index page
+     * @param Category $category
+     *
+     * @return array
+     */
+    public function getIndexPageProjectsForCategory(Category $category)
+    {
+        $query = $this->getEntityManager()
+                ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
+                    JOIN p.categories c WHERE c.id = ?1 AND p.onFrontPage = 1
+                    ORDER BY p.ordernum ASC');
+        $query->setParameter(1, $category->getId());
+
+        return $query->getResult();
+    }
 }

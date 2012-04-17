@@ -32,6 +32,8 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $preorder->setDate(new \DateTime('now'));
         $preorder->setDescription('Press-releases and reviews of the latest electronic novelties. The possibility to leave a pre-order.');
         $preorder->setUsers('<dl><dt>art-director and designer</dt><dd>Oleg Ulasyuk</dd></dl>');
+        $preorder->setOnFrontPage(0);
+        $preorder->setOrdernum(0);
         $preorder->addCategory($manager->merge($this->getReference('category-development')));
         $manager->persist($preorder);
 
@@ -41,6 +43,8 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $eprice->setUrl('http://eprice.kz');
         $eprice->setDate(new \DateTime('now'));
         $eprice->setDescription('Comparison of the prices of mobile phones, computers, monitors, audio and video in Kazakhstan');
+        $eprice->setOnFrontPage(1);
+        $eprice->setOrdernum(1);
         $eprice->addCategory($manager->merge($this->getReference('category-development')));
         $manager->persist($eprice);
 
@@ -48,6 +52,20 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 
         $this->addReference('project-preorder', $preorder);
         $this->addReference('project-eprice', $eprice);
+
+        for ($i = 0; $i < 6; $i++) {
+            $eprice = new Project();
+            $eprice->setName('eprice.kz_' . $i);
+            $eprice->setSlug('eprice-kz_' . $i);
+            $eprice->setUrl('http://eprice.kz');
+            $eprice->setDate(new \DateTime('now'));
+            $eprice->setDescription('Comparison of the prices of mobile phones, computers, monitors, audio and video in Kazakhstan');
+            $eprice->setOnFrontPage(0);
+            $eprice->setOrdernum(2 + $i);
+            $eprice->addCategory($manager->merge($this->getReference('category-development')));
+            $manager->persist($eprice);
+        }
+        $manager->flush();
     }
 
     /**

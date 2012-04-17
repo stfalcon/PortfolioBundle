@@ -5,6 +5,9 @@ namespace Stfalcon\Bundle\PortfolioBundle\Tests\Entity;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
 
+/**
+ * test Category entity
+ */
 class CategoryEntityTest extends \PHPUnit_Framework_TestCase
 {
 

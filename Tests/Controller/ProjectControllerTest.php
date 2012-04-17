@@ -5,7 +5,7 @@ namespace Stfalcon\Bundle\PortfolioBundle\Tests\Controller;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
- * Test cases for CategoryController
+ * Test cases for ProjectController
  *
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
@@ -60,6 +60,7 @@ class ProjectControllerTest extends WebTestCase
             'project[url]'  => 'http://wallpaper.in.ua',
             'project[image]'  => $this->_getTestImagePath(),
             'project[description]'  => 'Free desktop wallpapers gallery.',
+            'project[onFrontPage]'  => 1,
         ));
 
         // check redirect to list of categories
@@ -188,5 +189,4 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(0, $crawler->filter('html:contains("Над проектом работали")')->count());
         $this->assertEquals(0, $crawler->filter('html #sidebar dl>dt:contains("art-director and designer")')->count());
      }
-
 }

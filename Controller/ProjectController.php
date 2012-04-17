@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Stfalcon\Bundle\PortfolioBundle\Form\ProjectForm;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
+use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -101,6 +102,7 @@ class ProjectController extends Controller
                 $this->get('session')->setFlash('notice',
                     'Congratulations, your project is successfully updated!'
                 );
+
                 return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
             }
         }
@@ -197,6 +199,7 @@ class ProjectController extends Controller
         $this->get('session')->setFlash('notice',
             'Your project "' . $project->getName() . '" is successfully delete.'
         );
+
         return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
     }
 
@@ -249,6 +252,7 @@ class ProjectController extends Controller
     private function _getUploadPath()
     {
         $uploadDir = '/uploads/portfolio/projects';
+
         return realpath($this->get('kernel')->getRootDir() . '/../web' . $uploadDir);
     }
 

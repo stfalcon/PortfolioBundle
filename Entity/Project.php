@@ -93,6 +93,20 @@ class Project
     private $image;
 
     /**
+     * @var int $ordernum
+     *
+     * @ORM\Column(name="ordernum", type="integer")
+     */
+    private $ordernum = 0;
+
+    /**
+     * @var bool $onFrontPage
+     * Check if this project can be published on main page of the site
+     * @ORM\Column(name="onFrontPage", type="boolean")
+     */
+    private $onFrontPage = true;
+
+    /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\PortfolioBundle\Entity\Category")
@@ -336,6 +350,7 @@ class Project
     {
         if ($this->getImagePath() && \file_exists($this->getImagePath())) {
             unlink($this->getImagePath());
+
             return true;
         }
 
@@ -431,4 +446,47 @@ class Project
         return $this->updated;
     }
 
+    /**
+     * Set project ordernum
+     *
+     * @param int $ordernum
+     *
+     * @return void
+     */
+    public function setOrdernum($ordernum)
+    {
+        $this->ordernum = $ordernum;
+    }
+
+    /**
+     * Get project ordernum
+     *
+     * @return int
+     */
+    public function getOrdernum()
+    {
+        return $this->ordernum;
+    }
+
+    /**
+     * Set onFrontPage
+     *
+     * @param bool $onFrontPage
+     *
+     * @return void
+     */
+    public function setOnFrontPage($onFrontPage)
+    {
+        $this->onFrontPage = $onFrontPage;
+    }
+
+    /**
+     * Get onFrontPage
+     *
+     * @return bool
+     */
+    public function getOnFrontPage()
+    {
+        return $this->onFrontPage;
+    }
 }
