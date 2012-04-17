@@ -52,6 +52,20 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 
         $this->addReference('project-preorder', $preorder);
         $this->addReference('project-eprice', $eprice);
+
+        for ($i = 0; $i < 6; $i++) {
+            $eprice = new Project();
+            $eprice->setName('eprice.kz_' . $i);
+            $eprice->setSlug('eprice-kz_' . $i);
+            $eprice->setUrl('http://eprice.kz');
+            $eprice->setDate(new \DateTime('now'));
+            $eprice->setDescription('Comparison of the prices of mobile phones, computers, monitors, audio and video in Kazakhstan');
+            $eprice->setOnFrontPage(0);
+            $eprice->setOrdernum(2 + $i);
+            $eprice->addCategory($manager->merge($this->getReference('category-development')));
+            $manager->persist($eprice);
+        }
+        $manager->flush();
     }
 
     /**
