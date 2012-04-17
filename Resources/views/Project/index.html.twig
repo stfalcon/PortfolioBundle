@@ -4,9 +4,9 @@
     <h4>Projects list</h4>
 
     {% if projects %}
-        <ul class="sortable">
+        <ul>
             {% for project in projects %}
-                <li id="{{ project.id }}">
+                <li>
                     {{ project.name }}
                     (<a href="{{ path('portfolioProjectEdit', { 'slug': project.slug }) }}">Edit project</a>
                     / <a href="{{ path('portfolioProjectDelete', { 'slug': project.slug }) }}">Delete project</a>)

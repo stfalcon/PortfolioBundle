@@ -7,12 +7,11 @@
         <ul>
             {% for category in categories %}
                 <li>
-                    <a href="{{ path('portfolioCategoryView', { 'slug': category.slug }) }}">
+                    <a href="{{ path('portfolioProjectsByCategory', { 'slug': category.slug }) }}">
                         {{ category.name }}
                     </a>
                     (<a href="{{ path('portfolioCategoryEdit', { 'slug': category.slug }) }}">Edit Category</a>
-                    / <a href="{{ path('portfolioCategoryDelete', { 'slug': category.slug }) }}">Delete Category</a>
-                    / <a href="{{ path('portfolioProjectsByCategory', { 'slug': category.slug }) }}">Show projects in this category</a>)
+                    / <a href="{{ path('portfolioCategoryDelete', { 'slug': category.slug }) }}">Delete Category</a>)
                 </li>
             {% endfor %}
         </ul>

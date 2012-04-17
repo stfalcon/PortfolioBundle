@@ -55,7 +55,7 @@ class ProjectRepository extends EntityRepository
                 ->select('p')
                 ->join('p.categories', 'c')
                 ->where('c.id = ?1')
-                ->orderBy('p.indexPage', 'ASC')
+                ->orderBy('p.ordernum', 'ASC')
                 ->setParameter(1, $categoryId)
                 ->getQuery();
     }
@@ -63,14 +63,14 @@ class ProjectRepository extends EntityRepository
     /**
      * get projects for index page
      * @param Category $category
-     * 
+     *
      * @return array
      */
     public function getIndexPageProjectsForCategory(Category $category)
     {
         $query = $this->getEntityManager()
                 ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
-                    JOIN p.categories c WHERE c.id = ?1 AND p.indexPage = 1
+                    JOIN p.categories c WHERE c.id = ?1 AND p.allowPostOnIndexPage = 1
                     ORDER BY p.ordernum ASC');
         $query->setParameter(1, $category->getId());
 

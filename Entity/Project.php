@@ -97,14 +97,14 @@ class Project
      *
      * @ORM\Column(name="ordernum", type="integer")
      */
-    private $ordernum;
+    private $ordernum = 0;
 
     /**
-     * @var int $indexPage
+     * @var bool $allowPostOnIndexPage
      *
-     * @ORM\Column(name="indexPage", type="integer")
+     * @ORM\Column(name="allowPostOnIndexPage", type="boolean")
      */
-    private $indexPage;
+    private $allowPostOnIndexPage = 1;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
@@ -138,8 +138,6 @@ class Project
     public function __construct()
     {
         $this->categories = new ArrayCollection();
-        $this->ordernum = 0;
-        $this->indexPage = 1;
     }
 
     /**
@@ -471,24 +469,24 @@ class Project
     }
 
     /**
-     * Set project indexPage
+     * Set allowPostOnIndexPage
      *
-     * @param int $indexPage
+     * @param bool $allowPostOnIndexPage
      *
      * @return void
      */
-    public function setIndexPage($indexPage)
+    public function setAllowPostOnIndexPage($allowPostOnIndexPage)
     {
-        $this->indexPage = $indexPage;
+        $this->allowPostOnIndexPage = $allowPostOnIndexPage;
     }
 
     /**
-     * Get project indexPage
+     * Get allowPostOnIndexPage
      *
-     * @return int
+     * @return bool
      */
-    public function getIndexPage()
+    public function getAllowPostOnIndexPage()
     {
-        return $this->indexPage;
+        return $this->allowPostOnIndexPage;
     }
 }

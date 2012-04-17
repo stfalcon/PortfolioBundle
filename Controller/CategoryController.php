@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
@@ -178,6 +180,48 @@ class CategoryController extends Controller
                 ->getRepository("StfalconPortfolioBundle:Category")->getAllCategories();
 
         return array('categories' => $categories, 'currentProject' => $project, 'currentCategory' => $category);
+    }
+
+    /**
+     * Show projects by category
+     *
+     * @param Category $category
+     *
+     * @return array
+     * @Route("/admin/portfolio/category/{slug}/projects", name="portfolioProjectsByCategory")
+     * @Template()
+     */
+    public function showByCategoryAction(Category $category)
+    {
+        $projects = $this->get('doctrine')->getEntityManager()
+                ->getRepository("StfalconPortfolioBundle:Project")
+                ->getProjectsByCategory($category);
+
+        return array(
+            'projects' => $projects,
+            'category' => $category,
+        );
+    }
+
+    /**
+     * Ajax order projects
+     *
+     * @return string
+     * @Route("/admin/portfolio/category/applyOrder", name="portfolioProjectsApplyOrder")
+     * @Method({"POST"})
+     */
+    public function orderProjects()
+    {
+        $request = $this->getRequest();
+        $em = $this->get('doctrine')->getEntityManager();
+        foreach ($request->get('projects') as $projectInfo) {
+            $project = $em->getRepository("StfalconPortfolioBundle:Project")->find($projectInfo['id']);
+            $project->setOrdernum($projectInfo['index']);
+            $em->persist($project);
+        }
+        $em->flush();
+
+        return new Response('good');
     }
 
     /**
