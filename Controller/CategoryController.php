@@ -193,10 +193,7 @@ class CategoryController extends Controller
      */
     public function showByCategoryAction(Category $category)
     {
-        $projects = $category->getProjects();
-
         return array(
-            'projects' => $projects,
             'category' => $category,
         );
     }

@@ -2,9 +2,9 @@
 
 {% block content %}
     <h4>Projects in category: {{ category.getName }}</h4>
-    {% if projects %}
+    {% if category.getProjects.count > 0 %}
         <ul>
-            {% for project in projects %}
+            {% for project in category.getProjects %}
                 <li>
                     {{ project.name }}
                     (<a href="{{ path('portfolioProjectEdit', { 'slug': project.slug }) }}">Edit project</a>
