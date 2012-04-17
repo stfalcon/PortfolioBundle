@@ -104,7 +104,7 @@ class Project
      *
      * @ORM\Column(name="allowPostOnIndexPage", type="boolean")
      */
-    private $allowPostOnIndexPage = 1;
+    private $allowPostOnIndexPage = true;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
