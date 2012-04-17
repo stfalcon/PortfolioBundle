@@ -197,9 +197,9 @@ class CategoryControllerTest extends WebTestCase
         );
         $this->assertEquals(1, $crawler->filter('h4:contains("Projects in category: Web Development")')->count());
 
-        $this->assertEquals(2, $crawler->filter('.grid_12')->eq(3)->filter('li')->count());
-        $this->assertEquals(1, $crawler->filter('.grid_12')->eq(3)->filter('li:contains("preorder.it")')->count());
-        $this->assertEquals(1, $crawler->filter('.grid_12')->eq(3)->filter('li:contains("eprice.kz")')->count());
+        $this->assertEquals(2, $crawler->filter('#listProjects li')->count());
+        $this->assertEquals(1, $crawler->filter('#listProjects li:contains("preorder.it")')->count());
+        $this->assertEquals(1, $crawler->filter('#listProjects li:contains("eprice.kz")')->count());
      }
 
 }

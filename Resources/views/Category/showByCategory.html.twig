@@ -3,7 +3,7 @@
 {% block content %}
     <h4>Projects in category: {{ category.getName }}</h4>
     {% if category.getProjects.count > 0 %}
-        <ul>
+        <ul id="listProjects">
             {% for project in category.getProjects %}
                 <li>
                     {{ project.name }}
