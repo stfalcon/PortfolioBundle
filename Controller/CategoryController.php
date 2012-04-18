@@ -191,7 +191,7 @@ class CategoryController extends Controller
      * @Route("/admin/portfolio/category/{slug}/projects", name="portfolioProjectsByCategory")
      * @Template()
      */
-    public function showByCategoryAction(Category $category)
+    public function projectsAction(Category $category)
     {
         return array(
             'category' => $category,
