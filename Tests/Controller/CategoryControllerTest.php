@@ -225,7 +225,7 @@ class CategoryControllerTest extends WebTestCase
      {
         $crawler = $this->fetchCrawler($this->getUrl('portfolioProjectIndex'), 'GET', true, true);
 
-        $lis = $crawler->filter('.sortable li');
+        $lis = $crawler->filter('#sortable li');
         $lis->first();
 
         $this->assertContains('preorder.it', $lis->current()->textContent);
@@ -237,7 +237,7 @@ class CategoryControllerTest extends WebTestCase
         $this->assertEquals('good', $client->getResponse()->getContent());
 
         $crawler = $this->fetchCrawler($this->getUrl('portfolioProjectIndex'), 'GET', true, true);
-        $lis = $crawler->filter('.sortable li');
+        $lis = $crawler->filter('#sortable li');
         $lis->last();
         $this->assertContains('preorder.it', $lis->current()->textContent);
      }
