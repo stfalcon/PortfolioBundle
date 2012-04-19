@@ -43,7 +43,7 @@ class ProjectControllerTest extends WebTestCase
 
         // check display projects
         $this->assertEquals(1, $crawler->filter('ul li:contains("preorder.it")')->count());
-        $this->assertEquals(1, $crawler->filter('ul li:contains("eprice.kz")')->count());
+        $this->assertEquals(7, $crawler->filter('ul li:contains("eprice.kz")')->count());
     }
 
     public function testCreateValidProject()
