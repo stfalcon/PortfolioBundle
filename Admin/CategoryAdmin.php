@@ -14,7 +14,7 @@ class CategoryAdmin extends Admin
         $formMapper
             ->add('slug')
             ->add('name')
-            ->add('description')
+            ->add('description', 'textarea', array('attr' => array("class" => 'xxlarge')))
         ;
     }
 
