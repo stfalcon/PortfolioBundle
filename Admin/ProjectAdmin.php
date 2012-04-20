@@ -9,6 +9,18 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class ProjectAdmin extends Admin
 {
+    public function __construct($code, $class, $baseControllerName)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+
+        if (!$this->hasRequest()) {
+            $this->datagridValues = array(
+                '_page' => 1,
+                '_sort_order' => 'ASC', // sort direction
+                '_sort_by' => 'ordernum' // field name
+            );
+        }
+    }
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -32,5 +44,11 @@ class ProjectAdmin extends Admin
             ->add('description')
             ->add('date')
         ;
+    }
+
+    public function setTemplates(array $templates)
+    {
+        $templates['list'] = 'StfalconPortfolioBundle::list.html.twig';
+        parent::setTemplates($templates);
     }
 }
