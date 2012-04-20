@@ -4,7 +4,9 @@ namespace Stfalcon\Bundle\PortfolioBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Imagine;
 
@@ -14,6 +16,8 @@ use Imagine;
  * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  * @ORM\Table(name="portfolio_projects")
  * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\ProjectRepository")
+ * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable
  */
 class Project
 {
@@ -86,6 +90,18 @@ class Project
     private $updated;
 
     /**
+     * @Assert\File(
+     *     maxSize="4M",
+     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
+     * )
+     * @Vich\UploadableField(mapping="project_image", fileNameProperty="image")
+     *
+     * @var File $image
+     */
+    protected $imageFile;
+
+
+    /**
      * @var string $image
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
@@ -120,8 +136,6 @@ class Project
      * )
      */
     private $categories;
-
-    private $pathToUploads;
 
     /**
      * @var text $users
@@ -305,40 +319,30 @@ class Project
     }
 
     /**
-     * Get image path
-     *
-     * @return string|null
-     */
-    public function getImagePath()
-    {
-        return ($this->image) ? $this->getPathToUploads() . '/' . $this->image : null;
-    }
-
-    /**
      * Set image and create thumbnail
      *
-     * @param string $imagePath Full path to image file
+     * @param string $image Full path to image file
      *
      * @return void
      */
-    public function setImage($imagePath)
+    public function setImage($image)
     {
-        if (null === $imagePath) {
-            return;
-        }
+//        if (null === $imagePath) {
+//            return;
+//        }
+//
+//        // create thumbnail and save it to new file
+//        $filename = uniqid() . '.png';
+//        $imagine = new Imagine\Gd\Imagine();
+//        $imagePath = $imagine->open($imagePath);
+//        $imagePath->thumbnail(new Imagine\Image\Box(240, $imagePath->getSize()->getHeight()), Imagine\Image\ImageInterface::THUMBNAIL_INSET)
+//                ->crop(new Imagine\Image\Point(0, 0), new Imagine\Image\Box(240, 198))
+//                ->save($this->getPathToUploads() . '/' . $filename);
+//
+//        // remove old image file
+//        $this->removeImage();
 
-        // create thumbnail and save it to new file
-        $filename = uniqid() . '.png';
-        $imagine = new Imagine\Gd\Imagine();
-        $imagePath = $imagine->open($imagePath);
-        $imagePath->thumbnail(new Imagine\Image\Box(240, $imagePath->getSize()->getHeight()), Imagine\Image\ImageInterface::THUMBNAIL_INSET)
-                ->crop(new Imagine\Image\Point(0, 0), new Imagine\Image\Box(240, 198))
-                ->save($this->getPathToUploads() . '/' . $filename);
-
-        // remove old image file
-        $this->removeImage();
-
-        $this->image = $filename;
+        $this->image = $image;
     }
 
     /**
@@ -356,29 +360,6 @@ class Project
 
         return false;
     }
-
-    /**
-     * Get path to the uploaded files of the project
-     *
-     * @return string
-     */
-    public function getPathToUploads()
-    {
-        return $this->pathToUploads;
-    }
-
-    /**
-     * Set path to uploads
-     *
-     * @param string $path A full path to uploads directory
-     *
-     * @return void
-     */
-    public function setPathToUploads($path)
-    {
-        $this->pathToUploads = $path;
-    }
-
 
     /**
      * Get list of users who worked on the project (as html)
@@ -488,5 +469,32 @@ class Project
     public function getOnFrontPage()
     {
         return $this->onFrontPage;
+    }
+
+    /**
+     * Set imageFile
+     *
+     * @param File $imageFile
+     *
+     * @return void
+     */
+    public function setImageFile($imageFile)
+    {
+        $this->imageFile = $imageFile;
+        $imagine = new Imagine\Gd\Imagine();
+        $imagePath = $imagine->open($this->imageFile->getPathName());
+        $imagePath->thumbnail(new Imagine\Image\Box(240, $imagePath->getSize()->getHeight()), Imagine\Image\ImageInterface::THUMBNAIL_INSET)
+                ->crop(new Imagine\Image\Point(0, 0), new Imagine\Image\Box(240, 198))
+                ->save($this->imageFile->getPathName(), array('format' => 'png'));
+    }
+
+    /**
+     * Get imageFile
+     *
+     * @return File
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 }
