@@ -197,7 +197,7 @@ class CategoryControllerTest extends WebTestCase
 //        $this->assertTrue($client->getRequest()->getSession()->hasFlash('notice'));
 
         // check don't display deleting category
-        $this->assertEquals(0, $crawler->filter('ul li:contains("Web Development")')->count());
+        $this->assertEquals(0, $crawler->filter('table tbody tr td:contains("web-development")')->count());
     }
 
     public function testDeleteNotExistCategory()
