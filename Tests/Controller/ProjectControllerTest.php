@@ -25,12 +25,10 @@ class ProjectControllerTest extends WebTestCase
     public function testEmptyProjectsList()
     {
         $this->loadFixtures(array());
-        $crawler = $this->fetchCrawler($this->getUrl('portfolioProjectIndex', array()), 'GET', true, true);
+        $crawler = $this->fetchCrawler($this->getUrl('admin_bundle_portfolio_project_list', array()), 'GET', true, true);
 
-        // check display notice
-        $this->assertEquals(1, $crawler->filter('html:contains("List of projects is empty")')->count());
         // check don't display projects
-        $this->assertEquals(0, $crawler->filter('ul li:contains("preorder.it")')->count());
+        $this->assertEquals(0, $crawler->filter('table tbody tr')->count());
     }
 
     public function testProjectsList()
@@ -39,33 +37,41 @@ class ProjectControllerTest extends WebTestCase
                     'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
                     'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData',
                 ));
-        $crawler = $this->fetchCrawler($this->getUrl('portfolioProjectIndex', array()), 'GET', true, true);
+        $crawler = $this->fetchCrawler($this->getUrl('admin_bundle_portfolio_project_list', array()), 'GET', true, true);
 
         // check display projects
-        $this->assertEquals(1, $crawler->filter('ul li:contains("preorder.it")')->count());
-        $this->assertEquals(1, $crawler->filter('ul li:contains("eprice.kz")')->count());
+        $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("preorder.it")')->count());
+        $this->assertEquals(7, $crawler->filter('table tbody tr td:contains("eprice.kz")')->count());
     }
 
     public function testCreateValidProject()
     {
-        $this->loadFixtures(array());
+        $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $client = $this->makeClient(true);
-        $crawler = $client->request('GET', $this->getUrl('portfolioProjectCreate', array()));
+        $crawler = $client->request('GET', $this->getUrl('admin_bundle_portfolio_project_create', array()));
 
-        $form = $crawler->selectButton('Send')->form();
+        $inputs = $crawler->filter('form input');
+        $inputs->first();
+        $formId = str_replace("_slug", "", $inputs->current()->getAttribute('id'));
 
-        $crawler = $client->submit($form, array(
-            'project[name]' => 'wallpaper.in.ua',
-            'project[slug]' => 'wallpaper-in-ua',
-            'project[url]'  => 'http://wallpaper.in.ua',
-            'project[image]'  => $this->_getTestImagePath(),
-            'project[description]'  => 'Free desktop wallpapers gallery.',
-            'project[onFrontPage]'  => 1,
-        ));
+        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $category = $em->getRepository("StfalconPortfolioBundle:Category")->findOneBy(array('slug' => 'web-development'));
+
+        $form = $crawler->selectButton('Создать и редактировать')->form();
+
+        $form[$formId . '[name]'] = 'wallpaper.in.ua';
+        $form[$formId . '[slug]'] = 'wallpaper-in-ua';
+        $form[$formId . '[url]'] = 'http://wallpaper.in.ua';
+        $form[$formId . '[imageFile]'] = $this->_getTestImagePath();
+        $form[$formId . '[description]'] = 'Free desktop wallpapers gallery.';
+        $form[$formId . '[users]'] = 'users';
+        $form[$formId . '[categories]']->select(array($category->getId()));
+        $form[$formId . '[onFrontPage]'] = 1;
+        $crawler = $client->submit($form);
 
         // check redirect to list of categories
 //        $this->assertTrue($client->getResponse()->isRedirect());
-        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('portfolioProjectIndex', array())));
+        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_portfolio_project_edit', array('id' => 1) )));
 
         $crawler = $client->followRedirect();
 
@@ -73,8 +79,9 @@ class ProjectControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertFalse($client->getResponse()->isRedirect());
 
+        $crawler = $this->fetchCrawler($this->getUrl('admin_bundle_portfolio_project_list', array()), 'GET', true, true);
         // check display new category in list
-        $this->assertEquals(1, $crawler->filter('ul li:contains("wallpaper.in.ua")')->count());
+        $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("wallpaper.in.ua")')->count());
     }
 
 //    public function testCreateInvalidProject()
@@ -93,30 +100,23 @@ class ProjectControllerTest extends WebTestCase
                 ));
 
         $client = $this->makeClient(true);
+        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $project = $em->getRepository("StfalconPortfolioBundle:Project")->findOneBy(array('slug' => 'preorder-it'));
+
         // delete project
-        $crawler = $client->request('GET', $this->getUrl('portfolioProjectDelete', array('slug' => 'preorder-it')));
+        $crawler = $client->request('POST', $this->getUrl('admin_bundle_portfolio_project_delete', array('id' => $project->getId())), array('_method' => 'DELETE'));
 
-        // check redirect to list of projects
-        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('portfolioProjectIndex', array())));
-
-        // check notice
-//        $this->assertTrue($client->getRequest()->getSession()->hasFlash('notice'));
-
-        $crawler = $client->followRedirect();
-
-        // check responce
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertFalse($client->getResponse()->isRedirect());
-
-        // check don't display deleting category
-        $this->assertEquals(0, $crawler->filter('ul li:contains("preorder.it")')->count());
+        // check if project was removed from DB
+        $em->detach($project);
+        $projectRemoved = $em->getRepository("StfalconPortfolioBundle:Project")->findOneBy(array('slug' => 'preorder-it'));
+        $this->assertNull($projectRemoved);
     }
 
     public function testDeleteNotExistProject()
     {
         $this->loadFixtures(array());
         $client = $this->makeClient(true);
-        $crawler = $client->request('GET', $this->getUrl('portfolioProjectDelete', array('slug' => 'wallpaper-in-ua')));
+        $crawler = $client->request('POST', $this->getUrl('admin_bundle_portfolio_project_delete', array('id' => 0)));
 
         // check 404
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
