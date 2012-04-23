@@ -20,96 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class ProjectController extends Controller
 {
-
-    /**
-     * Projects list
-     *
-     * @return array
-     * @Route("/admin/portfolio/projects", name="portfolioProjectIndex")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $projects = $this->get('doctrine')->getEntityManager()
-            ->getRepository("StfalconPortfolioBundle:Project")->getAllProjects();
-
-        return array('projects' => $projects);
-    }
-
-    /**
-     * Create new project
-     *
-     * @return array|RedirectResponse
-     * @Route("/admin/portfolio/project/create", name="portfolioProjectCreate")
-     * @Template()
-     */
-    public function createAction()
-    {
-        $project = new Project();
-        $project->setPathToUploads($this->_getUploadPath());
-
-        $form = $this->get('form.factory')->create(new ProjectForm(), $project);
-
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($this->get('request'));
-
-            if ($form->isValid()) {
-                // create project
-                $em = $this->get('doctrine')->getEntityManager();
-                $em->persist($project);
-                $em->flush();
-
-                $this->get('session')->setFlash('notice',
-                    'Congratulations, your project "' . $project->getName()
-                    . '" is successfully created!'
-                );
-
-                // redirect to list of projects
-                return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
-            }
-        }
-
-        return array('form' => $form->createView());
-    }
-
-    /**
-     * Edit project
-     *
-     * @param string $slug Project slug
-     *
-     * @return array|RedirectResponse
-     * @Route("/admin/portfolio/project/edit/{slug}", name="portfolioProjectEdit")
-     * @Template()
-     */
-    public function editAction($slug)
-    {
-        $project = $this->_findProjectBySlug($slug);
-        $project->setPathToUploads($this->_getUploadPath());
-
-        $form = $this->get('form.factory')->create(new ProjectForm(), $project);
-
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-
-            if ($form->isValid()) {
-                // save project
-                $em = $this->get('doctrine')->getEntityManager();
-                $em->persist($project);
-                $em->flush();
-
-                $this->get('session')->setFlash('notice',
-                    'Congratulations, your project is successfully updated!'
-                );
-
-                return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
-            }
-        }
-
-        return array('form' => $form->createView(), 'project' => $project);
-    }
-
     /**
      * View project
      *
@@ -181,29 +91,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Delete project
-     *
-     * @param string $slug Slug of project
-     *
-     * @return RedirectResponse
-     * @Route("/admin/portfolio/project/delete/{slug}", name="portfolioProjectDelete")
-     */
-    public function deleteAction($slug)
-    {
-        $project = $this->_findProjectBySlug($slug);
-
-        $em = $this->get('doctrine')->getEntityManager();
-        $em->remove($project);
-        $em->flush();
-
-        $this->get('session')->setFlash('notice',
-            'Your project "' . $project->getName() . '" is successfully delete.'
-        );
-
-        return new RedirectResponse($this->generateUrl('portfolioProjectIndex'));
-    }
-
-    /**
      * Try find category by slug
      *
      * @param string $slug Slug of category
@@ -243,17 +130,4 @@ class ProjectController extends Controller
 
         return $project;
     }
-
-    /**
-     * Get path to upload dir for project images
-     *
-     * @return string
-     */
-    private function _getUploadPath()
-    {
-        $uploadDir = '/uploads/portfolio/projects';
-
-        return realpath($this->get('kernel')->getRootDir() . '/../web' . $uploadDir);
-    }
-
 }

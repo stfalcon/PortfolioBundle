@@ -23,91 +23,11 @@ use Stfalcon\Bundle\PortfolioBundle\Form\CategoryForm;
  */
 class CategoryController extends Controller
 {
-
-    /**
-     * List of categories
-     *
-     * @return array
-     * @Route("/admin/portfolio/categories", name="portfolioCategoryIndex")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $categories = $this->get('doctrine')->getEntityManager()
-                ->getRepository("StfalconPortfolioBundle:Category")->getAllCategories();
-
-        return array('categories' => $categories);
-    }
-
-    /**
-     * Create new category
-     *
-     * @return array|RedirectResponse
-     * @Route("/admin/portfolio/category/create", name="portfolioCategoryCreate")
-     * @Template()
-     */
-    public function createAction()
-    {
-        $category = new Category();
-        $form = $this->get('form.factory')->create(new CategoryForm(), $category);
-
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($this->get('request'));
-            if ($form->isValid()) {
-                $em = $this->get('doctrine')->getEntityManager();
-                $em->persist($category);
-                $em->flush();
-
-                $this->get('session')->setFlash('notice',
-                    'Congratulations, your category is successfully created!'
-                );
-
-                return new RedirectResponse($this->generateUrl('portfolioCategoryIndex'));
-            }
-        }
-
-        return array('form' => $form->createView());
-    }
-
-    /**
-     * Edit category
-     *
-     * @param string $slug Category slug
-     *
-     * @return array|RedirectResponse
-     * @Route("/admin/portfolio/category/edit/{slug}", name="portfolioCategoryEdit")
-     * @Template()
-     */
-    public function editAction($slug)
-    {
-        // try find category by slug
-        $category = $this->_findCategoryBySlug($slug);
-        $form = $this->get('form.factory')->create(new CategoryForm(), $category);
-
-        $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($this->get('request'));
-            if ($form->isValid()) {
-                // save category
-                $em = $this->get('doctrine')->getEntityManager();
-                $em->persist($category);
-                $em->flush();
-
-                $this->get('session')->setFlash('notice', 'Congratulations, your category is successfully updated!');
-
-                return new RedirectResponse($this->generateUrl('portfolioCategoryIndex'));
-            }
-        }
-
-        return array('form' => $form->createView(), 'category' => $category);
-    }
-
     /**
      * View category
      *
-     * @param string $slug Category slug
-     * @param int $page Page number
+     * @param Category $category
+     * @param int $page
      *
      * @return array
      * @Route(
@@ -118,10 +38,8 @@ class CategoryController extends Controller
      * )
      * @Template()
      */
-    public function viewAction($slug)
+    public function viewAction(Category $category)
     {
-        $category = $this->_findCategoryBySlug($slug);
-
         $knpPaginator = $this->get('knp_paginator');
         $paginator = $knpPaginator->paginate(
             $this->get('doctrine.orm.entity_manager')
@@ -142,27 +60,6 @@ class CategoryController extends Controller
             'category' => $category,
             'paginator' => $paginator,
         );
-    }
-
-    /**
-     * Delete category
-     *
-     * @param string $slug Category slug
-     *
-     * @return RedirectResponse
-     * @Route("/admin/portfolio/category/delete/{slug}", name="portfolioCategoryDelete")
-     */
-    public function deleteAction($slug)
-    {
-        $category = $this->_findCategoryBySlug($slug);
-
-        $em = $this->get('doctrine')->getEntityManager();
-        $em->remove($category);
-        $em->flush();
-
-        $this->get('session')->setFlash('notice', 'Your category is successfully delete.');
-
-        return new RedirectResponse($this->generateUrl('portfolioCategoryIndex'));
     }
 
     /**
@@ -218,25 +115,4 @@ class CategoryController extends Controller
 
         return new Response('good');
     }
-
-    /**
-     * Try find category by slug
-     *
-     * @param string $slug Category slug
-     *
-     * @return Category
-     */
-    private function _findCategoryBySlug($slug)
-    {
-        $em = $this->get('doctrine.orm.entity_manager');
-
-        $category = $em->getRepository("StfalconPortfolioBundle:Category")
-                ->findOneBy(array('slug' => $slug));
-        if (!$category) {
-            throw new NotFoundHttpException('The category does not exist.');
-        }
-
-        return $category;
-    }
-
 }
