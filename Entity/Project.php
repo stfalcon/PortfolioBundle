@@ -327,21 +327,6 @@ class Project
      */
     public function setImage($image)
     {
-//        if (null === $imagePath) {
-//            return;
-//        }
-//
-//        // create thumbnail and save it to new file
-//        $filename = uniqid() . '.png';
-//        $imagine = new Imagine\Gd\Imagine();
-//        $imagePath = $imagine->open($imagePath);
-//        $imagePath->thumbnail(new Imagine\Image\Box(240, $imagePath->getSize()->getHeight()), Imagine\Image\ImageInterface::THUMBNAIL_INSET)
-//                ->crop(new Imagine\Image\Point(0, 0), new Imagine\Image\Box(240, 198))
-//                ->save($this->getPathToUploads() . '/' . $filename);
-//
-//        // remove old image file
-//        $this->removeImage();
-
         $this->image = $image;
     }
 
