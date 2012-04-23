@@ -184,20 +184,10 @@ class CategoryControllerTest extends WebTestCase
         // delete category
         $crawler = $client->request('POST', $this->getUrl('admin_bundle_portfolio_category_delete', array('id' => $category->getId())), array('_method' => 'DELETE'));
 
-        // check redirect to list of categories
-        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_portfolio_category_list', array())));
-
-        $crawler = $client->followRedirect();
-
-        // check responce
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertFalse($client->getResponse()->isRedirect());
-
-        // check notice
-//        $this->assertTrue($client->getRequest()->getSession()->hasFlash('notice'));
-
-        // check don't display deleting category
-        $this->assertEquals(0, $crawler->filter('table tbody tr td:contains("web-development")')->count());
+        // check if category was removed from DB
+        $em->detach($category);
+        $categoryRemoved = $em->getRepository("StfalconPortfolioBundle:Category")->findOneBy(array('slug' => 'web-development'));
+        $this->assertNull($categoryRemoved);
     }
 
     public function testDeleteNotExistCategory()

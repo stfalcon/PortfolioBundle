@@ -106,20 +106,10 @@ class ProjectControllerTest extends WebTestCase
         // delete project
         $crawler = $client->request('POST', $this->getUrl('admin_bundle_portfolio_project_delete', array('id' => $project->getId())), array('_method' => 'DELETE'));
 
-        // check redirect to list of projects
-        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_portfolio_project_list', array())));
-
-        // check notice
-//        $this->assertTrue($client->getRequest()->getSession()->hasFlash('notice'));
-
-        $crawler = $client->followRedirect();
-
-        // check responce
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertFalse($client->getResponse()->isRedirect());
-
-        // check don't display deleting category
-        $this->assertEquals(0, $crawler->filter('table tbody tr td:contains("preorder-it")')->count());
+        // check if project was removed from DB
+        $em->detach($project);
+        $projectRemoved = $em->getRepository("StfalconPortfolioBundle:Project")->findOneBy(array('slug' => 'preorder-it'));
+        $this->assertNull($projectRemoved);
     }
 
     public function testDeleteNotExistProject()
