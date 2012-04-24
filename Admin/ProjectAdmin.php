@@ -21,34 +21,35 @@ class ProjectAdmin extends Admin
             );
         }
     }
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('slug')
             ->add('name')
-            ->add('description', 'textarea', array('attr' => array("class" => 'xxlarge')))
+            ->add('slug')
             ->add('url')
-            ->add('date', 'datetime', array('required' => false))
-            ->add('imageFile', 'file')
-            ->add('categories')
-            ->add('users', 'textarea', array('attr' => array("class" => 'xxlarge')))
+            ->add('description', 'textarea', array('attr' => array("class" => 'input-xxlarge')))
+            ->add('imageFile', 'file', array('required' => false))
+            ->add('date', 'date', array('required' => false))
+            ->add('categories', null, array('required' => false))
+            ->add('users', 'textarea', array('required' => false, 'attr' => array("class" => 'input-xxlarge')))
             ->add('onFrontPage', 'checkbox', array('required' => false))
         ;
     }
 
+    // @todo с sortable проблемы начиная со второй страницы
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->addIdentifier('slug')
             ->add('name')
-            ->add('description')
             ->add('date')
         ;
     }
 
     public function setTemplates(array $templates)
     {
-        $templates['list'] = 'StfalconPortfolioBundle::list.html.twig';
+        $templates['list'] = 'StfalconPortfolioBundle:ProjectAdmin:list.html.twig';
         parent::setTemplates($templates);
     }
 }

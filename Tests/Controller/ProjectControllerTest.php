@@ -41,7 +41,8 @@ class ProjectControllerTest extends WebTestCase
 
         // check display projects
         $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("preorder.it")')->count());
-        $this->assertEquals(7, $crawler->filter('table tbody tr td:contains("eprice.kz")')->count());
+        $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("eprice.kz")')->count());
+        $this->assertEquals(6, $crawler->filter('table tbody tr td:contains("example.com")')->count());
     }
 
     public function testCreateValidProject()
@@ -50,14 +51,12 @@ class ProjectControllerTest extends WebTestCase
         $client = $this->makeClient(true);
         $crawler = $client->request('GET', $this->getUrl('admin_bundle_portfolio_project_create', array()));
 
-        $inputs = $crawler->filter('form input');
-        $inputs->first();
-        $formId = str_replace("_slug", "", $inputs->current()->getAttribute('id'));
+        $form = $crawler->selectButton('Создать и редактировать')->form();
 
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $category = $em->getRepository("StfalconPortfolioBundle:Category")->findOneBy(array('slug' => 'web-development'));
 
-        $form = $crawler->selectButton('Создать и редактировать')->form();
+        $formId = substr($form->getUri(), -14);
 
         $form[$formId . '[name]'] = 'wallpaper.in.ua';
         $form[$formId . '[slug]'] = 'wallpaper-in-ua';
@@ -70,9 +69,9 @@ class ProjectControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         // check redirect to list of categories
-//        $this->assertTrue($client->getResponse()->isRedirect());
         $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_portfolio_project_edit', array('id' => 1) )));
 
+        // @todo дальше лишние проверки. достаточно проверить или проект создался в БД
         $crawler = $client->followRedirect();
 
         // check responce
@@ -131,7 +130,7 @@ class ProjectControllerTest extends WebTestCase
 
         $crawler = $this->fetchCrawler(
                 $this->getUrl(
-                        'portfolioCategoryProjectView',
+                        'portfolio_project_view',
                         array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
                 ), 'GET', true, true);
 
@@ -142,7 +141,7 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('html:contains("' . $description . '")')->count());
         $this->assertEquals(1, $crawler->filter('a[href="http://preorder.it"]')->count());
 
-        $epriceUrl = $this->getUrl('portfolioCategoryProjectView',
+        $epriceUrl = $this->getUrl('portfolio_project_view',
                 array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz'));
         // check display prev/next project url
         $this->assertEquals(1, $crawler->filter('#content a[href="' . $epriceUrl . '"]')->count());
@@ -161,14 +160,12 @@ class ProjectControllerTest extends WebTestCase
         // Check project preorder.it
         $crawler = $this->fetchCrawler(
                 $this->getUrl(
-                        'portfolioCategoryProjectView', array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
+                        'portfolio_project_view', array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
                 ), 'GET', true, true);
-
 
         // check display project info
         $this->assertEquals(1, $crawler->filter('html:contains("Над проектом работали")')->count());
         $this->assertEquals(1, $crawler->filter('html #sidebar dl>dt:contains("art-director and designer")')->count());
-
     }
 
     public function testEmptyProjectUsersList()
@@ -181,7 +178,7 @@ class ProjectControllerTest extends WebTestCase
         // Check project eprice.kz
         $crawler = $this->fetchCrawler(
                 $this->getUrl(
-                        'portfolioCategoryProjectView', array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz')
+                        'portfolio_project_view', array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz')
                 ), 'GET', true, true);
 
 

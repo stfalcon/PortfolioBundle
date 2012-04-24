@@ -120,7 +120,7 @@ class CategoryControllerTest extends WebTestCase
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $crawler = $this->fetchCrawler(
-            $this->getUrl('portfolioCategoryView', array('slug' => 'web-development')), 'GET', true, true
+            $this->getUrl('portfolio_category_view', array('slug' => 'web-development')), 'GET', true, true
         );
 
         $this->assertEquals(1, $crawler->filter('html:contains("Web Development")')->count());
@@ -132,7 +132,7 @@ class CategoryControllerTest extends WebTestCase
     {
         $this->loadFixtures(array());
         $client = $this->makeClient(true);
-        $crawler = $client->request('GET', $this->getUrl('portfolioCategoryView', array('slug' => 'web-design')));
+        $crawler = $client->request('GET', $this->getUrl('portfolio_category_view', array('slug' => 'web-design')));
 
         // check 404
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
@@ -223,13 +223,13 @@ class CategoryControllerTest extends WebTestCase
             'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData'
         ));
         $crawler = $this->fetchCrawler(
-            $this->getUrl('portfolioCategoryView', array('slug' => 'web-development')), 'GET', true, true
+            $this->getUrl('portfolio_category_view', array('slug' => 'web-development')), 'GET', true, true
         );
         $this->assertEquals(1, $crawler->filter('.pagination .current:contains("1")')->count());
         $this->assertEquals(6, $crawler->filter('img.project-thumb')->count());
 
         $crawler = $this->fetchCrawler(
-            $this->getUrl('portfolioCategoryView', array('slug' => 'web-development', 'page'=> 2)), 'GET', true, true
+            $this->getUrl('portfolio_category_view', array('slug' => 'web-development', 'page'=> 2)), 'GET', true, true
         );
         $this->assertEquals(1, $crawler->filter('.pagination .current:contains("2")')->count());
         $this->assertEquals(2, $crawler->filter('img.project-thumb')->count());

@@ -6,12 +6,29 @@ use Doctrine\ORM\EntityRepository;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 
 /**
- * ProjectRepository
- *
- * @author Stepan Tanasiychuk <ceo@stfalcon.com>
+ * Project Repository
  */
 class ProjectRepository extends EntityRepository
 {
+
+    /**
+     * Get query for select projects by category
+     *
+     * @param Category $category
+     *
+     * @return Doctrine\ORM\Query
+     */
+    public function getQueryForSelectProjectsByCategory(Category $category)
+    {
+        return $this->createQueryBuilder('p')
+                ->select('p')
+                ->join('p.categories', 'c')
+                ->where('c.id = ?1')
+                ->orderBy('p.ordernum', 'ASC')
+                ->setParameter(1, $category->getId())
+                ->getQuery();
+    }
+
     /**
      * Get all projects from this category
      *
@@ -21,59 +38,7 @@ class ProjectRepository extends EntityRepository
      */
     public function getProjectsByCategory(Category $category)
     {
-        $query = $this->getEntityManager()
-                ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
-                    JOIN p.categories c WHERE c.id = ?1 ORDER BY p.ordernum ASC');
-        $query->setParameter(1, $category->getId());
-
-        return $query->getResult();
-    }
-
-    /**
-     * Get all projects
-     *
-     * @return array
-     */
-    public function getAllProjects()
-    {
-        $query = $this->getEntityManager()
-                ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
-                    ORDER BY p.ordernum ASC');
-
-        return $query->getResult();
-    }
-
-    /**
-     * Project Query For Pagination
-     * @param int $categoryId
-     *
-     * @return Doctrine\ORM\Query
-     */
-    public function getProjectsQueryForPagination($categoryId = 0)
-    {
-        return $this->createQueryBuilder('p')
-                ->select('p')
-                ->join('p.categories', 'c')
-                ->where('c.id = ?1')
-                ->orderBy('p.ordernum', 'ASC')
-                ->setParameter(1, $categoryId)
-                ->getQuery();
-    }
-
-    /**
-     * get projects for index page
-     * @param Category $category
-     *
-     * @return array
-     */
-    public function getIndexPageProjectsForCategory(Category $category)
-    {
-        $query = $this->getEntityManager()
-                ->createQuery('SELECT p FROM StfalconPortfolioBundle:Project p
-                    JOIN p.categories c WHERE c.id = ?1 AND p.onFrontPage = 1
-                    ORDER BY p.ordernum ASC');
-        $query->setParameter(1, $category->getId());
-
-        return $query->getResult();
+        return $this->getQueryForSelectProjectsByCategory($category)
+                ->getResult();
     }
 }

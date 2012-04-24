@@ -39,9 +39,9 @@ class MenuBuilderTest extends WebTestCase
     {
         $client = $this->createClient();
 
-        $projectListUrl = $this->getUrl('portfolioCategoryView', array('slug' => 'web-development'));
+        $projectListUrl = $this->getUrl('portfolio_category_view', array('slug' => 'web-development'));
 
-        $crawler = $client->request('GET', $this->getUrl('portfolioCategoryProjectView', array(
+        $crawler = $client->request('GET', $this->getUrl('portfolio_project_view', array(
             'categorySlug' => 'web-development',
             'projectSlug'  => $projectSlug
         )));

@@ -9,6 +9,8 @@ use Vich\UploaderBundle\Naming\NamerInterface as NamerInterface;
 class ProjectNaming implements NamerInterface
 {
     /**
+     * Generate unique name for project image
+     *
      * @param Project $obj
      * @param string $field
      *

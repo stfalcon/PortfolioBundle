@@ -13,10 +13,8 @@ use Imagine;
 /**
  * Project entity
  *
- * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  * @ORM\Table(name="portfolio_projects")
  * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\ProjectRepository")
- * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
  */
 class Project
@@ -50,7 +48,7 @@ class Project
     private $slug;
 
     /**
-     * @var text $description
+     * @var string $description
      *
      * @Assert\NotBlank()
      * @Assert\MinLength(10)
@@ -59,7 +57,7 @@ class Project
     private $description;
 
     /**
-     * @var text $url
+     * @var string $url
      *
      * @Assert\Url
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
@@ -90,13 +88,13 @@ class Project
     private $updated;
 
     /**
+     * @var File $image
+     *
      * @Assert\File(
      *     maxSize="4M",
      *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
      * )
      * @Vich\UploadableField(mapping="project_image", fileNameProperty="image")
-     *
-     * @var File $image
      */
     protected $imageFile;
 
@@ -116,8 +114,10 @@ class Project
     private $ordernum = 0;
 
     /**
-     * @var bool $onFrontPage
      * Check if this project can be published on main page of the site
+     *
+     * @var bool $onFrontPage
+     *
      * @ORM\Column(name="onFrontPage", type="boolean")
      */
     private $onFrontPage = true;
@@ -138,7 +138,7 @@ class Project
     private $categories;
 
     /**
-     * @var text $users
+     * @var string $users
      *
      * @ORM\Column(name="users", type="text", nullable=true)
      */
@@ -177,11 +177,11 @@ class Project
     /**
      * Add category to project
      *
-     * @param \Stfalcon\Bundle\PortfolioBundle\Entity\Category $category Category entity
+     * @param Category $category Category entity
      *
      * @return void
      */
-    public function addCategory(\Stfalcon\Bundle\PortfolioBundle\Entity\Category $category)
+    public function addCategory(Category $category)
     {
         $this->categories[] = $category;
     }
@@ -465,6 +465,10 @@ class Project
      */
     public function setImageFile($imageFile)
     {
+        if (null === $imageFile) {
+            return;
+        }
+
         $this->imageFile = $imageFile;
         $imagine = new Imagine\Gd\Imagine();
         $imagePath = $imagine->open($this->imageFile->getPathName());

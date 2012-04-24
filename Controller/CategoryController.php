@@ -3,23 +3,16 @@
 namespace Stfalcon\Bundle\PortfolioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-
 use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
-use Stfalcon\Bundle\PortfolioBundle\Form\CategoryForm;
 
 /**
- * CRUD categories. Services widget.
- *
- * @author Stepan Tanasiychuk <ceo@stfalcon.com>
+ * Category Controller
  */
 class CategoryController extends Controller
 {
@@ -32,23 +25,20 @@ class CategoryController extends Controller
      * @return array
      * @Route(
      *      "/portfolio/{slug}/{page}",
-     *      name="portfolioCategoryView",
+     *      name="portfolio_category_view",
      *      requirements={"page" = "\d+"},
      *      defaults={"page" = "1"}
      * )
      * @Template()
      */
-    public function viewAction(Category $category)
+    public function viewAction(Category $category, $page = 1)
     {
-        $knpPaginator = $this->get('knp_paginator');
-        $paginator = $knpPaginator->paginate(
-            $this->get('doctrine.orm.entity_manager')
-                ->getRepository("StfalconPortfolioBundle:Project")
-                ->getProjectsQueryForPagination($category->getId()),
-            $this->getRequest()->get('page', 1) /*page number*/,
-            6 /*limit per page*/
-        );
-        $paginator->setUsedRoute('portfolioCategoryView');
+        $query = $this->get('doctrine.orm.entity_manager')
+            ->getRepository("StfalconPortfolioBundle:Project")
+            ->getQueryForSelectProjectsByCategory($category);
+
+        $paginator = $this->get('knp_paginator')->paginate($query, $page, 6);
+        $paginator->setUsedRoute('portfolio_category_view');
 
         if ($this->has('application_default.menu.breadcrumbs')) {
             $breadcrumbs = $this->get('application_default.menu.breadcrumbs');
@@ -58,7 +48,7 @@ class CategoryController extends Controller
 
         return array(
             'category' => $category,
-            'paginator' => $paginator,
+            'paginator' => $paginator, // @todo переименовать переменную
         );
     }
 
@@ -73,26 +63,11 @@ class CategoryController extends Controller
      */
     public function servicesAction(Category $category, $project = null)
     {
+        // @todo помоему этот блок отключен
         $categories = $this->get('doctrine.orm.entity_manager')
                 ->getRepository("StfalconPortfolioBundle:Category")->getAllCategories();
 
         return array('categories' => $categories, 'currentProject' => $project, 'currentCategory' => $category);
-    }
-
-    /**
-     * Show projects by category
-     *
-     * @param Category $category
-     *
-     * @return array
-     * @Route("/admin/portfolio/category/{slug}/projects", name="portfolioProjectsByCategory")
-     * @Template()
-     */
-    public function projectsAction(Category $category)
-    {
-        return array(
-            'category' => $category,
-        );
     }
 
     /**
@@ -104,6 +79,8 @@ class CategoryController extends Controller
      */
     public function orderProjects()
     {
+        // @todo переименовать метод и роут
+        // @todo перенести сортировку проектов в админку
         $projects = $this->getRequest()->get('projects');
         $em = $this->get('doctrine')->getEntityManager();
         foreach ($projects as $projectInfo) {

@@ -1,4 +1,4 @@
-{% extends 'StfalconPortfolioBundle::internal.html.twig' %}
+{% extends 'StfalconPortfolioBundle::layout.html.twig' %}
 
 {% block content %}
     <h1>{{ category.name }}</h1>
@@ -11,7 +11,7 @@
         <ul class="projects">
             {% for project in paginator %}
                 <li>
-                        <a href="{{ path('portfolioCategoryProjectView', { 'categorySlug': category.slug, 'projectSlug': project.slug }) }}">
+                        <a href="{{ path('portfolio_project_view', { 'categorySlug': category.slug, 'projectSlug': project.slug }) }}">
                             <span>
                                 <img src="/uploads/portfolio/projects/{{ project.image }}" width="240" height="198"
                                      alt="{{ project.name }}" title="{{ project.name }}" class="project-thumb" />

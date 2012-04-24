@@ -4,19 +4,14 @@ namespace Stfalcon\Bundle\PortfolioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Stfalcon\Bundle\PortfolioBundle\Form\ProjectForm;
-use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
-use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
+use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
+
 /**
- * CRUD projects. Show users and nearby projects widget.
- *
- * @author Stepan Tanasiychuk <ceo@stfalcon.com>
+ * Project controller
  */
 class ProjectController extends Controller
 {
@@ -27,11 +22,13 @@ class ProjectController extends Controller
      * @param string $projectSlug  Slug of project
      *
      * @return array
-     * @Route("/portfolio/{categorySlug}/{projectSlug}", name="portfolioCategoryProjectView")
+     * @Route("/portfolio/{categorySlug}/{projectSlug}", name="portfolio_project_view")
      * @Template()
      */
     public function viewAction($categorySlug, $projectSlug)
     {
+        // @todo упростить когда что-то разрулят с этим PR https://github.com/sensio/SensioFrameworkExtraBundle/pull/42
+
         // try find category by slug
         $category = $this->_findCategoryBySlug($categorySlug);
 
@@ -43,7 +40,7 @@ class ProjectController extends Controller
             $breadcrumbs->addChild(
                 $category->getName(),
                 array(
-                    'route' => 'portfolioCategoryView',
+                    'route' => 'portfolio_category_view',
                     'routeParameters' => array('slug' => $category->getSlug())
                 )
             );
@@ -65,21 +62,21 @@ class ProjectController extends Controller
     public function nearbyProjectsAction($categorySlug, $projectSlug)
     {
         // try find category by slug
-        $categorySlug = $this->_findCategoryBySlug($categorySlug);
+        $category = $this->_findCategoryBySlug($categorySlug);
 
         // try find project by slug
-        $projectSlug = $this->_findProjectBySlug($projectSlug);
+        $project = $this->_findProjectBySlug($projectSlug);
 
         $em = $this->get('doctrine')->getEntityManager();
 
         // get all projects from this category
         $projects = $em->getRepository("StfalconPortfolioBundle:Project")
-                ->getProjectsByCategory($categorySlug);
+                ->getProjectsByCategory($category);
 
         // get next and previous projects from this category
         $i = 0; $previousProject = null; $nextProject = null;
         foreach ($projects as $p) {
-            if ($projectSlug->getId() == $p->getId()) {
+            if ($project->getId() == $p->getId()) {
                 $previousProject = isset($projects[$i-1]) ? $projects[$i-1] : null;
                 $nextProject     = isset($projects[$i+1]) ? $projects[$i+1] : null;
                 break;
@@ -87,7 +84,7 @@ class ProjectController extends Controller
             $i++;
         }
 
-        return array('category' => $categorySlug, 'previousProject' => $previousProject, 'nextProject' => $nextProject);
+        return array('category' => $category, 'previousProject' => $previousProject, 'nextProject' => $nextProject);
     }
 
     /**
@@ -120,10 +117,9 @@ class ProjectController extends Controller
     private function _findProjectBySlug($slug)
     {
         $em = $this->get('doctrine')->getEntityManager();
-
-        // try find project by slug
         $project = $em->getRepository("StfalconPortfolioBundle:Project")
                 ->findOneBy(array('slug' => $slug));
+
         if (!$project) {
             throw new NotFoundHttpException('The project does not exist.');
         }

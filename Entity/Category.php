@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Category entity. It groups projects in portfolio
  *
- * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  * @ORM\Table(name="portfolio_categories")
  * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\CategoryRepository")
  */
@@ -55,7 +54,10 @@ class Category
     /**
      * @var Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\PortfolioBundle\Entity\Project", mappedBy="categories")
+     * @ORM\ManyToMany(
+     *      targetEntity="Stfalcon\Bundle\PortfolioBundle\Entity\Project",
+     *      mappedBy="categories", fetch="EXTRA_LAZY"
+     * )
      * @ORM\OrderBy({"ordernum" = "ASC", "date" = "DESC"})
      */
     private $projects;
