@@ -6,7 +6,7 @@ use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 
 /**
- * test Project entity
+ * Test Project entity
  */
 class ProjectEntityTest extends \PHPUnit_Framework_TestCase
 {

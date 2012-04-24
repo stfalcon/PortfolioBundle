@@ -37,7 +37,7 @@ class ProjectAdmin extends Admin
         ;
     }
 
-    // @todo с sortable проблемы начиная со второй страницы
+    // @todo с sortable проблемы начиная со второй страницы (проекты перемещаются на первую страницу)
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper

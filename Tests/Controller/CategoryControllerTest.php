@@ -6,8 +6,6 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * Test cases for CategoryController
- *
- * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class CategoryControllerTest extends WebTestCase
 {
@@ -48,7 +46,7 @@ class CategoryControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         // check redirect to list of categories
-        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_portfolio_category_edit', array('id' => 1) )));
+        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_portfolio_category_edit', array('id' => 1))));
 
         $crawler = $client->followRedirect();
 
@@ -104,7 +102,7 @@ class CategoryControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         // check redirect to list of categories
-        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_portfolio_category_edit', array('id' => $category->getId()) )));
+        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_portfolio_category_edit', array('id' => $category->getId()))));
 
         $crawler = $client->followRedirect();
 
@@ -199,22 +197,6 @@ class CategoryControllerTest extends WebTestCase
         // check 404
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
-
-     public function _testListProjectsByCategory()
-     {
-        $this->loadFixtures(array(
-            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
-            'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData'
-        ));
-        $crawler = $this->fetchCrawler(
-            $this->getUrl('portfolioProjectsByCategory', array('slug' => 'web-development')), 'GET', true, true
-        );
-        $this->assertEquals(1, $crawler->filter('h4:contains("Projects in category: Web Development")')->count());
-
-        $this->assertEquals(8, $crawler->filter('#listProjects li')->count());
-        $this->assertEquals(1, $crawler->filter('#listProjects li:contains("preorder.it")')->count());
-        $this->assertEquals(7, $crawler->filter('#listProjects li:contains("eprice.kz")')->count());
-     }
 
      public function testPortfolioPagination()
      {

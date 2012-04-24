@@ -6,8 +6,6 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * Test cases for ProjectController
- *
- * @author Stepan Tanasiychuk <ceo@stfalcon.com>
  */
 class ProjectControllerTest extends WebTestCase
 {
@@ -69,7 +67,7 @@ class ProjectControllerTest extends WebTestCase
         $crawler = $client->submit($form);
 
         // check redirect to list of categories
-        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_portfolio_project_edit', array('id' => 1) )));
+        $this->assertTrue($client->getResponse()->isRedirect($this->getUrl('admin_bundle_portfolio_project_edit', array('id' => 1))));
 
         // @todo дальше лишние проверки. достаточно проверить или проект создался в БД
         $crawler = $client->followRedirect();
@@ -87,7 +85,7 @@ class ProjectControllerTest extends WebTestCase
     {
         // Stop here and mark this test as incomplete.
         $this->markTestIncomplete(
-          'This test has not been implemented yet.'
+            'This test has not been implemented yet.'
         );
     }
 
@@ -95,7 +93,7 @@ class ProjectControllerTest extends WebTestCase
     {
         // Stop here and mark this test as incomplete.
         $this->markTestIncomplete(
-          'This test has not been implemented yet.'
+            'This test has not been implemented yet.'
         );
     }
 
@@ -111,7 +109,7 @@ class ProjectControllerTest extends WebTestCase
         $project = $em->getRepository("StfalconPortfolioBundle:Project")->findOneBy(array('slug' => 'preorder-it'));
 
         // delete project
-        $crawler = $client->request('POST', $this->getUrl('admin_bundle_portfolio_project_delete', array('id' => $project->getId())), array('_method' => 'DELETE'));
+        $client->request('POST', $this->getUrl('admin_bundle_portfolio_project_delete', array('id' => $project->getId())), array('_method' => 'DELETE'));
 
         // check if project was removed from DB
         $em->detach($project);
@@ -123,7 +121,7 @@ class ProjectControllerTest extends WebTestCase
     {
         $this->loadFixtures(array());
         $client = $this->makeClient(true);
-        $crawler = $client->request('POST', $this->getUrl('admin_bundle_portfolio_project_delete', array('id' => 0)));
+        $client->request('POST', $this->getUrl('admin_bundle_portfolio_project_delete', array('id' => 0)));
 
         // check 404
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
@@ -137,10 +135,10 @@ class ProjectControllerTest extends WebTestCase
                 ));
 
         $crawler = $this->fetchCrawler(
-                $this->getUrl(
-                        'portfolio_project_view',
-                        array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
-                ), 'GET', true, true);
+            $this->getUrl(
+                'portfolio_project_view',
+                array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
+            ), 'GET', true, true);
 
         $description = "Press-releases and reviews of the latest electronic novelties. The possibility to leave a pre-order.";
 
@@ -149,8 +147,10 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('html:contains("' . $description . '")')->count());
         $this->assertEquals(1, $crawler->filter('a[href="http://preorder.it"]')->count());
 
-        $epriceUrl = $this->getUrl('portfolio_project_view',
-                array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz'));
+        $epriceUrl = $this->getUrl(
+            'portfolio_project_view',
+            array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz')
+        );
         // check display prev/next project url
         $this->assertEquals(1, $crawler->filter('#content a[href="' . $epriceUrl . '"]')->count());
 
@@ -167,9 +167,9 @@ class ProjectControllerTest extends WebTestCase
 
         // Check project preorder.it
         $crawler = $this->fetchCrawler(
-                $this->getUrl(
-                        'portfolio_project_view', array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
-                ), 'GET', true, true);
+            $this->getUrl(
+                'portfolio_project_view', array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
+            ), 'GET', true, true);
 
         // check display project info
         $this->assertEquals(1, $crawler->filter('html:contains("Над проектом работали")')->count());
@@ -185,13 +185,13 @@ class ProjectControllerTest extends WebTestCase
 
         // Check project eprice.kz
         $crawler = $this->fetchCrawler(
-                $this->getUrl(
-                        'portfolio_project_view', array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz')
-                ), 'GET', true, true);
+            $this->getUrl(
+                'portfolio_project_view', array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz')
+            ), 'GET', true, true);
 
 
         // check display project info
         $this->assertEquals(0, $crawler->filter('html:contains("Над проектом работали")')->count());
         $this->assertEquals(0, $crawler->filter('html #sidebar dl>dt:contains("art-director and designer")')->count());
-     }
+    }
 }

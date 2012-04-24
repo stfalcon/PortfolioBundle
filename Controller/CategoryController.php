@@ -20,7 +20,7 @@ class CategoryController extends Controller
      * View category
      *
      * @param Category $category
-     * @param int $page
+     * @param int      $page
      *
      * @return array
      * @Route(

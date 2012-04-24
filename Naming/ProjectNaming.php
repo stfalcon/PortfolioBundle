@@ -11,10 +11,10 @@ class ProjectNaming implements NamerInterface
     /**
      * Generate unique name for project image
      *
-     * @param Project $obj
-     * @param string $field
+     * @param object $obj   The object the upload is attached to.
+     * @param string $field The name of the uploadable field to generate a name for.
      *
-     * @return string
+     * @return string The file name.
      */
     public function name($obj, $field)
     {
