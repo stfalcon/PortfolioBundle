@@ -11,16 +11,6 @@ use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 class ProjectEntityTest extends \PHPUnit_Framework_TestCase
 {
 
-    /**
-     * Get path to test project image
-     *
-     * @return string
-     */
-    private function _getTestImagePath()
-    {
-        return \realpath(__DIR__ . '/Resources/files/projects/preorder-it/data/index.png');
-    }
-
     public function testEmptyProjectIdisNull()
     {
         $project = new Project();
@@ -62,48 +52,6 @@ class ProjectEntityTest extends \PHPUnit_Framework_TestCase
         $project = new Project();
         $project->setImage('image.jpg');
         $this->assertEquals($project->getImage(), 'image.jpg');
-    }
-
-    public function _testRemoveImageMethod()
-    {
-        $project = new Project();
-        $project->setPathToUploads(realpath(__DIR__ . '/../uploads'));
-
-        // try remove not exist image
-        $this->assertFalse($project->removeImage());
-
-        $project->setImage($this->_getTestImagePath());
-
-        $imagePath = $project->getImagePath();
-
-        // try remove exist image
-        $this->assertTrue($project->removeImage());
-        // check or image does not exist
-        $this->assertFalse(\file_exists($imagePath));
-    }
-
-    public function _testRemoveOldImageWhenUpdating()
-    {
-        $project = new Project();
-        $project->setPathToUploads(realpath(__DIR__ . '/../uploads'));
-
-        $this->assertTrue(\file_exists($this->_getTestImagePath()));
-
-        // upload first image
-        $project->setImage($this->_getTestImagePath());
-        $firstImagePath = $project->getImagePath();
-        $this->assertTrue(\file_exists($firstImagePath), 'Image file is not exist');
-
-        // upload second image
-        $project->setImage($this->_getTestImagePath());
-        $secondImagePath = $project->getImagePath();
-        // check or old file does not exist
-        $this->assertFalse(\file_exists($firstImagePath), 'Old image file is exist');
-        // check or new file is exist
-        $this->assertTrue(\file_exists($secondImagePath), 'New image file is not exist');
-
-        // remove test image file
-        $project->removeImage();
     }
 
     public function testGetProjectCreated()
