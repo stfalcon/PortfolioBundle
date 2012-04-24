@@ -19,8 +19,8 @@ class CategoryController extends Controller
     /**
      * View category
      *
-     * @param Category $category
-     * @param int      $page
+     * @param Category $category Category object
+     * @param int      $page     Page number
      *
      * @return array
      * @Route(
