@@ -83,14 +83,22 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("wallpaper.in.ua")')->count());
     }
 
-//    public function testCreateInvalidProject()
-//    {
-//    }
-//
-//    public function testEditProject()
-//    {
-//    }
-//
+    public function testCreateInvalidProject()
+    {
+        // Stop here and mark this test as incomplete.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
+
+    public function testEditProject()
+    {
+        // Stop here and mark this test as incomplete.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
+
     public function testDeleteProject()
     {
         $this->loadFixtures(array(
