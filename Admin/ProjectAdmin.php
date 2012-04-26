@@ -28,11 +28,11 @@ class ProjectAdmin extends Admin
             ->add('name')
             ->add('slug')
             ->add('url')
-            ->add('description', 'textarea', array('attr' => array("class" => 'input-xxlarge')))
+            ->add('description')
             ->add('imageFile', 'file', array('required' => false))
-            ->add('date', 'date', array('required' => false))
-            ->add('categories', null, array('required' => false))
-            ->add('users', 'textarea', array('required' => false, 'attr' => array("class" => 'input-xxlarge')))
+            ->add('date', 'date')
+            ->add('categories')
+            ->add('users')
             ->add('onFrontPage', 'checkbox', array('required' => false))
         ;
     }

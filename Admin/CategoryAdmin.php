@@ -14,7 +14,7 @@ class CategoryAdmin extends Admin
         $formMapper
             ->add('slug')
             ->add('name')
-            ->add('description', 'textarea', array('attr' => array("class" => 'input-xxlarge')))
+            ->add('description')
             // @todo сделать сортировку через sortable (по аналогии с проектами)
             ->add('ordernum')
         ;
