@@ -42,7 +42,6 @@ class CategoryController extends Controller
 
         if ($this->has('application_default.menu.breadcrumbs')) {
             $breadcrumbs = $this->get('application_default.menu.breadcrumbs');
-            $breadcrumbs->addChild('Услуги', array('route' => 'homepage'));
             $breadcrumbs->addChild($category->getName())->setCurrent(true);
         }
 
