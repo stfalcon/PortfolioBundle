@@ -45,7 +45,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new Stfalcon\Bundle\PageBundle\StfalconPortfolioBundle(),
+        new Stfalcon\Bundle\PortfolioBundle\StfalconPortfolioBundle(),
     );
 }
 ```
