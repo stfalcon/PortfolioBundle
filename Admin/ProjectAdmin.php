@@ -29,7 +29,7 @@ class ProjectAdmin extends Admin
             ->add('slug')
             ->add('url')
             ->add('description')
-            ->add('imageFile', 'file', array('required' => false))
+            ->add('imageFile', 'file', array('required' => false, 'data_class' => 'Symfony\Component\HttpFoundation\File\File'))
             ->add('date', 'date')
             ->add('categories')
             ->add('users')

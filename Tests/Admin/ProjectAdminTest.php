@@ -50,11 +50,11 @@ class ProjectAdminTest extends WebTestCase
         $crawler = $client->request('GET', $this->getUrl('admin_bundle_portfolio_project_create', array()));
 
         $form = $crawler->selectButton('Создать и редактировать')->form();
+        $formId = substr($form->getUri(), -14);
 
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $category = $em->getRepository("StfalconPortfolioBundle:Category")->findOneBy(array('slug' => 'web-development'));
 
-        $formId = substr($form->getUri(), -14);
 
         $form[$formId . '[name]'] = 'wallpaper.in.ua';
         $form[$formId . '[slug]'] = 'wallpaper-in-ua';
