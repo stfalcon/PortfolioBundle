@@ -38,7 +38,7 @@ class CategoryAdminTest extends WebTestCase
         $inputs->first();
         $formId = str_replace("_slug", "", $inputs->current()->getAttribute('id'));
 
-        $form = $crawler->selectButton('Создать и редактировать')->form();
+        $form = $crawler->selectButton('btn_create_and_edit')->form();
 
         $form[$formId . '[name]'] = 'Web Design';
         $form[$formId . '[slug]'] = 'web-design';
@@ -70,7 +70,7 @@ class CategoryAdminTest extends WebTestCase
         $inputs->first();
         $formId = str_replace("_slug", "", $inputs->current()->getAttribute('id'));
 
-        $form = $crawler->selectButton('Создать и редактировать')->form();
+        $form = $crawler->selectButton('btn_create_and_edit')->form();
 
         $form[$formId . '[name]'] = ''; // should not be blank
         $form[$formId . '[slug]'] = ''; // should not be blank
@@ -94,7 +94,7 @@ class CategoryAdminTest extends WebTestCase
         $inputs->first();
         $formId = str_replace("_slug", "", $inputs->current()->getAttribute('id'));
 
-        $form = $crawler->selectButton('Сохранить')->form();
+        $form = $crawler->selectButton('btn_update_and_edit')->form();
 
         $form[$formId . '[name]'] = 'Web Design';
         $form[$formId . '[slug]'] = 'web-design';
@@ -127,7 +127,7 @@ class CategoryAdminTest extends WebTestCase
         $inputs->first();
         $formId = str_replace("_slug", "", $inputs->current()->getAttribute('id'));
 
-        $form = $crawler->selectButton('Сохранить')->form();
+        $form = $crawler->selectButton('btn_update_and_edit')->form();
 
         $form[$formId . '[name]'] = 'Web Design';
         $form[$formId . '[slug]'] = 'web-design';

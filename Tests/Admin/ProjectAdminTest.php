@@ -49,7 +49,7 @@ class ProjectAdminTest extends WebTestCase
         $client = $this->makeClient(true);
         $crawler = $client->request('GET', $this->getUrl('admin_bundle_portfolio_project_create', array()));
 
-        $form = $crawler->selectButton('Создать и редактировать')->form();
+        $form = $crawler->selectButton('btn_create_and_edit')->form();
         $formId = substr($form->getUri(), -14);
 
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
