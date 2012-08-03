@@ -37,7 +37,7 @@ class Project implements Translatable
      *
      * @Assert\NotBlank()
      * @Assert\MinLength(3)
-     * @Gedmo\Translatable
+     * @Gedmo\Translatable(fallback=true)
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -56,7 +56,7 @@ class Project implements Translatable
      *
      * @Assert\NotBlank()
      * @Assert\MinLength(10)
-     * @Gedmo\Translatable
+     * @Gedmo\Translatable(fallback=true)
      * @ORM\Column(name="description", type="text")
      */
     private $description;
