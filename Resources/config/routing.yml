@@ -1,7 +1,8 @@
-_portfolio_category:
-    resource: "@StfalconPortfolioBundle/Controller/CategoryController.php"
+_portfolio:
+    resource: "@StfalconPortfolioBundle/Controller"
     type:     annotation
-
-_portfolio_project:
-    resource: "@StfalconPortfolioBundle/Controller/ProjectController.php"
-    type:     annotation
+    prefix:   /{_locale}/portfolio
+    requirements:
+        _locale: ru|uk|en
+    defaults:
+        _locale: %locale%

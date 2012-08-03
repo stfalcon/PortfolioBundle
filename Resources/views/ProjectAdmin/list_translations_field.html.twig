@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{%- block field %}
+    {% if value %}
+        {% for locale in value if locale.field == 'name' %}
+            {{ locale|upper }}
+        {% endfor %}
+    {% endif %}
+{% endblock -%}

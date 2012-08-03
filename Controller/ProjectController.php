@@ -22,7 +22,7 @@ class ProjectController extends Controller
      * @param string $projectSlug  Slug of project
      *
      * @return array
-     * @Route("/portfolio/{categorySlug}/{projectSlug}", name="portfolio_project_view")
+     * @Route("/{categorySlug}/{projectSlug}", name="portfolio_project_view")
      * @Template()
      */
     public function viewAction($categorySlug, $projectSlug)
