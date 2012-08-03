@@ -13,8 +13,19 @@ class CategoryAdmin extends Admin
     {
         $formMapper
             ->add('slug')
-            ->add('name')
-            ->add('description')
+            ->add('name', 'translatable_field', array(
+                'field'          => 'name',
+                'attr'           => array('class' => 'controls'),
+                'property_path'  => 'translations',
+                'personal_translation' => 'Stfalcon\Bundle\PortfolioBundle\Entity\CategoryTranslation',
+            ))
+            ->add('description', 'translatable_field', array(
+                'field'          => 'description',
+                'widget'         => 'textarea',
+                'attr'           => array('class' => 'controls'),
+                'property_path'  => 'translations',
+                'personal_translation' => 'Stfalcon\Bundle\PortfolioBundle\Entity\CategoryTranslation',
+            ))
             // @todo сделать сортировку через sortable (по аналогии с проектами)
             ->add('ordernum')
         ;

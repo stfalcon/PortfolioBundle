@@ -34,6 +34,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $preorder->setUsers('<dl><dt>art-director and designer</dt><dd>Oleg Ulasyuk</dd></dl>');
         $preorder->setOnFrontPage(0);
         $preorder->setOrdernum(0);
+        $preorder->setTranslatableLocale('ru');
         $preorder->addCategory($manager->merge($this->getReference('category-development')));
         $manager->persist($preorder);
 
@@ -45,6 +46,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $eprice->setDescription('Comparison of the prices of mobile phones, computers, monitors, audio and video in Kazakhstan');
         $eprice->setOnFrontPage(1);
         $eprice->setOrdernum(1);
+        $eprice->setTranslatableLocale('ru');
         $eprice->addCategory($manager->merge($this->getReference('category-development')));
         $manager->persist($eprice);
 
@@ -62,6 +64,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
             $example->setDescription('As described in RFC 2606, we maintain a number of domains such as EXAMPLE.COM and EXAMPLE.ORG for documentation purposes. These domains may be used as illustrative examples in documents without prior coordination with us. They are not available for registration.');
             $example->setOnFrontPage(0);
             $example->setOrdernum(2 + $i);
+            $example->setTranslatableLocale('ru');
             $example->addCategory($manager->merge($this->getReference('category-development')));
             $manager->persist($example);
         }

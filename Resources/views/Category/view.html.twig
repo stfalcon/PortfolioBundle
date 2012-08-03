@@ -11,7 +11,7 @@
         <ul class="projects">
             {% for project in paginator %}
                 <li>
-                        <a href="{{ path('portfolio_project_view', { 'categorySlug': category.slug, 'projectSlug': project.slug }) }}">
+                        <a href="{{ path('portfolio_project_view', { 'categorySlug': category.slug, 'projectSlug': project.slug, '_locale': app.request.locale }) }}">
                             <span>
                                 <img src="/uploads/portfolio/projects/{{ project.image }}" width="240" height="198"
                                      alt="{{ project.name }}" title="{{ project.name }}" class="project-thumb" />

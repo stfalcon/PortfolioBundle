@@ -20,7 +20,7 @@ class ProjectControllerTest extends WebTestCase
         $crawler = $this->fetchCrawler(
             $this->getUrl(
                 'portfolio_project_view',
-                array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it')
+                array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it', '_locale' => 'ru')
             ), 'GET', true, true);
 
         $description = "Press-releases and reviews of the latest electronic novelties. The possibility to leave a pre-order.";
@@ -32,7 +32,7 @@ class ProjectControllerTest extends WebTestCase
 
         $epriceUrl = $this->getUrl(
             'portfolio_project_view',
-            array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz')
+            array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz', '_locale' => 'ru')
         );
         // check display prev/next project url
         $this->assertEquals(1, $crawler->filter('#content a[href="' . $epriceUrl . '"]')->count());
@@ -50,7 +50,7 @@ class ProjectControllerTest extends WebTestCase
 
         // Check project preorder.it
         $urlProjectView = $this->getUrl('portfolio_project_view',
-            array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it'));
+            array('categorySlug' => 'web-development', 'projectSlug' => 'preorder-it', '_locale' => 'ru'));
         $crawler = $this->fetchCrawler($urlProjectView, 'GET', true, true);
 
         // check display project info
@@ -67,7 +67,7 @@ class ProjectControllerTest extends WebTestCase
 
         // Check project eprice.kz
         $url = $this->getUrl('portfolio_project_view',
-            array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz'));
+            array('categorySlug' => 'web-development', 'projectSlug' => 'eprice-kz', '_locale' => 'ru'));
         $crawler = $this->fetchCrawler($url, 'GET', true, true);
 
         // check display project info
