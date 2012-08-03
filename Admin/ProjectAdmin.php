@@ -25,14 +25,30 @@ class ProjectAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
+            ->add('name', 'translatable_field', array(
+                'field'          => 'name',
+                'property_path'  => 'translations',
+                'personal_translation' => 'Stfalcon\Bundle\PortfolioBundle\Entity\ProjectTranslation',
+            ))
             ->add('slug')
             ->add('url')
-            ->add('description')
+            ->add('description', 'translatable_field', array(
+                'field'          => 'description',
+                'widget'         => 'textarea',
+                'attr'           => array('class' => 'controls'),
+                'property_path'  => 'translations',
+                'personal_translation' => 'Stfalcon\Bundle\PortfolioBundle\Entity\ProjectTranslation',
+            ))
             ->add('imageFile', 'file', array('required' => false, 'data_class' => 'Symfony\Component\HttpFoundation\File\File'))
             ->add('date', 'date')
             ->add('categories')
-            ->add('users')
+            ->add('users', 'translatable_field', array(
+                'field'          => 'users',
+                'widget'         => 'textarea',
+                'attr'           => array('class' => 'controls'),
+                'property_path'  => 'translations',
+                'personal_translation' => 'Stfalcon\Bundle\PortfolioBundle\Entity\ProjectTranslation',
+            ))
             ->add('onFrontPage', 'checkbox', array('required' => false))
         ;
     }

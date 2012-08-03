@@ -20,6 +20,11 @@
             <argument />
         </service>
 
+        <service id="form.type.translatable" class="Stfalcon\Bundle\PortfolioBundle\Form\TranslatedFieldType">
+           <tag name="form.type" alias="translatable_field"/>
+           <argument type="service" id="service_container" />
+        </service>
+
         <service id="stfalcon_portfolio.admin.project" class="%stfalcon_portfolio.admin.project.class%">
             <tag name="sonata.admin" manager_type="orm" group="PortfolioBundle" label="Projects" />
             <argument />

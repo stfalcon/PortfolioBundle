@@ -6,13 +6,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Gedmo\Mapping\Annotation as Gedmo,
+    Gedmo\Translatable\Translatable;
+
 /**
  * Category entity. It groups projects in portfolio
  *
  * @ORM\Table(name="portfolio_categories")
  * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\CategoryRepository")
+ * @Gedmo\TranslationEntity(class="Stfalcon\Bundle\PortfolioBundle\Entity\CategoryTranslation")
  */
-class Category
+class Category implements Translatable
 {
 
     /**
@@ -27,9 +31,10 @@ class Category
     /**
      * @var string $name
      *
-     * @Assert\NotBlank()
-     * @Assert\MinLength(3)
-     * @ORM\Column(name="name", type="string", length=255)
+     * //@Assert\NotBlank()
+     * //@Assert\MinLength(3)
+     * @Gedmo\Translatable
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -43,16 +48,17 @@ class Category
     private $slug;
 
     /**
-     * @var text $description
+     * @var string $description
      *
-     * @Assert\NotBlank()
-     * @Assert\MinLength(10)
-     * @ORM\Column(name="description", type="text")
+     * //@Assert\NotBlank()
+     * //@Assert\MinLength(10)
+     * @Gedmo\Translatable
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @var Doctrine\Common\Collections\ArrayCollection
+     * @var ArrayCollection
      *
      * @ORM\ManyToMany(
      *      targetEntity="Stfalcon\Bundle\PortfolioBundle\Entity\Project",
@@ -63,7 +69,6 @@ class Category
     private $projects;
 
     /**
-     *
      * @var integer
      *
      * @ORM\Column(name="ordernum", type="integer")
@@ -71,13 +76,32 @@ class Category
     private $ordernum = 0;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *   targetEntity="CategoryTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    private $translations;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
+
+    /**
      * Initialization properties for new category entity
      *
-     * @return void
+     * @return Category
      */
     public function __construct()
     {
-        $this->projects = new ArrayCollection();
+        $this->projects     = new ArrayCollection();
+        $this->translations = new ArrayCollection();
     }
 
     /**
@@ -169,11 +193,11 @@ class Category
     /**
      * Add project to category
      *
-     * @param \Stfalcon\Bundle\PortfolioBundle\Entity\Project $project Project object
+     * @param Project $project Project object
      *
      * @return void
      */
-    public function addProject(\Stfalcon\Bundle\PortfolioBundle\Entity\Project $project)
+    public function addProject(Project $project)
     {
         $this->projects[] = $project;
     }
@@ -208,4 +232,36 @@ class Category
         $this->ordernum = $ordernum;
     }
 
+    /**
+     * Gets translation
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * @param CategoryTranslation $translation
+     */
+    public function addTranslation(CategoryTranslation $translation)
+    {
+        $this->translations[] = $translation;
+        $translation->setObject($this);
+    }
+
+    /**
+     * @param $translations
+     */
+    public function setTranslations($translations)
+    {
+        $this->translations = $translations;
+    }
+
+    /**
+     * @param $locale
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
 }

@@ -56,12 +56,12 @@ class ProjectAdminTest extends WebTestCase
         $category = $em->getRepository("StfalconPortfolioBundle:Category")->findOneBy(array('slug' => 'web-development'));
 
 
-        $form[$formId . '[name]'] = 'wallpaper.in.ua';
+        $form[$formId . '[name][name_ru]'] = 'wallpaper.in.ua';
         $form[$formId . '[slug]'] = 'wallpaper-in-ua';
         $form[$formId . '[url]'] = 'http://wallpaper.in.ua';
         $form[$formId . '[imageFile]'] = $this->_getTestImagePath();
-        $form[$formId . '[description]'] = 'Free desktop wallpapers gallery.';
-        $form[$formId . '[users]'] = 'users';
+        $form[$formId . '[description][description_ru]'] = 'Free desktop wallpapers gallery.';
+        $form[$formId . '[users][users_ru]'] = 'users';
         $form[$formId . '[categories]']->select(array($category->getId()));
         $form[$formId . '[onFrontPage]'] = 1;
         $crawler = $client->submit($form);

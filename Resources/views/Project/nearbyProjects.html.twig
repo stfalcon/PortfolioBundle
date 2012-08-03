@@ -1,7 +1,7 @@
 <div class="next-prev-projects">
     <div class="next">
         {% if nextProject %}
-            <a href="{{ path('portfolio_project_view', { 'categorySlug': category.slug, 'projectSlug': nextProject.slug }) }}">
+            <a href="{{ path('portfolio_project_view', { 'categorySlug': category.slug, 'projectSlug': nextProject.slug, '_locale': app.request.locale }) }}">
                 {{ "Следующий проект"|trans }} →
             </a>
             <br />
@@ -13,7 +13,7 @@
 
     <div class="prev">
         {% if previousProject %}
-            <a href="{{ path('portfolio_project_view', { 'categorySlug': category.slug, 'projectSlug': previousProject.slug }) }}">
+            <a href="{{ path('portfolio_project_view', { 'categorySlug': category.slug, 'projectSlug': previousProject.slug, '_locale': app.request.locale }) }}">
                 ← {{ "Предыдущий проект"|trans }}
             </a>
             <br />

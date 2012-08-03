@@ -39,11 +39,12 @@ class MenuBuilderTest extends WebTestCase
     {
         $client = $this->createClient();
 
-        $projectListUrl = $this->getUrl('portfolio_category_view', array('slug' => 'web-development'));
+        $projectListUrl = $this->getUrl('portfolio_category_view', array('slug' => 'web-development', '_locale' => 'ru'));
 
         $crawler = $client->request('GET', $this->getUrl('portfolio_project_view', array(
             'categorySlug' => 'web-development',
-            'projectSlug'  => $projectSlug
+            'projectSlug'  => $projectSlug,
+            '_locale' => 'ru'
         )));
         // check if a response is successful
         $this->assertTrue($client->getResponse()->isSuccessful());

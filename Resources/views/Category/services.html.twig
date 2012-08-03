@@ -15,7 +15,7 @@
                     </li>
                 {% else %}
                     <li>
-                        <a href="{{ path('portfolio_project_view', {'categorySlug': category.slug, 'projectSlug': project.slug }) }}">
+                        <a href="{{ path('portfolio_project_view', {'categorySlug': category.slug, 'projectSlug': project.slug, '_locale': app.request.locale }) }}">
                             {{ project.name }}
                         </a>
                     </li>

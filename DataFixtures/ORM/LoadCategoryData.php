@@ -18,7 +18,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
     /**
      * Create and load categories fixtures to database
      *
-     * @param Doctrine\ORM\EntityManager $manager Entity manager object
+     * @param ObjectManager $manager Entity manager object
      *
      * @return void
      */
@@ -29,6 +29,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
         $development->setName('Web Development');
         $development->setSlug('web-development');
         $development->setDescription('In work we use Symfony2.');
+        $development->setTranslatableLocale('ru');
 
         $manager->persist($development);
         $manager->flush();

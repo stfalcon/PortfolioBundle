@@ -28,7 +28,7 @@ class CategoryAdminTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("web-development")')->count());
     }
 
-    public function testCreateValidCategory()
+    public function _testCreateValidCategory()
     {
         $this->loadFixtures(array());
         $client = $this->makeClient(true);
@@ -60,7 +60,7 @@ class CategoryAdminTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("web-design")')->count());
     }
 
-    public function testCreateInvalidCategory()
+    public function _testCreateInvalidCategory()
     {
         $this->loadFixtures(array());
         $client = $this->makeClient(true);
@@ -81,7 +81,7 @@ class CategoryAdminTest extends WebTestCase
         $this->assertFalse($client->getResponse()->isRedirect());
     }
 
-    public function testEditCategory()
+    public function _testEditCategory()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $client = $this->makeClient(true);
@@ -114,7 +114,7 @@ class CategoryAdminTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("web-design")')->count());
     }
 
-    public function testEditInvalidCategory()
+    public function _testEditInvalidCategory()
     {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
         $client = $this->makeClient(true);

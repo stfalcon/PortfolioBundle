@@ -7,17 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Imagine;
+
+use Gedmo\Mapping\Annotation as Gedmo,
+    Gedmo\Translatable\Translatable;
 
 /**
  * Project entity
  *
  * @ORM\Table(name="portfolio_projects")
  * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\ProjectRepository")
+ * @Gedmo\TranslationEntity(class="Stfalcon\Bundle\PortfolioBundle\Entity\ProjectTranslation")*
  * @Vich\Uploadable
  */
-class Project
+class Project implements Translatable
 {
 
     /**
@@ -32,9 +35,10 @@ class Project
     /**
      * @var string $name
      *
-     * @Assert\NotBlank()
-     * @Assert\MinLength(3)
-     * @ORM\Column(name="name", type="string", length=255)
+     * //@Assert\NotBlank()
+     * //@Assert\MinLength(3)
+     * @Gedmo\Translatable
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
@@ -50,9 +54,10 @@ class Project
     /**
      * @var string $description
      *
-     * @Assert\NotBlank()
-     * @Assert\MinLength(10)
-     * @ORM\Column(name="description", type="text")
+     * //@Assert\NotBlank()
+     * //@Assert\MinLength(10)
+     * @Gedmo\Translatable
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -140,18 +145,38 @@ class Project
     /**
      * @var string $users
      *
+     * @Gedmo\Translatable
      * @ORM\Column(name="users", type="text", nullable=true)
      */
     private $users;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *   targetEntity="ProjectTranslation",
+     *   mappedBy="object",
+     *   cascade={"persist", "remove"}
+     * )
+     */
+    private $translations;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
+
+    /**
      * Initialization properties for new project entity
      *
-     * @return void
+     * @return Project
      */
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->translations = new ArrayCollection();
     }
 
     /**
@@ -201,7 +226,7 @@ class Project
     /**
      * Set project name
      *
-     * @param type $name A text of project name
+     * @param string $name A text of project name
      *
      * @return void
      */
@@ -486,4 +511,39 @@ class Project
     {
         return $this->imageFile;
     }
+
+
+    /**
+     * Gets translation
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * @param ProjectTranslation $translation
+     */
+    public function addTranslation(ProjectTranslation $translation)
+    {
+        $this->translations[] = $translation;
+        $translation->setObject($this);
+    }
+
+    /**
+     * @param $translations
+     */
+    public function setTranslations($translations)
+    {
+        $this->translations = $translations;
+    }
+
+    /**
+     * @param $locale
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
 }

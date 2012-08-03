@@ -22,7 +22,11 @@ class ProjectController extends Controller
      * @param string $projectSlug  Slug of project
      *
      * @return array
-     * @Route("/portfolio/{categorySlug}/{projectSlug}", name="portfolio_project_view")
+     * @Route(
+     *      "/{_locale}/portfolio/{categorySlug}/{projectSlug}",
+     *      name="portfolio_project_view",
+     *      requirements={"_locale"="ru|en"}
+     * )
      * @Template()
      */
     public function viewAction($categorySlug, $projectSlug)
@@ -41,7 +45,7 @@ class ProjectController extends Controller
                 $category->getName(),
                 array(
                     'route' => 'portfolio_category_view',
-                    'routeParameters' => array('slug' => $category->getSlug())
+                    'routeParameters' => array('slug' => $category->getSlug(), '_locale' => $this->getRequest()->getLocale())
                 )
             );
             $breadcrumbs->addChild($project->getName())->setCurrent(true);

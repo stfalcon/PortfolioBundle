@@ -24,10 +24,10 @@ class CategoryController extends Controller
      *
      * @return array
      * @Route(
-     *      "/portfolio/{slug}/{page}",
+     *      "/{_locale}/portfolio/{slug}/{page}",
      *      name="portfolio_category_view",
-     *      requirements={"page" = "\d+"},
-     *      defaults={"page" = "1"}
+     *      requirements={"page"="\d+", "_locale"="ru|en"},
+     *      defaults={"page"="1"}
      * )
      * @Template()
      */
