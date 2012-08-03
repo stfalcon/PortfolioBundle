@@ -3,12 +3,14 @@
 namespace Stfalcon\Bundle\PortfolioBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
+use Imagine;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Imagine;
 
 /**
  * Project entity
@@ -16,8 +18,9 @@ use Imagine;
  * @ORM\Table(name="portfolio_projects")
  * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\ProjectRepository")
  * @Vich\Uploadable
+ * @Gedmo\TranslationEntity(class="Stfalcon\Bundle\PortfolioBundle\Entity\ProjectTranslation")
  */
-class Project
+class Project implements Translatable
 {
 
     /**
@@ -34,6 +37,7 @@ class Project
      *
      * @Assert\NotBlank()
      * @Assert\MinLength(3)
+     * @Gedmo\Translatable(fallback=true)
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -52,6 +56,7 @@ class Project
      *
      * @Assert\NotBlank()
      * @Assert\MinLength(10)
+     * @Gedmo\Translatable(fallback=true)
      * @ORM\Column(name="description", type="text")
      */
     private $description;
@@ -145,13 +150,35 @@ class Project
     private $users;
 
     /**
-     * Initialization properties for new project entity
+     * @var ArrayCollection
      *
-     * @return void
+     * @ORM\OneToMany(targetEntity="ProjectTranslation", mappedBy="object", cascade={"persist", "remove"})
+     */
+    protected $translations;
+
+    /**
+     * @var string $locale
+     *
+     * Required for Translatable behaviour
+     * @Gedmo\Locale
+     */
+    protected $locale;
+
+    /**
+     * Initialization properties for new project entity
      */
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+        $this->categories   = new ArrayCollection();
+        $this->translations = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     /**
@@ -189,7 +216,7 @@ class Project
     /**
      * Set categories collection to project
      *
-     * @param \Doctrine\Common\Collections\Collection $categories Categories collection
+     * @param Collection $categories Categories collection
      *
      * @return void
      */
@@ -485,5 +512,40 @@ class Project
     public function getImageFile()
     {
         return $this->imageFile;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * @param ProjectTranslation $projectTranslation
+     */
+    public function addTranslation(ProjectTranslation $projectTranslation)
+    {
+        if (!$this->translations->contains($projectTranslation)) {
+            $this->translations->add($projectTranslation);
+            $projectTranslation->setObject($this);
+        }
+    }
+
+    /**
+     * @param ProjectTranslation $projectTranslation
+     */
+    public function removeTranslation(ProjectTranslation $projectTranslation)
+    {
+        $this->translations->removeElement($projectTranslation);
+    }
+
+    /**
+     * @param Collection $translations
+     */
+    public function setTranslations(Collection $translations)
+    {
+        $this->translations = $translations;
     }
 }

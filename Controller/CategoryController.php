@@ -24,7 +24,7 @@ class CategoryController extends Controller
      *
      * @return array
      * @Route(
-     *      "/portfolio/{slug}/{page}",
+     *      "{slug}/{page}",
      *      name="portfolio_category_view",
      *      requirements={"page" = "\d+"},
      *      defaults={"page" = "1"}

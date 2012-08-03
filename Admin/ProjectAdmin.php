@@ -25,15 +25,26 @@ class ProjectAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
-            ->add('slug')
+            ->with('General')
+                ->add('name')
+                ->add('slug')
+                ->add('description')
+                ->add('translations', 'project_translations', array(
+                    'by_reference' => false,
+                    'attr' => array(
+                        'class'   => 'project-translations',
+                    ),
+                    'locales' => array('uk', 'en')
+                ))
+
             ->add('url')
-            ->add('description')
-            ->add('imageFile', 'file', array('required' => false, 'data_class' => 'Symfony\Component\HttpFoundation\File\File'))
-            ->add('date', 'date')
-            ->add('categories')
-            ->add('users')
-            ->add('onFrontPage', 'checkbox', array('required' => false))
+            ->with('Options')
+                ->add('imageFile', 'file', array('required' => false, 'data_class' => 'Symfony\Component\HttpFoundation\File\File'))
+                ->add('date', 'date')
+                ->add('categories')
+                ->add('users')
+                ->add('onFrontPage', 'checkbox', array('required' => false))
+            ->end();
         ;
     }
 
@@ -44,6 +55,9 @@ class ProjectAdmin extends Admin
             ->addIdentifier('slug')
             ->add('name')
             ->add('date')
+            ->add('translations', 'text', array(
+                'template' => 'StfalconPortfolioBundle:ProjectAdmin:list_translations_field.html.twig'
+            ))
         ;
     }
 

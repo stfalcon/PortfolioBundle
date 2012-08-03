@@ -10,6 +10,9 @@
 
         <parameter key="stfalcon_portfolio.admin.project.class">Stfalcon\Bundle\PortfolioBundle\Admin\ProjectAdmin</parameter>
         <parameter key="stfalcon_portfolio.admin.project.entity">Stfalcon\Bundle\PortfolioBundle\Entity\Project</parameter>
+
+        <parameter key="stfalcon_portfolio.form_type.project_translations.class">Stfalcon\Bundle\PortfolioBundle\Form\TranslationsType</parameter>
+        <parameter key="stfalcon_portfolio.form_type.project_translation_locale.class">Stfalcon\Bundle\PortfolioBundle\Form\TranslationLocaleType</parameter>
     </parameters>
 
     <services>
@@ -31,6 +34,18 @@
             <argument />
             <argument />
         </service>
+
+        <service id="stfalcon_portfolio.form_type.project_translations" class="%stfalcon_portfolio.form_type.project_translations.class%">
+              <argument type="service" id="doctrine.orm.entity_manager" />
+              <argument type="service" id="annotation_reader" />
+              <argument type="service" id="stof_doctrine_extensions.listener.translatable" />
+              <tag name="form.type" alias="project_translations" />
+          </service>
+
+          <service id="stfalcon_portfolio.form_type.project_translation_locale" class="%stfalcon_portfolio.form_type.project_translation_locale.class%">
+              <tag name="form.type" alias="project_translation_locale" />
+          </service>
+
     </services>
 
 </container>
