@@ -2,12 +2,13 @@
 
 namespace Stfalcon\Bundle\PortfolioBundle\Tests\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Stfalcon\Bundle\BlogBundle\Tests\Controller\AbstractTestCase;
+//use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * Test cases for CategoryController
  */
-class CategoryControllerTest extends WebTestCase
+class CategoryControllerTest extends AbstractTestCase
 {
 
     public function testViewCategory()
@@ -38,7 +39,10 @@ class CategoryControllerTest extends WebTestCase
             'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
             'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData'
         ));
-        $crawler = $this->fetchCrawler(
+
+        $this->paginationCheck('portfolio_category_view', 'slug', 'web-development', 'project-thumb', 6);
+
+        /*$crawler = $this->fetchCrawler(
             $this->getUrl('portfolio_category_view', array('slug' => 'web-development')), 'GET', true, true
         );
         $this->assertEquals(1, $crawler->filter('.pagination .current:contains("1")')->count());
@@ -48,7 +52,6 @@ class CategoryControllerTest extends WebTestCase
             $this->getUrl('portfolio_category_view', array('slug' => 'web-development', 'page'=> 2)), 'GET', true, true
         );
         $this->assertEquals(1, $crawler->filter('.pagination .current:contains("2")')->count());
-        $this->assertEquals(2, $crawler->filter('img.project-thumb')->count());
-     }
+        $this->assertEquals(2, $crawler->filter('img.project-thumb')->count());*/
 
 }

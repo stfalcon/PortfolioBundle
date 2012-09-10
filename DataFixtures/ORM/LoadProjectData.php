@@ -53,7 +53,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('project-preorder', $preorder);
         $this->addReference('project-eprice', $eprice);
 
-        for ($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i < 16; $i++) {
             $example = new Project();
             $example->setName('example.com_' . $i);
             $example->setSlug('example-com_' . $i);
