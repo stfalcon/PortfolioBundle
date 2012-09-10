@@ -2,8 +2,9 @@
 
 namespace Stfalcon\Bundle\PortfolioBundle\Tests\Controller;
 
-use Stfalcon\Bundle\BlogBundle\Tests\Controller\AbstractTestCase;
+//use Stfalcon\Bundle\BlogBundle\Tests\Controller\AbstractTestCase;
 //use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Application\Bundle\DefaultBundle\Tests\Controller\AbstractTestCase;
 
 /**
  * Test cases for CategoryController
@@ -53,5 +54,6 @@ class CategoryControllerTest extends AbstractTestCase
         );
         $this->assertEquals(1, $crawler->filter('.pagination .current:contains("2")')->count());
         $this->assertEquals(2, $crawler->filter('img.project-thumb')->count());*/
+    }
 
 }
