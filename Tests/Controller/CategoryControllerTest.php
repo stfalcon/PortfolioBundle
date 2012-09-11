@@ -38,17 +38,20 @@ class CategoryControllerTest extends WebTestCase
             'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData',
             'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData'
         ));
-        $crawler = $this->fetchCrawler(
-            $this->getUrl('portfolio_category_view', array('slug' => 'web-development')), 'GET', true, true
-        );
-        $this->assertEquals(1, $crawler->filter('.pagination .current:contains("1")')->count());
-        $this->assertEquals(6, $crawler->filter('img.project-thumb')->count());
 
-        $crawler = $this->fetchCrawler(
-            $this->getUrl('portfolio_category_view', array('slug' => 'web-development', 'page'=> 2)), 'GET', true, true
+        // check elements on second page
+        $crawlerFirstPage = $this->fetchCrawler(
+            $this->getUrl('portfolio_category_view', array('slug' => 'web-development'))
         );
-        $this->assertEquals(1, $crawler->filter('.pagination .current:contains("2")')->count());
-        $this->assertEquals(2, $crawler->filter('img.project-thumb')->count());
+        $this->assertCount(1, $crawlerFirstPage->filter('.pagination .current:contains("1")'));
+        $this->assertCount(6, $crawlerFirstPage->filter('img.project-thumb'));
+
+        // check elements on second page
+        $crawlerSecondPage = $this->fetchCrawler(
+            $this->getUrl('portfolio_category_view', array('slug' => 'web-development', 'page'=> 2))
+        );
+        $this->assertCount(1, $crawlerSecondPage->filter('.pagination .current:contains("2")'));
+        $this->assertCount(2, $crawlerSecondPage->filter('img.project-thumb'));
      }
 
 }
