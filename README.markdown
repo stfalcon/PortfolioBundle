@@ -7,7 +7,9 @@ for images in projects, and StofDoctrineExtensionsBundle for timestamps
 
 Features include:
 
-- Projects & categories can be stored via Doctrine ORM
+- Projects and categories can be stored via Doctrine ORM
+- Pagination of projects and categories
+- Administrating via SonataAdminBundle
 - Unit tested
 
 
