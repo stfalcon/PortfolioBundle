@@ -7,7 +7,7 @@ Simple small bundle for simple site portfolio
 
 This version of the bundle requires:
 
-1. Symfony >= 2.0
+1. Symfony >= 2.1
 2. LiipFunctionalTestBundle for testing
 3. DoctrineFixturesBundle for fixtures
 4. SonataAdminBundle for administering
@@ -63,16 +63,11 @@ In YAML:
 # app/config/routing.yml
 _stfalcon_portfolio:
     resource: "@StfalconPortfolioBundle/Resources/config/routing.yml"
-
-admin:
-    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
-    prefix: /admin
-
-_sonata_admin:
-    resource: .
-    type: sonata_admin
-    prefix: /admin
 ```
+[Routing in SonataAdminBundle](https://github.com/sonata-project/SonataAdminBundle/blob/master/Resources/doc/reference/getting_started.rst#step-1-define-sonataadminbundle-routes)
+
+
+
 Add following lines to your config file:
 
 In YAML:
