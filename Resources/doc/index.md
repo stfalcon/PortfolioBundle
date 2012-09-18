@@ -15,6 +15,10 @@ This version of the bundle requires:
 6. StofDoctrineExtensionsBundle for timestamps
 7. KnpPaginatorBundle for automate pagination
 
+## Bundle features
+
+
+
 ## Installation
 
 Installation is a quick 4 step process:

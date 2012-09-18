@@ -1,5 +1,5 @@
 {
-    "name": "mutuh/portfolio-bundle",
+    "name": "stfalcon/portfolio-bundle",
     "description": "Simple portfolio module.",
     "keywords": ["portfolio"],
     "type": "symfony-bundle",
@@ -18,7 +18,6 @@
         "stof/doctrine-extensions-bundle": "dev-master",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
-        "sonata-project/cache-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
         "vich/uploader-bundle": "dev-master"
     },
