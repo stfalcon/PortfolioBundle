@@ -1,0 +1,35 @@
+{
+    "name": "stfalcon/portfolio-bundle",
+    "description": "Simple portfolio module.",
+    "keywords": ["portfolio"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stepan Tanasiychuk",
+            "homepage": "http://blog.stfalcon.com",
+            "email": "ceo@stfalcon.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/symfony": ">=2.1",
+        "stof/doctrine-extensions-bundle": "dev-master",
+        "sonata-project/admin-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+        "knplabs/knp-paginator-bundle": "dev-master",
+        "vich/uploader-bundle": "dev-master"
+    },
+    "suggest": {
+        "liip/functional-test-bundle": "functional testing bundle",
+        "doctrine/doctrine-fixtures-bundle": "required for functional testing",
+        "doctrine/data-fixtures": "required for functional testing"
+    },
+    "autoload": {
+        "psr-0": {
+            "Stfalcon\\Bundle\\PortfolioBundle": ""
+        }
+    },
+    "target-dir": "Stfalcon/Bundle/PortfolioBundle"
+}
