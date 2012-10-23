@@ -1,5 +1,5 @@
 {
-    "name": "mutuh/portfolio-bundle",
+    "name": "stfalcon/portfolio-bundle",
     "description": "Simple portfolio module.",
     "keywords": ["portfolio"],
     "type": "symfony-bundle",
