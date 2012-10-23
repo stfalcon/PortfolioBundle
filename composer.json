@@ -20,10 +20,8 @@
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
         "vich/uploader-bundle": "dev-master",
-        "avalanche123/imagine-bundle": "dev-master"
-    },
-    "require-dev": {
-         "liip/functional-test-bundle": "dev-master"
+        "avalanche123/imagine-bundle": "dev-master",
+        "liip/functional-test-bundle": "dev-master"
     },
     "suggest": {
         "doctrine/doctrine-fixtures-bundle": "required for functional testing",
