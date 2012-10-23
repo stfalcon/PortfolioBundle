@@ -19,7 +19,8 @@
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
-        "vich/uploader-bundle": "dev-master"
+        "vich/uploader-bundle": "dev-master",
+        "imagine/Imagine": "dev-develop"
     },
     "suggest": {
         "liip/functional-test-bundle": "functional testing bundle",
