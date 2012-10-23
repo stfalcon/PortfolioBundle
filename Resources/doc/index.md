@@ -92,21 +92,7 @@ vich_uploader:
             namer: stfalcon_portfolio.namer.project
 ```
 
-### Step 4: Configure a pagination
-
-Set a number of items you intend to show per page.
-
-Add a new line to parameters:
-
-In YAML:
-
-``` yaml
-# app/config/parameters.yml
-parameters:
-    page_range: 10
-```
-
-### Step 5: Update your database schema
+### Step 4: Update your database schema
 
 Now that the bundle is configured, the last thing you need to do is update your
 database schema because you have added a two new entities, the `Project` and the `Category`.

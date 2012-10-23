@@ -1,4 +1,4 @@
-PortfolioBundle
+fgePortfolioBundle
 =============
 
 The PortfolioBundle adds some basic support for your protfolio. You can create categories and projects
@@ -10,6 +10,9 @@ Features include:
 - Projects and categories can be stored via Doctrine ORM
 - Pagination of projects and categories
 - Administrating via SonataAdminBundle
+- Syntax highlighting with geshi.
+  Wrap code blocks with  ```<pre lang="LANGUAGE" line="1">``` and ```</pre>``` where "LANGUAGE" is a Geshi supported language syntax.
+- Cut is available with <!--more--> tag
 - Unit tested
 
 
