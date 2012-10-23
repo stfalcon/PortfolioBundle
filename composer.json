@@ -1,5 +1,5 @@
 {
-    "name": "stfalcon/portfolio-bundle",
+    "name": "mutuh/portfolio-bundle",
     "description": "Simple portfolio module.",
     "keywords": ["portfolio"],
     "type": "symfony-bundle",
@@ -20,7 +20,7 @@
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
         "vich/uploader-bundle": "dev-master",
-        "avalanche123/imagine-bundle": "dev-master#eb03645887f732410127a2b3d992befe0f175277"
+        "avalanche123/imagine-bundle": "dev-master"
     },
     "suggest": {
         "liip/functional-test-bundle": "functional testing bundle",
