@@ -23,7 +23,7 @@
         "avalanche123/imagine-bundle": "dev-master"
     },
     "require-dev": {
-         "liip/functional-test-bundle": "dev-master",
+         "liip/functional-test-bundle": "dev-master"
     },
     "suggest": {
         "doctrine/doctrine-fixtures-bundle": "required for functional testing",
