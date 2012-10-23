@@ -1,28 +1,19 @@
-fgePortfolioBundle
+StfalconPortfolioBundle
 =============
 
-The PortfolioBundle adds some basic support for your protfolio. You can create categories and projects
-This bundle requires configured sonata/admin-bundle with ORM support for administration, VichUploaderBundle
-for images in projects, and StofDoctrineExtensionsBundle for timestamps
+The StfalconPortfolioBundle adds some basic support for your portfolio. You can create categories and projects
+This bundle requires configured SonataAdminBundle with ORM support for administration, VichUploaderBundle
+for images in projects, and StofDoctrineExtensionsBundle for timestamps.
+
+Studio stfalcon.com use this bundle for portfolio http://stfalcon.com/portfolio/web-development
 
 Features include:
-
-- Projects and categories can be stored via Doctrine ORM
-- Pagination of projects and categories
-- Administrating via SonataAdminBundle
-- Syntax highlighting with geshi.
-  Wrap code blocks with  ```<pre lang="LANGUAGE" line="1">``` and ```</pre>``` where "LANGUAGE" is a Geshi supported language syntax.
-- Cut is available with <!--more--> tag
-- Unit tested
-
-
-Documentation
--------------
-
-The bulk of the documentation is stored in the `Resources/doc/index.md`
-file in this bundle:
-
-[Read the Documentation for master](https://github.com/stfalcon/PortfolioBundle/blob/master/Resources/doc/index.md)
+- Projects and categories can be stored (with Doctrine ORM)
+- Administrating with SonataAdminBundle
+- Pagination of projects (with KnpPaginatorBundle)
+- Breadcrumbs (with KnpMenuBundle)
+- Upload images (with VichUploaderBundle) and resize it to thumbnails (with AvalancheImagineBundle)
+- PHPUnit tests
 
 Installation
 ------------
