@@ -22,7 +22,7 @@
         "vich/uploader-bundle": "dev-master",
         "avalanche123/imagine-bundle": "dev-master"
     },
-    "require": {
+    "require-dev": {
          "liip/functional-test-bundle": "dev-master",
     },
     "suggest": {
