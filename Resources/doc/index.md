@@ -14,6 +14,7 @@ This version of the bundle requires:
 5. VichUploaderBundle for uploads
 6. StofDoctrineExtensionsBundle for timestamps
 7. KnpPaginatorBundle for automate pagination
+8. AvalancheImagineBundle for easy image manipulation support for Symfony2
 
 ## Installation
 
