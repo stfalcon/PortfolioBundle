@@ -22,8 +22,10 @@
         "vich/uploader-bundle": "dev-master",
         "avalanche123/imagine-bundle": "dev-master"
     },
+    "require": {
+         "liip/functional-test-bundle": "dev-master",
+    },
     "suggest": {
-        "liip/functional-test-bundle": "functional testing bundle",
         "doctrine/doctrine-fixtures-bundle": "required for functional testing",
         "doctrine/data-fixtures": "required for functional testing"
     },
