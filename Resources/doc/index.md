@@ -71,11 +71,12 @@ public function registerBundles()
         new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
         // for use SonataAdminBundle
-        new Sonata\CacheBundle\SonataCacheBundle(),
         new Sonata\BlockBundle\SonataBlockBundle(),
         new Sonata\AdminBundle\SonataAdminBundle(),
         new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
         new Sonata\jQueryBundle\SonatajQueryBundle(),
+        
+        new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
     );
 }
 ```
@@ -120,7 +121,7 @@ vich_uploader:
     db_driver: orm
     mappings:
         project_image:
-            upload_dir: %kernel.root_dir%/../web/uploads/portfolio/projects
+            upload_destination: %kernel.root_dir%/../web/uploads/portfolio/projects
             namer: stfalcon_portfolio.namer.project
 ```
 
