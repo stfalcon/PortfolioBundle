@@ -2,12 +2,12 @@
 
 namespace Stfalcon\Bundle\PortfolioBundle\Tests\Controller;
 
-use Application\Bundle\DefaultBundle\Tests\Controller\AbstractTestCase;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * Test cases for CategoryController
  */
-class CategoryControllerTest extends AbstractTestCase {
+class CategoryControllerTest extends WebTestCase{
 
     public function testViewCategory() {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
@@ -35,7 +35,22 @@ class CategoryControllerTest extends AbstractTestCase {
             'Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadProjectData'
         ));
 
-        $this->paginationCheck('portfolio_category_view', 'slug', 'web-development', 'project-thumb', 6);
+        $client = static::createClient();
+
+        $crawlerFirstPage = $this->fetchCrawler(
+            $this->getUrl(
+                'portfolio_category_view',
+                array('slug' => 'web-development')
+            ), 'GET', true, true);
+
+        $this->assertCount(1, $crawlerFirstPage->filter('div.pagination'));
+        $this->assertCount(6, $crawlerFirstPage->filter('ul.projects li'));
+
+        // click link to second page and check posts on second page
+        $crawlerSecondPage = $client->click($crawlerFirstPage->filter('span.next a')->link());
+        $this->assertEquals($this->getUrl('portfolio_category_view', array('slug' => 'web-development', 'page' => 2)),
+        $client->getRequest()->getRequestUri());
+        $this->assertCount(6, $crawlerSecondPage->filter('ul.projects li'));
     }
 
 }
