@@ -40,7 +40,7 @@ class ProjectAdminTest extends WebTestCase
         // check display projects
         $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("preorder.it")')->count());
         $this->assertEquals(1, $crawler->filter('table tbody tr td:contains("eprice.kz")')->count());
-        $this->assertEquals(6, $crawler->filter('table tbody tr td:contains("example.com")')->count());
+        $this->assertEquals(16, $crawler->filter('table tbody tr td:contains("example.com")')->count());
     }
 
     public function testCreateValidProject()

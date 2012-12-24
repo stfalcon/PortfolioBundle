@@ -7,7 +7,7 @@ use Application\Bundle\DefaultBundle\Tests\Controller\AbstractTestCase;
 /**
  * Test cases for CategoryController
  */
-class CategoryControllerTest extends AbstractTestCase {
+class CategoryControllerTest {
 
     public function testViewCategory() {
         $this->loadFixtures(array('Stfalcon\Bundle\PortfolioBundle\DataFixtures\ORM\LoadCategoryData'));
