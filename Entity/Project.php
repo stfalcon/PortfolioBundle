@@ -36,7 +36,7 @@ class Project
      * @Assert\MinLength(3)
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string $slug
@@ -496,6 +496,6 @@ class Project
      */
     public function __toString()
     {
-        return $this->getName() ?: '-';
+        return $this->getName();
     }
 }
