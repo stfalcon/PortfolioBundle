@@ -21,7 +21,7 @@
             {% endfor %}
         </ul>
 
-        {{ paginator.render()|raw }}
+        {{ knp_pagination_render(paginator) }}
     {% else %}
         <div class="info">
             This category is empty

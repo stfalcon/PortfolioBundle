@@ -475,6 +475,8 @@ class Project
         $imagePath->thumbnail(new Imagine\Image\Box(240, $imagePath->getSize()->getHeight()), Imagine\Image\ImageInterface::THUMBNAIL_INSET)
                 ->crop(new Imagine\Image\Point(0, 0), new Imagine\Image\Box(240, 198))
                 ->save($this->imageFile->getPathName(), array('format' => 'png'));
+
+        $this->setUpdated(new \DateTime());
     }
 
     /**
@@ -485,5 +487,15 @@ class Project
     public function getImageFile()
     {
         return $this->imageFile;
+    }
+
+    /**
+     * This method allows a class to decide how it will react when it is treated like a string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName() ?: '-';
     }
 }

@@ -16,6 +16,7 @@ class ProjectAdmin extends Admin
         if (!$this->hasRequest()) {
             $this->datagridValues = array(
                 '_page' => 1,
+                '_per_page' => 1,
                 '_sort_order' => 'ASC', // sort direction
                 '_sort_by' => 'ordernum' // field name
             );
