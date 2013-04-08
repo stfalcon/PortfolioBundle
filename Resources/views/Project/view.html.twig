@@ -5,7 +5,7 @@
 {% block content %}
     <!--details of project-->
     <div class="detailsOfProject">
-        {% render "StfalconPortfolioBundle:Project:nearbyProjects" with { 'categorySlug': category.slug, 'projectSlug': project.slug } %}
+        {% render controller("StfalconPortfolioBundle:Project:nearbyProjects", { 'categorySlug': category.slug, 'projectSlug': project.slug }) %}
 
         <h1>
             {{ project.name }}
