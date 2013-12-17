@@ -4,31 +4,16 @@ namespace Stfalcon\Bundle\PortfolioBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Imagine;
 
 /**
  * Project entity
  *
- * @ORM\Table(name="portfolio_projects")
- * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\ProjectRepository")
- * @Vich\Uploadable
+ * @ORM\MappedSuperclass
  */
 class Project
 {
-
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var string $name
      *
@@ -36,7 +21,7 @@ class Project
      * @Assert\MinLength(3)
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var string $slug
@@ -45,7 +30,7 @@ class Project
      * @Assert\MinLength(3)
      * @ORM\Column(name="slug", type="string", length=128, unique=true)
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @var string $description
@@ -54,7 +39,7 @@ class Project
      * @Assert\MinLength(10)
      * @ORM\Column(name="description", type="text")
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string $url
@@ -62,14 +47,14 @@ class Project
      * @Assert\Url
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
-    private $url;
+    protected $url;
 
     /**
      * @var \DateTime $date
      *
      * @ORM\Column(type="datetime")
      */
-    private $date;
+    protected $date;
 
     /**
      * @var \DateTime $created
@@ -77,7 +62,7 @@ class Project
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime $updated
@@ -85,33 +70,21 @@ class Project
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
-    private $updated;
-
-    /**
-     * @var File $image
-     *
-     * @Assert\File(
-     *     maxSize="4M",
-     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
-     * )
-     * @Vich\UploadableField(mapping="project_image", fileNameProperty="image")
-     */
-    protected $imageFile;
-
+    protected $updated;
 
     /**
      * @var string $image
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
-    private $image;
+    protected $image;
 
     /**
      * @var int $ordernum
      *
      * @ORM\Column(name="ordernum", type="integer")
      */
-    private $ordernum = 0;
+    protected $ordernum = 0;
 
     /**
      * Check if this project can be published on main page of the site
@@ -120,49 +93,19 @@ class Project
      *
      * @ORM\Column(name="onFrontPage", type="boolean")
      */
-    private $onFrontPage = true;
+    protected $onFrontPage = true;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Stfalcon\Bundle\PortfolioBundle\Entity\Category")
-     * @ORM\JoinTable(name="portfolio_projects_categories",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="project_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     *   }
-     * )
+     * @var ArrayCollection
      */
-    private $categories;
+    protected $categories;
 
     /**
      * @var string $users
      *
      * @ORM\Column(name="users", type="text", nullable=true)
      */
-    private $users;
-
-    /**
-     * Initialization properties for new project entity
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->categories = new ArrayCollection();
-    }
-
-    /**
-     * Get post id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    protected $users;
 
     /**
      * Get project categories
@@ -189,11 +132,9 @@ class Project
     /**
      * Set categories collection to project
      *
-     * @param \Doctrine\Common\Collections\Collection $categories Categories collection
-     *
-     * @return void
+     * @param ArrayCollection $categories Categories collection
      */
-    public function setCategories(\Doctrine\Common\Collections\Collection $categories)
+    public function setCategories(ArrayCollection $categories)
     {
         $this->categories = $categories;
     }
@@ -201,9 +142,7 @@ class Project
     /**
      * Set project name
      *
-     * @param type $name A text of project name
-     *
-     * @return void
+     * @param string $name A text of project name
      */
     public function setName($name)
     {
@@ -246,8 +185,6 @@ class Project
      * Set project description
      *
      * @param string $description A text of description
-     *
-     * @return void
      */
     public function setDescription($description)
     {
@@ -268,8 +205,6 @@ class Project
      * Set project url
      *
      * @param string $url A url for project
-     *
-     * @return void
      */
     public function setUrl($url)
     {
@@ -290,8 +225,6 @@ class Project
      * Set date when project has been realized
      *
      * @param \DateTime $date Date when project has been realized
-     *
-     * @return void
      */
     public function setDate(\DateTime $date)
     {
@@ -360,8 +293,6 @@ class Project
      * Set list of users who worked on the project (as html)
      *
      * @param string $users A list in html format
-     *
-     * @return void
      */
     public function setUsers($users)
     {
@@ -372,8 +303,6 @@ class Project
      * Set time when project created
      *
      * @param \DateTime $created A time when project created
-     *
-     * @return void
      */
     public function setCreated(\DateTime $created)
     {
@@ -394,8 +323,6 @@ class Project
      * Set time when project updated
      *
      * @param \DateTime $updated A time when project updated
-     *
-     * @return void
      */
     public function setUpdated(\DateTime $updated)
     {
@@ -416,8 +343,6 @@ class Project
      * Set project ordernum
      *
      * @param int $ordernum
-     *
-     * @return void
      */
     public function setOrdernum($ordernum)
     {
@@ -438,8 +363,6 @@ class Project
      * Set onFrontPage
      *
      * @param bool $onFrontPage
-     *
-     * @return void
      */
     public function setOnFrontPage($onFrontPage)
     {
@@ -457,45 +380,12 @@ class Project
     }
 
     /**
-     * Set imageFile
-     *
-     * @param File $imageFile
-     *
-     * @return void
-     */
-    public function setImageFile($imageFile)
-    {
-        if (null === $imageFile) {
-            return;
-        }
-
-        $this->imageFile = $imageFile;
-        $imagine = new Imagine\Gd\Imagine();
-        $imagePath = $imagine->open($this->imageFile->getPathName());
-        $imagePath->thumbnail(new Imagine\Image\Box(240, $imagePath->getSize()->getHeight()), Imagine\Image\ImageInterface::THUMBNAIL_INSET)
-                ->crop(new Imagine\Image\Point(0, 0), new Imagine\Image\Box(240, 198))
-                ->save($this->imageFile->getPathName(), array('format' => 'png'));
-
-        $this->setUpdated(new \DateTime());
-    }
-
-    /**
-     * Get imageFile
-     *
-     * @return File
-     */
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
-
-    /**
      * This method allows a class to decide how it will react when it is treated like a string
      *
      * @return string
      */
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName()?$this->getName():'';
     }
 }

@@ -31,10 +31,9 @@ class CategoryController extends Controller
      * )
      * @Template()
      */
-    public function viewAction(Category $category, $page = 1)
+    public function viewAction(Category $category, $page)
     {
-        $query = $this->get('doctrine.orm.entity_manager')
-            ->getRepository("StfalconPortfolioBundle:Project")
+        $query = $this->get('stfalcon_portfolio.project.manager')
             ->getQueryForSelectProjectsByCategory($category);
 
         $paginator = $this->get('knp_paginator')->paginate($query, $page, 6);
@@ -81,13 +80,12 @@ class CategoryController extends Controller
         // @todo переименовать метод и роут
         // @todo перенести сортировку проектов в админку
         $projects = $this->getRequest()->get('projects');
-        $em = $this->get('doctrine')->getEntityManager();
+        $projectManager = $this->get('stfalcon_portfolio.project.manager');
         foreach ($projects as $projectInfo) {
-            $project = $em->getRepository("StfalconPortfolioBundle:Project")->find($projectInfo['id']);
+            $project = $projectManager->find($projectInfo['id']);
             $project->setOrdernum($projectInfo['index']);
-            $em->persist($project);
+            $projectManager->save($project);
         }
-        $em->flush();
 
         return new Response('good');
     }

@@ -9,21 +9,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Category entity. It groups projects in portfolio
  *
- * @ORM\Table(name="portfolio_categories")
- * @ORM\Entity(repositoryClass="Stfalcon\Bundle\PortfolioBundle\Repository\CategoryRepository")
+ * @ORM\MappedSuperclass
  */
 class Category
 {
-
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var string $name
      *
@@ -31,7 +20,7 @@ class Category
      * @Assert\MinLength(3)
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var string $slug
@@ -40,27 +29,21 @@ class Category
      * @Assert\MinLength(3)
      * @ORM\Column(name="slug", type="string", length=128, unique=true)
      */
-    private $slug;
+    protected $slug;
 
     /**
-     * @var text $description
+     * @var string $description
      *
      * @Assert\NotBlank()
      * @Assert\MinLength(10)
      * @ORM\Column(name="description", type="text")
      */
-    private $description;
+    protected $description;
 
     /**
-     * @var Doctrine\Common\Collections\ArrayCollection
-     *
-     * @ORM\ManyToMany(
-     *      targetEntity="Stfalcon\Bundle\PortfolioBundle\Entity\Project",
-     *      mappedBy="categories", fetch="EXTRA_LAZY"
-     * )
-     * @ORM\OrderBy({"ordernum" = "ASC", "date" = "DESC"})
+     * @var ArrayCollection
      */
-    private $projects;
+    protected $projects;
 
     /**
      *
@@ -68,27 +51,7 @@ class Category
      *
      * @ORM\Column(name="ordernum", type="integer")
      */
-    private $ordernum = 0;
-
-    /**
-     * Initialization properties for new category entity
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->projects = new ArrayCollection();
-    }
-
-    /**
-     * Get category id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    protected $ordernum = 0;
 
     /**
      * Set category name
@@ -169,13 +132,11 @@ class Category
     /**
      * Add project to category
      *
-     * @param \Stfalcon\Bundle\PortfolioBundle\Entity\Project $project Project object
-     *
-     * @return void
+     * @param Project $project Project object
      */
-    public function addProject(\Stfalcon\Bundle\PortfolioBundle\Entity\Project $project)
+    public function addProject($project)
     {
-        $this->projects[] = $project;
+        $this->projects->add($project);
     }
 
     /**
@@ -185,7 +146,7 @@ class Category
      */
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName()?$this->getName():'';
     }
 
     /**
@@ -208,4 +169,23 @@ class Category
         $this->ordernum = $ordernum;
     }
 
+    /**
+     * Set projects
+     *
+     * @param ArrayCollection $projects Array collection of projects
+     */
+    public function setProjects($projects)
+    {
+        $this->projects = $projects;
+    }
+
+    /**
+     * Remove project from category
+     *
+     * @param Project $project Project object
+     */
+    public function removeProject($project)
+    {
+        $this->getProjects()->removeElement($project);
+    }
 }

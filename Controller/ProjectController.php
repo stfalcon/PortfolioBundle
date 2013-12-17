@@ -30,10 +30,10 @@ class ProjectController extends Controller
         // @todo упростить когда что-то разрулят с этим PR https://github.com/sensio/SensioFrameworkExtraBundle/pull/42
 
         // try find category by slug
-        $category = $this->_findCategoryBySlug($categorySlug);
+        $category = $this->get('stfalcon_portfolio.category.manager')->findCategoryBy(array('slug' => $categorySlug));
 
         // try find project by slug
-        $project = $this->_findProjectBySlug($projectSlug);
+        $project =$this->get('stfalcon_portfolio.project.manager')->findProjectBy(array('slug' => $projectSlug));
 
         if ($this->has('application_default.menu.breadcrumbs')) {
             $breadcrumbs = $this->get('application_default.menu.breadcrumbs');
@@ -61,17 +61,13 @@ class ProjectController extends Controller
      */
     public function nearbyProjectsAction($categorySlug, $projectSlug)
     {
-        // try find category by slug
-        $category = $this->_findCategoryBySlug($categorySlug);
+        $category = $this->get('stfalcon_portfolio.category.manager')->findCategoryBy(array('slug' => $categorySlug));
 
         // try find project by slug
-        $project = $this->_findProjectBySlug($projectSlug);
-
-        $em = $this->get('doctrine')->getEntityManager();
+        $project =$this->get('stfalcon_portfolio.project.manager')->findProjectBy(array('slug' => $projectSlug));
 
         // get all projects from this category
-        $projects = $em->getRepository("StfalconPortfolioBundle:Project")
-                ->getProjectsByCategory($category);
+        $projects = $this->get('stfalcon_portfolio.project.manager')->findProjectsByCategory($category);
 
         // get next and previous projects from this category
         $i = 0; $previousProject = null; $nextProject = null;
@@ -85,45 +81,5 @@ class ProjectController extends Controller
         }
 
         return array('category' => $category, 'previousProject' => $previousProject, 'nextProject' => $nextProject);
-    }
-
-    /**
-     * Try find category by slug
-     *
-     * @param string $slug Slug of category
-     *
-     * @return Category
-     */
-    private function _findCategoryBySlug($slug)
-    {
-        $em = $this->get('doctrine')->getEntityManager();
-        $category = $em->getRepository("StfalconPortfolioBundle:Category")
-                ->findOneBy(array('slug' => $slug));
-
-        if (!$category) {
-            throw new NotFoundHttpException('The category does not exist.');
-        }
-
-        return $category;
-    }
-
-    /**
-     * Try find project by slug
-     *
-     * @param string $slug Slug of project
-     *
-     * @return Project
-     */
-    private function _findProjectBySlug($slug)
-    {
-        $em = $this->get('doctrine')->getEntityManager();
-        $project = $em->getRepository("StfalconPortfolioBundle:Project")
-                ->findOneBy(array('slug' => $slug));
-
-        if (!$project) {
-            throw new NotFoundHttpException('The project does not exist.');
-        }
-
-        return $project;
     }
 }

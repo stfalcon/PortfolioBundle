@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="stfalcon_portfolio.project_manager.class">Stfalcon\Bundle\PortfolioBundle\Entity\ProjectManager</parameter>
+        <parameter key="stfalcon_portfolio.category_manager.class">Stfalcon\Bundle\PortfolioBundle\Entity\CategoryManager</parameter>
+    </parameters>
+
+    <services>
+        <service id="stfalcon_portfolio.project.manager.default" class="%stfalcon_portfolio.project_manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%stfalcon_portfolio.project.entity%</argument>
+        </service>
+
+        <service id="stfalcon_portfolio.category.manager.default" class="%stfalcon_portfolio.category_manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%stfalcon_portfolio.category.entity%</argument>
+        </service>
+    </services>
+
+</container>

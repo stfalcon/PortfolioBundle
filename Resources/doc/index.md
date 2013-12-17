@@ -11,10 +11,8 @@ This version of the bundle requires:
 2. LiipFunctionalTestBundle for testing (optional)
 3. DoctrineFixturesBundle for fixtures (optional)
 4. SonataAdminBundle for administering
-5. VichUploaderBundle for uploads
-6. StofDoctrineExtensionsBundle for timestamps
-7. KnpPaginatorBundle for automate pagination
-8. AvalancheImagineBundle for easy image manipulation support for Symfony2
+5. StofDoctrineExtensionsBundle for timestamps
+6. KnpPaginatorBundle for automate pagination
 
 ## Installation
 
@@ -58,9 +56,6 @@ public function registerBundles()
         // ...
         new Stfalcon\Bundle\PortfolioBundle\StfalconPortfolioBundle(),
 
-	// for use VichUploaderBundle
-	new Vich\UploaderBundle\VichUploaderBundle(),
-
         // for use KnpMenuBundle
         new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
@@ -75,8 +70,6 @@ public function registerBundles()
         new Sonata\AdminBundle\SonataAdminBundle(),
         new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
         new Sonata\jQueryBundle\SonatajQueryBundle(),
-        
-        new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
     );
 }
 ```
@@ -103,6 +96,23 @@ In YAML:
 
 ``` yaml
 # app/config/config.yml
+
+#stfalcon portfolio config
+stfalcon_portfolio:
+    project:
+        entity:               ~ # Required
+        manager:              stfalcon_portfolio.project.manager.default
+        admin:
+            class:                Stfalcon\Bundle\PortfolioBundle\Admin\ProjectAdmin
+            controller:           SonataAdminBundle:CRUD
+    category:
+        entity:               ~ # Required
+        manager:              stfalcon_portfolio.category.manager.default
+        admin:
+            class:                Stfalcon\Bundle\PortfolioBundle\Admin\CategoryAdmin
+            controller:           SonataAdminBundle:CRUD
+
+
 # Sonata Configuration
 sonata_block:
     default_contexts: [cms]
@@ -117,12 +127,6 @@ stof_doctrine_extensions:
         default:
             timestampable: true
 
-vich_uploader:
-    db_driver: orm
-    mappings:
-        project_image:
-            upload_destination: %kernel.root_dir%/../web/uploads/portfolio/projects
-            namer: stfalcon_portfolio.namer.project
 ```
 
 ### Step 4: Update your database schema

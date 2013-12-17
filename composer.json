@@ -19,8 +19,6 @@
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "2.3.2",
-        "vich/uploader-bundle": "0.8.1",
-        "avalanche123/imagine-bundle": "dev-master",
         "liip/functional-test-bundle": "dev-master"
     },
     "suggest": {
