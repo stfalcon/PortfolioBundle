@@ -26,29 +26,33 @@ class StfalconPortfolioExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $processor = new Processor();
-        $configuration = new Configuration();
+        $config = $configs[0];
 
-        $config = $processor->processConfiguration($configuration, $configs);
+        $container->setParameter('stfalcon_portfolio.project.entity', $config['project']['entity']);
+        $container->setParameter('stfalcon_portfolio.category.entity', $config['category']['entity']);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        if (isset($config['project']['repository'])) {
+            $container->setParameter('stfalcon_portfolio.project.repository', $config['project']['repository']);
+        }
+        if (isset($config['category']['repository'])) {
+            $container->setParameter('stfalcon_portfolio.category.repository', $config['category']['repository']);
+        }
         $loader->load('orm.xml');
-        $container->setParameter('stfalcon_portfolio.project.entity', $config['project']['entity']);
-        $container->setAlias('stfalcon_portfolio.project.manager', $config['project']['manager']);
-        unset($config['project']['manager']);
-
-        $container->setParameter('stfalcon_portfolio.category.entity', $config['category']['entity']);
-        $container->setAlias('stfalcon_portfolio.category.manager', $config['category']['manager']);
-        unset($config['category']['manager']);
-
         $loader->load('admin.xml');
 
-        $container->setParameter('stfalcon_portfolio.category.admin.class', $config['category']['admin']['class']);
-        $container->setParameter('stfalcon_portfolio.category.admin.controller', $config['category']['admin']['controller']);
-
-        $container->setParameter('stfalcon_portfolio.project.admin.class', $config['project']['admin']['class']);
-        $container->setParameter('stfalcon_portfolio.project.admin.controller', $config['project']['admin']['controller']);
-
+        if (isset($config['category']['admin']['class'])) {
+            $container->setParameter('stfalcon_portfolio.category.admin.class', $config['category']['admin']['class']);
+        }
+        if (isset($config['category']['admin']['controller'])) {
+            $container->setParameter('stfalcon_portfolio.category.admin.controller', $config['category']['admin']['controller']);
+        }
+        if (isset($config['project']['admin']['class'])) {
+            $container->setParameter('stfalcon_portfolio.project.admin.class', $config['project']['admin']['class']);
+        }
+        if (isset($config['project']['admin']['controller'])) {
+            $container->setParameter('stfalcon_portfolio.project.admin.controller', $config['project']['admin']['controller']);
+        }
     }
 
 }

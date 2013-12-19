@@ -386,6 +386,6 @@ class Project
      */
     public function __toString()
     {
-        return $this->getName()?$this->getName():'';
+        return $this->getName();
     }
 }

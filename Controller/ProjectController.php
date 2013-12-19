@@ -22,6 +22,9 @@ class ProjectController extends Controller
      * @param string $projectSlug  Slug of project
      *
      * @return array
+     *
+     * @throws NotFoundHttpException
+     *
      * @Route("/portfolio/{categorySlug}/{projectSlug}", name="portfolio_project_view")
      * @Template()
      */
@@ -30,10 +33,15 @@ class ProjectController extends Controller
         // @todo упростить когда что-то разрулят с этим PR https://github.com/sensio/SensioFrameworkExtraBundle/pull/42
 
         // try find category by slug
-        $category = $this->get('stfalcon_portfolio.category.manager')->findCategoryBy(array('slug' => $categorySlug));
-
+        $category = $this->get('stfalcon_portfolio.category.repository')->findOneBy(array('slug' => $categorySlug));
+        if (!$category) {
+            throw new NotFoundHttpException('Category not found');
+        }
         // try find project by slug
-        $project =$this->get('stfalcon_portfolio.project.manager')->findProjectBy(array('slug' => $projectSlug));
+        $project = $this->get('stfalcon_portfolio.project.repository')->findOneBy(array('slug' => $projectSlug));
+        if (!$project) {
+            throw new NotFoundHttpException('Project not found');
+        }
 
         if ($this->has('application_default.menu.breadcrumbs')) {
             $breadcrumbs = $this->get('application_default.menu.breadcrumbs');
@@ -57,17 +65,26 @@ class ProjectController extends Controller
      * @param string $projectSlug  Object of project
      *
      * @return array
+     *
+     * @throws NotFoundHttpException
+     *
      * @Template()
      */
     public function nearbyProjectsAction($categorySlug, $projectSlug)
     {
-        $category = $this->get('stfalcon_portfolio.category.manager')->findCategoryBy(array('slug' => $categorySlug));
+        $category = $this->get('stfalcon_portfolio.category.repository')->findOneBy(array('slug' => $categorySlug));
 
+        if (!$category) {
+            throw new NotFoundHttpException('Category not found');
+        }
         // try find project by slug
-        $project =$this->get('stfalcon_portfolio.project.manager')->findProjectBy(array('slug' => $projectSlug));
+        $project = $this->get('stfalcon_portfolio.project.repository')->findOneBy(array('slug' => $projectSlug));
 
+        if (!$project) {
+            throw new NotFoundHttpException('Project not found');
+        }
         // get all projects from this category
-        $projects = $this->get('stfalcon_portfolio.project.manager')->findProjectsByCategory($category);
+        $projects = $this->get('stfalcon_portfolio.project.repository')->findProjectsByCategory($category);
 
         // get next and previous projects from this category
         $i = 0; $previousProject = null; $nextProject = null;

@@ -100,14 +100,14 @@ In YAML:
 #stfalcon portfolio config
 stfalcon_portfolio:
     project:
-        entity:               ~ # Required
-        manager:              stfalcon_portfolio.project.manager.default
+        entity:               ~ # Required define
+        repository:           ~ # Required define
         admin:
             class:                Stfalcon\Bundle\PortfolioBundle\Admin\ProjectAdmin
             controller:           SonataAdminBundle:CRUD
     category:
-        entity:               ~ # Required
-        manager:              stfalcon_portfolio.category.manager.default
+        entity:               ~ # Required define
+        repository:           ~ # Required define
         admin:
             class:                Stfalcon\Bundle\PortfolioBundle\Admin\CategoryAdmin
             controller:           SonataAdminBundle:CRUD

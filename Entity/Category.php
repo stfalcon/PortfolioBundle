@@ -46,14 +46,6 @@ class Category
     protected $projects;
 
     /**
-     *
-     * @var integer
-     *
-     * @ORM\Column(name="ordernum", type="integer")
-     */
-    protected $ordernum = 0;
-
-    /**
      * Set category name
      *
      * @param string $name Text for category name
@@ -130,46 +122,6 @@ class Category
     }
 
     /**
-     * Add project to category
-     *
-     * @param Project $project Project object
-     */
-    public function addProject($project)
-    {
-        $this->projects->add($project);
-    }
-
-    /**
-     * This method allows a class to decide how it will react when it is treated like a string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getName()?$this->getName():'';
-    }
-
-    /**
-     * Get order num
-     *
-     * @return integer
-     */
-    public function getOrdernum()
-    {
-        return $this->ordernum;
-    }
-
-    /**
-     * Set order num
-     *
-     * @param integer $ordernum
-     */
-    public function setOrdernum($ordernum)
-    {
-        $this->ordernum = $ordernum;
-    }
-
-    /**
      * Set projects
      *
      * @param ArrayCollection $projects Array collection of projects
@@ -180,12 +132,12 @@ class Category
     }
 
     /**
-     * Remove project from category
+     * This method allows a class to decide how it will react when it is treated like a string
      *
-     * @param Project $project Project object
+     * @return string
      */
-    public function removeProject($project)
+    public function __toString()
     {
-        $this->getProjects()->removeElement($project);
+        return $this->getName();
     }
 }

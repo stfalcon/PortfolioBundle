@@ -8,7 +8,7 @@ use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
 /**
  * Project Repository
  */
-class ProjectRepository extends EntityRepository
+abstract class ProjectRepository extends EntityRepository
 {
 
     /**
@@ -23,9 +23,9 @@ class ProjectRepository extends EntityRepository
         return $this->createQueryBuilder('p')
                 ->select('p')
                 ->join('p.categories', 'c')
-                ->where('c.id = ?1')
+                ->where('c = :category')
                 ->orderBy('p.ordernum', 'ASC')
-                ->setParameter(1, $category->getId())
+                ->setParameter('category', $category)
                 ->getQuery();
     }
 
@@ -36,7 +36,7 @@ class ProjectRepository extends EntityRepository
      *
      * @return array
      */
-    public function getProjectsByCategory(Category $category)
+    public function findProjectsByCategory(Category $category)
     {
         return $this->getQueryForSelectProjectsByCategory($category)
                 ->getResult();
