@@ -15,6 +15,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Project
 {
     /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @var string $name
      *
      * @Assert\NotBlank()
@@ -106,6 +113,14 @@ class Project
      * @ORM\Column(name="users", type="text", nullable=true)
      */
     protected $users;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Get project categories

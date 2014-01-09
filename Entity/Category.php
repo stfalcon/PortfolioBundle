@@ -14,6 +14,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Category
 {
     /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
      * @var string $name
      *
      * @Assert\NotBlank()
@@ -44,6 +51,14 @@ class Category
      * @var ArrayCollection
      */
     protected $projects;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set category name
