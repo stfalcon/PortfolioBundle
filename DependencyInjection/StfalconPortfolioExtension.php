@@ -5,6 +5,7 @@ namespace Stfalcon\Bundle\PortfolioBundle\DependencyInjection;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 
 /**
@@ -25,15 +26,41 @@ class StfalconPortfolioExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $config = array();
-        foreach ($configs as $c) {
-            $config = array_merge($config, $c);
-        }
+        $config = $configs[0];
 
-        $container->setParameter('stfalcon_portfolio.config', $config);
+
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+        $loader->load('orm.xml');
+
+        if (isset($config['project']['entity'])) {
+            $container->setParameter('stfalcon_portfolio.project.entity', $config['project']['entity']);
+        }
+        if (isset($config['category']['entity'])) {
+            $container->setParameter('stfalcon_portfolio.category.entity', $config['category']['entity']);
+        }
+
+        if (isset($config['project']['repository'])) {
+            $container->setParameter('stfalcon_portfolio.project.repository', $config['project']['repository']);
+        }
+        if (isset($config['category']['repository'])) {
+            $container->setParameter('stfalcon_portfolio.category.repository', $config['category']['repository']);
+        }
+
+        $loader->load('admin.xml');
+
+        if (isset($config['category']['admin']['class'])) {
+            $container->setParameter('stfalcon_portfolio.category.admin.class', $config['category']['admin']['class']);
+        }
+        if (isset($config['category']['admin']['controller'])) {
+            $container->setParameter('stfalcon_portfolio.category.admin.controller', $config['category']['admin']['controller']);
+        }
+        if (isset($config['project']['admin']['class'])) {
+            $container->setParameter('stfalcon_portfolio.project.admin.class', $config['project']['admin']['class']);
+        }
+        if (isset($config['project']['admin']['controller'])) {
+            $container->setParameter('stfalcon_portfolio.project.admin.controller', $config['project']['admin']['controller']);
+        }
     }
 
 }

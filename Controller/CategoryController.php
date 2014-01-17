@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Stfalcon\Bundle\PortfolioBundle\Entity\Project;
 use Stfalcon\Bundle\PortfolioBundle\Entity\Category;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Category Controller
@@ -19,10 +20,13 @@ class CategoryController extends Controller
     /**
      * View category
      *
-     * @param Category $category Category object
-     * @param int      $page     Page number
+     * @param string $slug Category slug
+     * @param int    $page Page number
      *
      * @return array
+     *
+     * @throws NotFoundHttpException
+     *
      * @Route(
      *      "/portfolio/{slug}/{page}",
      *      name="portfolio_category_view",
@@ -31,10 +35,15 @@ class CategoryController extends Controller
      * )
      * @Template()
      */
-    public function viewAction(Category $category, $page = 1)
+    public function viewAction($slug, $page)
     {
-        $query = $this->get('doctrine.orm.entity_manager')
-            ->getRepository("StfalconPortfolioBundle:Project")
+        $category = $this->get('stfalcon_portfolio.category.repository')->findOneBy(array('slug' => $slug));
+
+        if (!$category) {
+            throw new NotFoundHttpException('Category not found');
+        }
+
+        $query = $this->get('stfalcon_portfolio.project.repository')
             ->getQueryForSelectProjectsByCategory($category);
 
         $paginator = $this->get('knp_paginator')->paginate($query, $page, 6);
@@ -63,8 +72,7 @@ class CategoryController extends Controller
     public function servicesAction(Category $category, $project = null)
     {
         // @todo помоему этот блок отключен
-        $categories = $this->get('doctrine.orm.entity_manager')
-                ->getRepository("StfalconPortfolioBundle:Category")->getAllCategories();
+        $categories = $this->get('stfalcon_portfolio.category.repository')->findAll();
 
         return array('categories' => $categories, 'currentProject' => $project, 'currentCategory' => $category);
     }
@@ -80,10 +88,11 @@ class CategoryController extends Controller
     {
         // @todo переименовать метод и роут
         // @todo перенести сортировку проектов в админку
+        $em = $this->getDoctrine()->getManager();
         $projects = $this->getRequest()->get('projects');
-        $em = $this->get('doctrine')->getEntityManager();
+        $projectManager = $this->get('stfalcon_portfolio.project.repository');
         foreach ($projects as $projectInfo) {
-            $project = $em->getRepository("StfalconPortfolioBundle:Project")->find($projectInfo['id']);
+            $project = $projectManager->find($projectInfo['id']);
             $project->setOrdernum($projectInfo['index']);
             $em->persist($project);
         }

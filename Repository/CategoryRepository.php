@@ -17,15 +17,8 @@ class CategoryRepository extends EntityRepository
      */
     public function getAllCategories()
     {
-        $query = $this->getEntityManager()->createQuery('
-            SELECT
-                c
-            FROM
-                StfalconPortfolioBundle:Category c
-            ORDER BY
-                c.ordernum');
-
-        return $query->getResult();
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.ordernum', 'ASC')->getQuery()->getResult();
     }
 
 }
