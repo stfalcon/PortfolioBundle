@@ -28,17 +28,25 @@ class StfalconPortfolioExtension extends Extension
     {
         $config = $configs[0];
 
-        $container->setParameter('stfalcon_portfolio.project.entity', $config['project']['entity']);
-        $container->setParameter('stfalcon_portfolio.category.entity', $config['category']['entity']);
+
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('orm.xml');
+
+        if (isset($config['project']['entity'])) {
+            $container->setParameter('stfalcon_portfolio.project.entity', $config['project']['entity']);
+        }
+        if (isset($config['category']['entity'])) {
+            $container->setParameter('stfalcon_portfolio.category.entity', $config['category']['entity']);
+        }
+
         if (isset($config['project']['repository'])) {
             $container->setParameter('stfalcon_portfolio.project.repository', $config['project']['repository']);
         }
         if (isset($config['category']['repository'])) {
             $container->setParameter('stfalcon_portfolio.category.repository', $config['category']['repository']);
         }
-        $loader->load('orm.xml');
+
         $loader->load('admin.xml');
 
         if (isset($config['category']['admin']['class'])) {

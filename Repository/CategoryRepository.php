@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityRepository;
 /**
  * Category Repository
  */
-abstract class CategoryRepository extends EntityRepository
+class CategoryRepository extends EntityRepository
 {
 
     /**

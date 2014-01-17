@@ -4,6 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="stfalcon_portfolio.project.entity">Stfalcon\Bundle\PortfolioBundle\Entity\Project</parameter>
+        <parameter key="stfalcon_portfolio.category.entity">Stfalcon\Bundle\PortfolioBundle\Entity\Category</parameter>
+
+        <parameter key="stfalcon_portfolio.project.repository">Stfalcon\Bundle\PortfolioBundle\Repository\ProjectRepository</parameter>
+        <parameter key="stfalcon_portfolio.category.repository">Stfalcon\Bundle\PortfolioBundle\Repository\CategoryRepository</parameter>
+    </parameters>
+
     <services>
         <service id="stfalcon_portfolio.project.repository"
                  factory-service="doctrine.orm.entity_manager"
