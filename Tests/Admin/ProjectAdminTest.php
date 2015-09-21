@@ -143,7 +143,7 @@ class ProjectAdminTest extends WebTestCase
         $client = $this->makeClient(true);
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $project = $em->getRepository("StfalconPortfolioBundle:Project")->findOneBy(array('name' => 'preorder.it'));
-        $crawler = $client->request('POST', $this->getUrl('portfolioProjectsApplyOrder'), array(
+        $crawler = $client->request('POST', $this->getUrl('admin_bundle_portfolio_project_orderProjects'), array(
             'projects' => array(array('id' => $project->getId(), 'index' => 200))
             ));
         $this->assertEquals('good', $client->getResponse()->getContent());
