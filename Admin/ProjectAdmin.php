@@ -23,6 +23,11 @@ class ProjectAdmin extends Admin
         }
     }
 
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('changeProjectsOrder', '/reorderProjects');
+    }
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -46,11 +51,5 @@ class ProjectAdmin extends Admin
             ->add('name')
             ->add('date')
         ;
-    }
-
-    public function setTemplates(array $templates)
-    {
-        $templates['list'] = 'StfalconPortfolioBundle:ProjectAdmin:list.html.twig';
-        parent::setTemplates($templates);
     }
 }

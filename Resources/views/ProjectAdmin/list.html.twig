@@ -16,7 +16,7 @@
                     $("input[name='idx[]']").each(function(index){
                         array.push({id: $(this).val(), index: index});
                     });
-                    $.post('{{ path('portfolioProjectsApplyOrder') }}', {projects: array}, function(response){});
+                    $.post('{{ admin.generateUrl('reorderProjects') }}', {projects: array}, function(response){});
                 }
             }).disableSelection();
         });
