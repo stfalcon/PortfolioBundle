@@ -24,7 +24,12 @@
             <tag name="sonata.admin" manager_type="orm" group="PortfolioBundle" label="Projects" />
             <argument />
             <argument>%stfalcon_portfolio.admin.project.entity%</argument>
-            <argument />
+            <argument>StfalconPortfolioBundle:ProjectAdmin</argument>
+            <call method="setTemplates">
+                <argument type="collection">
+                    <argument key="list">StfalconPortfolioBundle:ProjectAdmin:list.html.twig</argument>
+                </argument>
+            </call>
         </service>
 
         <service id="stfalcon_portfolio.namer.project" class="Stfalcon\Bundle\PortfolioBundle\Naming\ProjectNaming">

@@ -68,27 +68,4 @@ class CategoryController extends Controller
 
         return array('categories' => $categories, 'currentProject' => $project, 'currentCategory' => $category);
     }
-
-    /**
-     * Ajax order projects
-     *
-     * @return string
-     * @Route("/admin/portfolio/category/applyOrder", name="portfolioProjectsApplyOrder")
-     * @Method({"POST"})
-     */
-    public function orderProjects()
-    {
-        // @todo переименовать метод и роут
-        // @todo перенести сортировку проектов в админку
-        $projects = $this->getRequest()->get('projects');
-        $em = $this->get('doctrine')->getEntityManager();
-        foreach ($projects as $projectInfo) {
-            $project = $em->getRepository("StfalconPortfolioBundle:Project")->find($projectInfo['id']);
-            $project->setOrdernum($projectInfo['index']);
-            $em->persist($project);
-        }
-        $em->flush();
-
-        return new Response('good');
-    }
 }
